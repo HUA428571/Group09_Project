@@ -1,4 +1,5 @@
-﻿Developing outline for group 09
+﻿这里是NJUPT计算机学院2019级学生的程序设计课程小组
+Developing outline for group 09
 民航票务系统的设计与实现
 Day 0 20200325
 确定基本功能及框架
