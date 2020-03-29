@@ -32,13 +32,13 @@
     <Text Include="缩写.txt">
       <Filter>资源文件</Filter>
     </Text>
-    <Text Include="..\README.txt">
-      <Filter>资源文件</Filter>
-    </Text>
     <Text Include="..\项目进度(教师用).txt">
       <Filter>资源文件</Filter>
     </Text>
     <Text Include="HuaCL_Log.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="README.txt">
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>
