@@ -8,10 +8,16 @@ int main()
 	int FlightID_Count = 0;//存储当前航班号个数
 	FlightID_Count = ImportFlightDatabase(ID);
 	PrintFlightTitle();
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		PrintFlight(ID,i,i+1);
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t"<<JudgeAircraftSize(ID, i) << endl;
 	}
-
+	cout << "请输入你要查询的航班号" << endl;
+	char search[10];
+	int result;
+	cin >> search;
+	result=SearchFlightID(ID, search, FlightID_Count);
+	PrintFlight(ID, result, 1);
 	return 0;
 }

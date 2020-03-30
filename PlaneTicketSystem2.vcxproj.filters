@@ -41,6 +41,9 @@
     <Text Include="README.txt">
       <Filter>资源文件</Filter>
     </Text>
+    <Text Include="Default_FlightID_Database_2.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\机场信息\机场代码.csv">

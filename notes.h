@@ -1,5 +1,6 @@
 #include <iostream>
 #include<stdio.h>
+#include<string.h>
 using namespace std;
 //原结构体，出发和到达时间均为字符数组
 //typedef struct FlightID //用于表示航班号，航班号只代表航班基本信息。
@@ -91,3 +92,5 @@ int WeekDayTransfer(int year, int month, int day);
 int ImportFlightDatabase(FlightID*);
 void PrintFlight(FlightID* ,int n,int i);
 void PrintFlightTitle();//打印标题栏
+int JudgeAircraftSize(FlightID* ID, int n);//判断飞机是小飞机还是大飞机，小飞机返回1，大飞机返回2
+int SearchFlightID(FlightID* ID, char* search, int IDcount);

@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\项目进度(教师用).txt" />
+    <Text Include="Default_FlightID_Database_2.txt" />
     <Text Include="HuaCL_Log.txt" />
     <Text Include="README.txt" />
     <Text Include="缩写.txt" />

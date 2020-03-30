@@ -53,6 +53,14 @@ int DateTransfer(int year, int month ,int day)//返回日期对应天数
 	return daycount;
 }
 
+int JudgeAircraftSize(FlightID* ID, int n)//判断飞机是小飞机还是大飞机，小飞机返回1，大飞机返回2
+{
+	if (strcmp(ID[n].AircraftType, "319")&& strcmp(ID[n].AircraftType, "320")&& strcmp(ID[n].AircraftType, "321")&& strcmp(ID[n].AircraftType, "737")&& strcmp(ID[n].AircraftType, "738"))
+		return 2;
+	else
+		return 1;
+}
+
 int ImportFlightDatabase(FlightID* ID)//用于在开头询问是否要引入现有航线数据库,函数返回读取航班个数
 {
 	char choice;
@@ -159,12 +167,52 @@ void PrintFlightTicket()
 	;
 }
 
-int SearchFlightID(int search)//查找航班号，返回查询到个数
+int SearchFlightID(FlightID* ID,char* search,int IDcount)//查找航班号，返回查询到的数组下标
 {
-	return 0;
+	//查询航班号分两种情况，第一种纯数字，即没有航空公司代码，这种情况下可能重名；第二种字母加数字，即有航空公司代码，这种情况下航班号唯一。
+	if (strcmp(search, "AAAA") < 0)//纯数字
+	{
+		int SearchReasult[20];
+		int SearchReasultCount = 0; //记录搜索到的航班个数
+		int SearchReasultChoice;
+		for (int i = 0; i < IDcount; i++)
+		{
+			if (!strcmp(search, ID[i].ID))
+			{
+				PrintFlight(ID, i, SearchReasultCount+1);
+				SearchReasult[SearchReasultCount] = i;
+				SearchReasultCount++;
+			}
+		}
+		if (SearchReasultCount)
+		{
+			cout << "共为您找到" << SearchReasultCount << "个航班\n" << "请选择您需要查询的航班序号：";
+			cin >> SearchReasultChoice;
+			return SearchReasult[SearchReasultChoice-1];
+		}
+		else
+		{
+			cout << "没有找到符合条件的航班！" << endl;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < IDcount; i++)
+		{
+			char a[12];//存储航空公司+航班号的合体
+			a[0] = ID[i].Carrier[0];
+			a[1] = ID[i].Carrier[1];
+			a[2] = '\0';
+			strcat(a, ID[i].ID);
+			if (!strcmp(search, a))
+			{
+				PrintFlight(ID, i, 1);
+				cout << "共为您找到1个航班"<<endl ;
+				return i;
+			}
+		}
+		cout << "没有找到符合条件的航班！" << endl;
+	}
+	return -1;
 }
 
-int JudgeAircraftSize(FlightID* ID, int n)//判断飞机是小飞机还是大飞机，小飞机返回1，大飞机返回2
-{
-	return 0;
-}
