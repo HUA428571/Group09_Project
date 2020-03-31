@@ -173,13 +173,10 @@ int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, 
 	SearchCount = 0; //记录搜索到的航班个数,先置零
 	if (strcmp(search, "AAAA") < 0)//纯数字
 	{
-		//int SearchReasult[20];
-		//int SearchReasultChoice;
 		for (int i = 0; i < IDcount; i++)
 		{
 			if (!strcmp(search, ID[i].ID))
 			{
-				PrintFlight(ID, i, SearchCount + 1);
 				SearchReasult[SearchCount] = i;
 				SearchCount++;
 			}
@@ -197,6 +194,7 @@ int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, 
 			if (!strcmp(search, a))
 			{
 				SearchReasult[SearchCount] = i;
+				SearchCount++;
 				return SearchCount;
 			}
 		}
@@ -239,7 +237,7 @@ int NewFlight(FlightID* ID, int &IDcount)
 	int SearchCount = 0;
 	cout << "请输入完整航班号：";
 	cin >> Input;
-	if (!SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount))
+	if (SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount))
 	{
 		cout << "重复的航班号！请重新输入\n";
 		return IDcount;
@@ -275,8 +273,9 @@ int NewFlight(FlightID* ID, int &IDcount)
 	cin >> ID[IDcount].Class;
 	ID[IDcount].Price = ID[IDcount].TravelTimeHour * 675 + ID[IDcount].TravelTimeMinute * 11.25;
 	IDcount++;
+	cout << "已成功添加第" << IDcount << "个航线数据" << endl;//这句话可能后期要加到上级菜单函数里头
 	return IDcount;
-}
+}//可选功能：检验输入数据的正确性，不过这个太繁杂了，先不做。
 
 void SaveDatabase(FlightID* ID,int IDcount)
 {
