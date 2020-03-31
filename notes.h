@@ -93,4 +93,6 @@ int ImportFlightDatabase(FlightID*);
 void PrintFlight(FlightID* ,int n,int i);
 void PrintFlightTitle();//打印标题栏
 int JudgeAircraftSize(FlightID* ID, int n);//判断飞机是小飞机还是大飞机，小飞机返回1，大飞机返回2
-int SearchFlightID(FlightID* ID, char* search, int IDcount);
+int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount);//查找航班号，返回查找到航班个数
+int PrintSearch(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount);//展示查询的结果
+int NewFlight(FlightID* ID, int& IDcount);//创建新航线
