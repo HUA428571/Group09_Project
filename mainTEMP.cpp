@@ -49,6 +49,9 @@ int main()
 	//{
 	//	PrintFlight(ID, SortReasult[i], i + 1);
 	//}
+	SaveFlightDatabase(ID,FlightID_Count);
+
+
 
 	return 0;
 }

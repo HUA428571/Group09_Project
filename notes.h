@@ -91,12 +91,22 @@ typedef struct FlightTicket //每日机票情况
 #endif // !struct
 
 
-int WeekDayTransfer(int year, int month, int day);
+int WeekDayTransfer(int, int, int);//使用蔡勒公式转换日期与星期
+int DateTransfer(int, int, int);//返回日期对应天数
+int JudgeAircraftSize(FlightID*, int);//判断飞机是小飞机还是大飞机，小飞机返回1，大飞机返回2
 int ImportFlightDatabase(FlightID*);
-void PrintFlight(FlightID* ,int n,int i);
 void PrintFlightTitle();//打印标题栏
-int JudgeAircraftSize(FlightID* ID, int n);//判断飞机是小飞机还是大飞机，小飞机返回1，大飞机返回2
-int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount);//查找航班号，返回查找到航班个数
-int PrintSearch(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount);//展示查询的结果
-int NewFlight(FlightID* ID, int& IDcount);//创建新航线
-int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult);//按照起飞时间排序
+void PrintFlight(FlightID*, int, int);
+int SearchFlightID(FlightID*, char*, int, int*, int&);//查找航班号，返回查找到航班个数
+int SearchFlightDepartureAirport(FlightID*, char*, int, int*, int&);//查找航起飞地，返回查找到航班个数
+int SearchFlightArrivalAirport(FlightID*, char*, int, int*, int&);//查找航起飞地，返回查找到航班个数
+int PrintSearch(FlightID*, int, int*, int&);//展示查询的结果
+int NewFlight(FlightID*, int&);//创建新航线
+int SortByDepartureTime(FlightID*, int, int*);//按照起飞时间排序
+int SaveFlightDatabase(FlightID*, int);
+
+
+
+
+
+
