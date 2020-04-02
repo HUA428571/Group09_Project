@@ -81,10 +81,13 @@ typedef struct FlightID //ÓÃÓÚ±íÊ¾º½°àºÅ£¬º½°àºÅÖ»´ú±íº½°à»ù±¾ĞÅÏ¢¡£
 
 typedef struct FlightTicket //Ã¿ÈÕ»úÆ±Çé¿ö
 {
-    int Seat[50][10];
+    int Seat[50][10] = { 0 };
+    int FirstClassTicketRemain = 0;
+    int BusinessClassTicketRemain = 0;
+    int EconomyClassTicketRemain = 0;
     int ActuralDepartureTime = 2500;
     int ActuralArrivalTime = 2500;
-}FlightTicket;
+}FlightTicket; 
 #endif // !struct
 
 
@@ -96,3 +99,4 @@ int JudgeAircraftSize(FlightID* ID, int n);//ÅĞ¶Ï·É»úÊÇĞ¡·É»ú»¹ÊÇ´ó·É»ú£¬Ğ¡·É»ú·
 int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount);//²éÕÒº½°àºÅ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
 int PrintSearch(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount);//Õ¹Ê¾²éÑ¯µÄ½á¹û
 int NewFlight(FlightID* ID, int& IDcount);//´´½¨ĞÂº½Ïß
+int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult);//°´ÕÕÆğ·ÉÊ±¼äÅÅĞò

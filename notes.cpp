@@ -281,3 +281,30 @@ void SaveDatabase(FlightID* ID,int IDcount)
 {
 	;
 }
+
+int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//冒泡排序法按照时间排序航班；
+{
+	int i;
+	//首先要初始化一下存储排序结果的数组
+	for (i = 0; i < IDcount; i++)
+	{
+		SortReasult[i] = i;
+	}
+	int i1, i2;
+	//先写一个时间由早到晚的
+	//谁会时间由晚到早查呢，就不写了。
+	for (i1 = 0; i1 < (IDcount-1); i1++)
+	{
+		for (i2 = 0; i2 < (IDcount-i1-1); i2++)
+		{
+			if (ID[SortReasult[i2]].DepartureTime > ID[SortReasult[i2 + 1]].DepartureTime)
+			{
+				int Switch;
+				Switch = SortReasult[i2];
+				SortReasult[i2] = SortReasult[i2+1];
+				SortReasult[i2+1] = Switch;
+			}
+		}
+	}
+	return 0;
+}
