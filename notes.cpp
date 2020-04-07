@@ -324,7 +324,7 @@ int SaveFlightDatabase(FlightID* ID, int IDcount)
 		cout << "建立新数据库(A)/在已有数据库上增加(B)" << endl;
 		cin >> choice;
 	} while (choice != 'A' && choice != 'a' && choice != 'B' && choice != 'b');
-	if (choice == 'A' || choice == 'A')
+	if (choice == 'A' || choice == 'a')
 	{
 		if ((fp = fopen(".\\FlightID_Database.txt", "w")) == NULL)
 		{
