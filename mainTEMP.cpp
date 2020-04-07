@@ -21,12 +21,12 @@ int main()
 		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t" << JudgeAircraftSize(ID, i) << endl;
 	}
 
-	//cout << "请输入你要查询的航班号" << endl;
-	//char search[10];
-	//int result;
-	//cin >> search;
-	//SearchFlightID(ID, search, FlightID_Count, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数	
-	//result = PrintSearch(ID, FlightID_Count, SearchReasult, SearchCount);
+	cout << "请输入你要查询的航班号" << endl;
+	char search[10];
+	int result;
+	cin >> search;
+	SearchFlightID(ID, search, FlightID_Count, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数	
+	result = PrintSearch(ID, FlightID_Count, SearchReasult, SearchCount);
 	//PrintFlight(ID, result, 1);
 	//NewFlight(ID, FlightID_Count);
 	//NewFlight(ID, FlightID_Count);
@@ -49,9 +49,14 @@ int main()
 	//{
 	//	PrintFlight(ID, SortReasult[i], i + 1);
 	//}
-	SaveFlightDatabase(ID,FlightID_Count);
+	//SaveFlightDatabase(ID,FlightID_Count);
 
-
-
+	//ChangeFlightInformation(ID, FlightID_Count, result);
+	cout << "你想删啥？" << endl;
+	cin >> search;
+	SearchFlightID(ID, search, FlightID_Count, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数	
+	result = PrintSearch(ID, FlightID_Count, SearchReasult, SearchCount);
+	DeleteFlight(ID,DATA,FlightID_Count,result);
+	PrintInformation(ID, FlightID_Count);
 	return 0;
 }

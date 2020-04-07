@@ -104,6 +104,10 @@ int PrintSearch(FlightID*, int, int*, int&);//展示查询的结果
 int NewFlight(FlightID*, int&);//创建新航线
 int SortByDepartureTime(FlightID*, int, int*);//按照起飞时间排序
 int SaveFlightDatabase(FlightID*, int);
+void ChangeFlightInformation(FlightID* , int , int );
+void PrintInformation(FlightID* , int );
+int DeleteFlight(FlightID* , FlightTicket[][999], int& , int );
+
 
 
 

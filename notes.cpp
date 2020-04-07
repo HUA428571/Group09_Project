@@ -324,7 +324,7 @@ int SaveFlightDatabase(FlightID* ID, int IDcount)
 		cout << "建立新数据库(A)/在已有数据库上增加(B)" << endl;
 		cin >> choice;
 	} while (choice != 'A' && choice != 'a' && choice != 'B' && choice != 'b');
-	if (choice == 'A' || choice == 'A')
+	if (choice == 'A' || choice == 'a')
 	{
 		if ((fp = fopen(".\\FlightID_Database.txt", "w")) == NULL)
 		{
@@ -375,4 +375,74 @@ int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//冒泡排序法
 		}
 	}
 	return 0;
+}
+
+int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete)
+{
+	for (int i = Delete; i < IDcount; i++)
+	{
+		ID[i] = ID[i + 1];
+		for (int i2 = 0; i2 < 366; i2++)
+		{
+			DATA[i2][i] = DATA[i2][i + 1];
+		}
+	}
+	return IDcount=IDcount - 1;
+}
+
+void ChangeFlightInformation(FlightID* ID, int IDcount, int change)
+{
+	PrintFlight(ID, change, 1);
+	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
+	int SearchReasult[2];
+	int SearchCount = 0;
+	cout << "请输入完整航班号：";
+	cin >> Input;
+	if (SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount))
+	{
+		cout << "重复的航班号！请重新输入\n";
+		return;
+	}
+	ID[change].Carrier[0] = Input[0];
+	ID[change].Carrier[1] = Input[1];
+	ID[change].Carrier[2] = '\0';
+	ID[change].ID[0] = Input[2];
+	ID[change].ID[1] = Input[3];
+	ID[change].ID[2] = Input[4];
+	ID[change].ID[3] = Input[5];
+	ID[change].ID[4] = Input[6];
+	ID[change].ID[5] = Input[7];
+	ID[change].ID[6] = Input[8];
+	ID[change].ID[7] = Input[9];
+	cout << "请输入开航日期：";
+	cin >> ID[change].FlyDay;
+	cout << "请输入起飞机场：";
+	cin >> ID[change].DepartureAirport;
+	cout << "请输入降落机场：";
+	cin >> ID[change].ArrivalAirport;
+	cout << "请输入起飞时间：";
+	cin >> ID[change].DepartureTime;
+	cout << "请输入降落时间：";
+	cin >> ID[change].ArrivalTime;
+	cout << "请输入飞行时间（小时）：";
+	cin >> ID[change].TravelTimeHour;
+	cout << "请输入飞行时间（分钟）：";
+	cin >> ID[change].TravelTimeMinute;
+	cout << "请输入执飞机型：";
+	cin >> ID[change].AircraftType;
+	cout << "请输入舱位：";
+	cin >> ID[change].Class;
+	ID[change].Price = ID[change].TravelTimeHour * 675 + ID[change].TravelTimeMinute * 11.25;
+	cout << "已成功添加第" << change << "个航线数据" << endl;//这句话可能后期要加到上级菜单函数里头
+	return ;
+}
+
+void PrintInformation(FlightID* ID, int IDcount)
+{
+	cout << "现有" << IDcount << "个航班数据" << endl;
+	PrintFlightTitle();
+	for (int i = 0; i < IDcount; i++)
+	{
+		PrintFlight(ID, i, i + 1);
+	}
 }
