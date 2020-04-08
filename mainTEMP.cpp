@@ -184,7 +184,15 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 	_tcscpy_s(f.lfFaceName, _T("黑体"));		// 设置字体为“黑体”
 	f.lfQuality = ANTIALIASED_QUALITY;		// 设置输出效果为抗锯齿  
 	settextstyle(&f);						// 设置字体样式
-	outtextxy(240, 200, "搜索");
+	char count[4];
+	_stprintf(count, _T("%d"), IDcount);
+	for (int i = 0; i < 100; i++)
+	{
+		outtextxy(240-i, 200, "当前数据库中有");
+		outtextxy(240-i, 230, count);
+		outtextxy(292-i, 230, "个航线数据");
+		Sleep(5);
+	}
 	while (true)
 	{
 		// 获取一条鼠标消息

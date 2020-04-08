@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="easyx演示代码.cpp" />
     <ClCompile Include="mainTEMP.cpp" />
     <ClCompile Include="notes.cpp" />
     <ClCompile Include="notes.h" />
@@ -155,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="struct.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="BlackGround.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
