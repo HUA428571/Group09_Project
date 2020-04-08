@@ -1,5 +1,5 @@
-#include <iostream>
-#include<stdio.h>
+#pragma once
+#include<iostream>
 using namespace std;
 
 typedef struct FlightID //用于表示航班号，航班号只代表航班基本信息。

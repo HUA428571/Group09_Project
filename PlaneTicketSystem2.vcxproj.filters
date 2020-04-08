@@ -30,6 +30,12 @@
     <ClCompile Include="easyx演示代码.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="easyXclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="print.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="缩写.txt">
@@ -55,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="struct.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="print.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>

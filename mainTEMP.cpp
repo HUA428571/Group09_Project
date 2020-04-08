@@ -1,9 +1,14 @@
-﻿#include"notes.h"
+﻿#pragma once
+#include"notes.h"
+#include"print.h"
 #include<iostream>
 #include<graphics.h>
-#include <easyx.h>			// 引用图形库头文件
-#include <conio.h>
+#include<easyx.h>			// 引用图形库头文件
+#include<conio.h>
 #include<string>
+#include<stdlib.h>
+
+//#include"easyXclass.cpp"
 using namespace std;
 int AdminMENU(FlightID*, FlightTicket[][999], int&);
 int AdminMENU_MainMENU(FlightID* ID, int IDcount);
@@ -11,6 +16,9 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount);
 int AdminMENU_AddMENU(FlightID* ID, int IDcount);
 int AdminMENU_DeleteMENU(FlightID* ID, int IDcount);
 int AdminMENU_ChangeMENU(FlightID* ID, int IDcount);
+int AdminMENU_ChooseMENU();
+
+char Input();
 
 int main()
 {
@@ -58,29 +66,29 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	Sleep(1000);
 	cleardevice();
 	IMAGE BG;
-	loadimage(&BG, _T(".\\BlackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGES\\BlackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	int MENUchoice;
-	MENUchoice=AdminMENU_MainMENU(ID, IDcount);
+	MENUchoice = AdminMENU_MainMENU(ID, IDcount);
 	while (true)
 	{
 		switch (MENUchoice)
 		{
 		case 0:
-			MENUchoice=AdminMENU_MainMENU(ID, IDcount);
+			MENUchoice = AdminMENU_MainMENU(ID, IDcount);
 			break;
 		case 1:
 			MENUchoice = AdminMENU_SearchMENU(ID, IDcount);
 			break;
 		case 2:
-			MENUchoice = AdminMENU_AddMENU(ID,IDcount);
+			MENUchoice = AdminMENU_AddMENU(ID, IDcount);
 			break;
 		case 3:
-			MENUchoice = AdminMENU_DeleteMENU(ID,IDcount);
-				break;
+			MENUchoice = AdminMENU_DeleteMENU(ID, IDcount);
+			break;
 		case 4:
-			MENUchoice = AdminMENU_ChangeMENU(ID,IDcount);
-				break;
+			MENUchoice = AdminMENU_ChangeMENU(ID, IDcount);
+			break;
 
 
 		}
@@ -174,51 +182,68 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
-	loadimage(&BG, _T(".\\BlackGround.png"), 1280, 720);
-	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
+	loadimage(&BG, _T(".\\IMAGES\\BlackGround.png"), 1280, 720);
+	putimage(0, 0, &BG);						// 显示背景
 	settextcolor(BLACK);
 	MOUSEMSG m;
-	LOGFONT f;
-	gettextstyle(&f);						// 获取当前字体设置
-	f.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(f.lfFaceName, _T("黑体"));		// 设置字体为“黑体”
-	f.lfQuality = ANTIALIASED_QUALITY;		// 设置输出效果为抗锯齿  
-	settextstyle(&f);						// 设置字体样式
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = ANTIALIASED_QUALITY;		// 设置输出效果为抗锯齿  
+	settextstyle(&format);							// 设置字体样式
 	char count[4];
 	_stprintf(count, _T("%d"), IDcount);
 	for (int i = 0; i < 100; i++)
 	{
-		outtextxy(240-i, 200, "当前数据库中有");
-		outtextxy(240-i, 230, count);
-		outtextxy(292-i, 230, "个航线数据");
+		outtextxy(240 - i, 200, "当前数据库中有");
+		outtextxy(240 - i, 230, count);
+		outtextxy(292 - i, 230, "个航线数据");
 		Sleep(5);
 	}
-	while (true)
+	Sleep(100);
+	int SearchReasult[999];//用于存储搜索结果
+	int SearchCount = 0;//存储搜索结果数
+	char search[12];
+	InputBox(search, 12, "请输入你想查询的航班号");
+	SearchFlightID(ID, search, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
+	if (SearchCount == 1)
 	{
-		// 获取一条鼠标消息
-		m = GetMouseMsg();
-		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
-		{
-			if (m.y > 90 && m.y < 136 && m.x>220 && m.x < 325)//鼠标按在主页区域
-				return 0;
-			if (m.y > 90 && m.y < 136 && m.x>410 && m.x < 515)//鼠标按在查找区域
-				return 1;
-			if (m.y > 90 && m.y < 136 && m.x>600 && m.x < 705)//鼠标按在添加区域
-				return 2;
-			if (m.y > 90 && m.y < 136 && m.x>790 && m.x < 895)//鼠标按在删除区域
-				return 3;
-			if (m.y > 90 && m.y < 136 && m.x>980 && m.x < 1085)//鼠标按在更改区域
-				return 4;
-		}
+		PrintSingleFlight(ID,IDcount, SearchReasult[0]);
 	}
-	_getch();
+	//TextBox textbox(140,260,340,290,50);
+	//char UserInput;
+	//char search[12];
+	//while (true)
+	//{
+	//	UserInput = Input();
+	//	int i = 0;
+	//	if (UserInput != 0)
+	//	{
+	//		textbox.Append(UserInput);
+		//		if (UserInput != 8)
+	//		{
+	//			search[i] = UserInput;
+	//			i++;
+	//		}
+		//		//// 判断输入的字符串是否与掉落的字符串相等
+	//		//for (int i = 0; i < 3; i++)
+	//		//	if (wcscmp(textbox.Text(), words[i].p) == 0)
+	//		//	{
+	//		//		InitTarget(words, i);
+	//		//		textbox.Empty();
+	//		//	}
+	//	}
+	//	textbox.Draw();
+	//}
+	return AdminMENU_ChooseMENU();
 }
 int AdminMENU_AddMENU(FlightID* ID, int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
-	loadimage(&BG, _T(".\\BlackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGE\BlackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
 	MOUSEMSG m;
@@ -254,7 +279,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, int IDcount)
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
-	loadimage(&BG, _T(".\\BlackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGE\BlackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
 	MOUSEMSG m;
@@ -290,7 +315,7 @@ int AdminMENU_ChangeMENU(FlightID* ID, int IDcount)
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
-	loadimage(&BG, _T(".\\BlackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGE\BlackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
 	MOUSEMSG m;
@@ -321,3 +346,65 @@ int AdminMENU_ChangeMENU(FlightID* ID, int IDcount)
 	}
 	_getch();
 }
+int AdminMENU_ChooseMENU()
+{
+	while (true)
+	{
+		MOUSEMSG m;
+		// 获取一条鼠标消息
+		m = GetMouseMsg();
+		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
+		{
+			if (m.y > 90 && m.y < 136 && m.x>220 && m.x < 325)//鼠标按在主页区域
+				return 0;
+			if (m.y > 90 && m.y < 136 && m.x>410 && m.x < 515)//鼠标按在查找区域
+				return 1;
+			if (m.y > 90 && m.y < 136 && m.x>600 && m.x < 705)//鼠标按在添加区域
+				return 2;
+			if (m.y > 90 && m.y < 136 && m.x>790 && m.x < 895)//鼠标按在删除区域
+				return 3;
+			if (m.y > 90 && m.y < 136 && m.x>980 && m.x < 1085)//鼠标按在更改区域
+				return 4;
+		}
+	}
+}
+
+char Input()
+{
+	char c = 0;
+
+	if (_kbhit())
+	{
+		c = _getwch();
+		if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) && c != 8)
+			c = 0;
+	}
+	return c;
+}
+
+//void InputBox()
+//{
+//
+//	static int fps = 0;				// 统计字母个数计算光标位置
+//	int		m_x1 = 140, m_y1 = 260, m_x2 = 340, m_y2 = 290;
+//	// 设置文字输出样式
+//	settextstyle(20, 0, "Verdana");
+//
+//	// 画边框
+//	setlinecolor(WHITE);
+//	rectangle(m_x1, m_y1, m_x2, m_y2);
+//
+//	// 输出用户输入的字符串
+//	outtextxy(m_x1 + 30, m_y1 + (m_y2 - m_y1 - 20) / 2, m_text);
+//	// 绘制光标 
+//	fps++;
+//	if (fps < (m_fps / 4))
+//	{
+//		setlinecolor(WHITE);
+//		int sx = m_x1 + 31 + textwidth(m_text);
+//		line(sx, m_y1 + (m_y2 - m_y1 - 20) / 2, sx, m_y1 + (m_y2 - m_y1 - 20) / 2 + 20);
+//	}
+//	else if (fps > (m_fps / 2))
+//		fps = 0;
+//
+//}

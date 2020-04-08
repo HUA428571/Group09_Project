@@ -138,10 +138,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="easyXclass.cpp" />
     <ClCompile Include="easyx演示代码.cpp" />
     <ClCompile Include="mainTEMP.cpp" />
     <ClCompile Include="notes.cpp" />
     <ClCompile Include="notes.h" />
+    <ClCompile Include="print.cpp" />
     <ClCompile Include="机场票务系统参考代码1.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +157,7 @@
     <None Include="..\机场信息\机场代码.csv" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="print.h" />
     <ClInclude Include="struct.h" />
   </ItemGroup>
   <ItemGroup>
