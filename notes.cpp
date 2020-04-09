@@ -159,11 +159,11 @@ int ImportFlightDatabase(FlightID* ID)//ÓÃÓÚÔÚ¿ªÍ·Ñ¯ÎÊÊÇ·ñÒªÒıÈëÏÖÓĞº½ÏßÊı¾İ¿â,º
 	}
 }
 
-void PrintFlightTitle()//´òÓ¡±êÌâÀ¸
-{
-	printf("±àºÅ\tº½°àºÅ\t\tÆğ·ÉÊ±¼ä\tÆğ·É»ú³¡\tµ½´ï»ú³¡\tµ½´ïÊ±¼ä\t·ÉĞĞÊ±¼ä\tÖ´·É»úĞÍ\n");
-	return;
-}
+//void PrintFlightTitle()//´òÓ¡±êÌâÀ¸
+//{
+//	printf("±àºÅ\tº½°àºÅ\t\tÆğ·ÉÊ±¼ä\tÆğ·É»ú³¡\tµ½´ï»ú³¡\tµ½´ïÊ±¼ä\t·ÉĞĞÊ±¼ä\tÖ´·É»úĞÍ\n");
+//	return;
+//}
 
 void PrintFlight(FlightID* ID, int n, int i)//´«ÈëÊı×é£¬Êı×éÏÂ±ê£¬ĞòºÅ
 {
@@ -216,13 +216,13 @@ int SearchFlightDepartureAirport(FlightID* ID, char* search, int IDcount, int* S
 	SearchCount = 0; //¼ÇÂ¼ËÑË÷µ½µÄº½°à¸öÊı,ÏÈÖÃÁã
 	for (int i = 0; i < IDcount; i++)
 	{
-		if (!strcmp(search, ID[i].DepartureAirport))
+		if (!strncmp(search,ID[i].DepartureAirport,3))
 		{
 			SearchReasult[SearchCount] = i;
 			SearchCount++;
-			return SearchCount;
 		}
 	}
+	return SearchCount;
 }
 
 int SearchFlightArrivalAirport(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//²éÕÒº½Æğ·ÉµØ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
@@ -230,13 +230,13 @@ int SearchFlightArrivalAirport(FlightID* ID, char* search, int IDcount, int* Sea
 	SearchCount = 0; //¼ÇÂ¼ËÑË÷µ½µÄº½°à¸öÊı,ÏÈÖÃÁã
 	for (int i = 0; i < IDcount; i++)
 	{
-		if (!strcmp(search, ID[i].ArrivalAirport))
+		if (!strncmp(search, ID[i].ArrivalAirport, 3))
 		{
 			SearchReasult[SearchCount] = i;
 			SearchCount++;
-			return SearchCount;
 		}
 	}
+	return SearchCount;
 }
 
 int PrintSearch(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount)//Õ¹Ê¾²éÑ¯µÄ½á¹û
@@ -348,7 +348,7 @@ int SaveFlightDatabase(FlightID* ID, int IDcount)
 	return IDcount;
 }
 
-int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//Ã°ÅİÅÅĞò·¨°´ÕÕÊ±¼äÅÅĞòº½°à£»
+int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//Ã°ÅİÅÅĞò·¨°´ÕÕÊ±¼äÅÅĞòËùÓĞº½°à£»×¢Òâ´Ëº¯ÊıÓĞÖØÔØ
 {
 	int i;
 	//Ê×ÏÈÒª³õÊ¼»¯Ò»ÏÂ´æ´¢ÅÅĞò½á¹ûµÄÊı×é
@@ -362,6 +362,33 @@ int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//Ã°ÅİÅÅĞò·¨
 	for (i1 = 0; i1 < (IDcount - 1); i1++)
 	{
 		for (i2 = 0; i2 < (IDcount - i1 - 1); i2++)
+		{
+			if (ID[SortReasult[i2]].DepartureTime > ID[SortReasult[i2 + 1]].DepartureTime)
+			{
+				int Switch;
+				Switch = SortReasult[i2];
+				SortReasult[i2] = SortReasult[i2 + 1];
+				SortReasult[i2 + 1] = Switch;
+			}
+		}
+	}
+	return 0;
+}
+
+int SortByDepartureTime(FlightID* ID, int * SearchReasult,int SearchCount, int* SortReasult)//Ã°ÅİÅÅĞò·¨°´ÕÕÊ±¼äÅÅĞòËÑË÷º½°à½á¹û£»×¢Òâ´Ëº¯ÊıÓĞÖØÔØ
+{
+	int i;
+	//Ê×ÏÈÒª³õÊ¼»¯Ò»ÏÂ´æ´¢ÅÅĞò½á¹ûµÄÊı×é
+	for (i = 0; i < SearchCount; i++)
+	{
+		SortReasult[i] = SearchReasult[i];
+	}
+	int i1, i2;
+	//ÏÈĞ´Ò»¸öÊ±¼äÓÉÔçµ½ÍíµÄ
+	//Ë­»áÊ±¼äÓÉÍíµ½Ôç²éÄØ£¬¾Í²»Ğ´ÁË¡£
+	for (i1 = 0; i1 < (SearchCount - 1); i1++)
+	{
+		for (i2 = 0; i2 < (SearchCount - i1 - 1); i2++)
 		{
 			if (ID[SortReasult[i2]].DepartureTime > ID[SortReasult[i2 + 1]].DepartureTime)
 			{
