@@ -71,7 +71,7 @@ int ImportFlightDatabase(FlightID* ID)//ÓÃÓÚÔÚ¿ªÍ·Ñ¯ÎÊÊÇ·ñÒªÒıÈëÏÖÓĞº½ÏßÊı¾İ¿â,º
 		FILE* fp;
 		if (choice == '1')
 		{
-			if ((fp = fopen(".\\Default_FlightID_Database_2.txt", "r")) == NULL)
+			if ((fp = fopen(".\\Default_FlightID_Database_2_NEW.txt", "r")) == NULL)
 			{
 				printf("Fail to open file!\n");
 				return 0;
