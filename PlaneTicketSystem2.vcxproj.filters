@@ -36,6 +36,12 @@
     <ClCompile Include="print.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="match.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MENUchoice.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="缩写.txt">
@@ -68,6 +74,12 @@
     </ClInclude>
     <ClInclude Include="print.h">
       <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="match.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MENUchoice.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

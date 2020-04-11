@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<string.h>
 #include"struct.h"
+
 using namespace std;
 int WeekDayTransfer(int, int, int);//使用蔡勒公式转换日期与星期
 int DateTransfer(int, int, int);//返回日期对应天数

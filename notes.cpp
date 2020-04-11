@@ -71,7 +71,7 @@ int ImportFlightDatabase(FlightID* ID)//ÓÃÓÚÔÚ¿ªÍ·Ñ¯ÎÊÊÇ·ñÒªÒıÈëÏÖÓĞº½ÏßÊı¾İ¿â,º
 		FILE* fp;
 		if (choice == '1')
 		{
-			if ((fp = fopen(".\\Default_FlightID_Database_2_NEW.txt", "r")) == NULL)
+			if ((fp = fopen(".\\Default_FlightID_Database_NEW.txt", "r")) == NULL)
 			{
 				printf("Fail to open file!\n");
 				return 0;
@@ -200,7 +200,7 @@ int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, 
 			a[1] = ID[i].Carrier[1];
 			a[2] = '\0';
 			strcat(a, ID[i].ID);
-			if (!strcmp(search, a))
+			if (!_stricmp(search, a))
 			{
 				SearchReasult[SearchCount] = i;
 				SearchCount++;
@@ -216,7 +216,7 @@ int SearchFlightDepartureAirport(FlightID* ID, char* search, int IDcount, int* S
 	SearchCount = 0; //¼ÇÂ¼ËÑË÷µ½µÄº½°à¸öÊı,ÏÈÖÃÁã
 	for (int i = 0; i < IDcount; i++)
 	{
-		if (!strncmp(search,ID[i].DepartureAirport,3))
+		if (!_strnicmp(search,ID[i].DepartureAirport,3))
 		{
 			SearchReasult[SearchCount] = i;
 			SearchCount++;
@@ -230,7 +230,7 @@ int SearchFlightArrivalAirport(FlightID* ID, char* search, int IDcount, int* Sea
 	SearchCount = 0; //¼ÇÂ¼ËÑË÷µ½µÄº½°à¸öÊı,ÏÈÖÃÁã
 	for (int i = 0; i < IDcount; i++)
 	{
-		if (!strncmp(search, ID[i].ArrivalAirport, 3))
+		if (!_strnicmp(search, ID[i].ArrivalAirport, 3))
 		{
 			SearchReasult[SearchCount] = i;
 			SearchCount++;
