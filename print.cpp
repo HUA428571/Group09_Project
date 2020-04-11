@@ -149,18 +149,17 @@ int PrintMultiFlight(FlightID* ID, int IDcount, int* SearchReasult, int SearchCo
 		case 114:
 		case 115:									//跳转到详情页面
 			//首先判断该页的航班数量
-			int FlightReamin=SearchCount- (CurrentPage - 1) * 15;//本页还剩余航班个数
-			if (MENUchoice % 100 <= FlightReamin)
+			int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
+			if ((MENUchoice%100 + Count) <= SearchCount)
 			{
 				clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
 				IMAGE PageChoiceImage;
 				loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
 				putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
-				PrintFlightDetail(ID, IDcount, SearchReasult[MENUchoice % 100 + (CurrentPage - 1) * 15]-1);
-				MENUchoice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
+				PrintFlightDetail(ID, IDcount, SearchReasult[MENUchoice % 100 + Count-1]);
 			}
-			else
-				break;
+			MENUchoice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
+			break;
 		}
 	}
 }
