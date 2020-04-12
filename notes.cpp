@@ -401,3 +401,27 @@ int SortByDepartureTime(FlightID* ID, int * SearchReasult,int SearchCount, int* 
 	}
 	return 0;
 }
+
+int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete)
+{
+	for (int i = Delete; i < IDcount; i++)
+	{
+		ID[i] = ID[i + 1];
+		for (int i2 = 0; i2 < 366; i2++)
+		{
+			DATA[i2][i] = DATA[i2][i + 1];
+		}
+	}
+	IDcount--;
+	return IDcount;
+}
+
+int DeleteFlight(FlightID* ID,  int& IDcount, int Delete)
+{
+	for (int i = Delete; i < IDcount; i++)
+	{
+		ID[i] = ID[i + 1];
+	}
+	IDcount--;
+	return IDcount;
+}

@@ -102,7 +102,7 @@ void MatchCarrier(char* carrier, char* CARRIER)
 	if (!strcmp(carrier, "CA")) { strcpy(CARRIER, "中国国际航空公司"); return; }
 	if (!strcmp(carrier, "CZ")) { strcpy(CARRIER, "中国南方航空公司"); return; }
 	if (!strcmp(carrier, "PN")) { strcpy(CARRIER, "西部航空有限责任公司"); return; }
-	if (!strcmp(carrier, "MU")) { strcpy(CARRIER, "东方航空公司"); return; }
+	if (!strcmp(carrier, "MU")) { strcpy(CARRIER, "中国东方航空公司"); return; }
 	if (!strcmp(carrier, "MF")) { strcpy(CARRIER, "厦门航空公司"); return; }
 	if (!strcmp(carrier, "SC")) { strcpy(CARRIER, "山东航空公司"); return; }
 	if (!strcmp(carrier, "EU")) { strcpy(CARRIER, "成都航空公司"); return; }

@@ -24,9 +24,6 @@
     <ClCompile Include="mainTEMP.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="notes.h">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="easyx演示代码.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -39,8 +36,11 @@
     <ClCompile Include="match.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MENUchoice.cpp">
+    <ClCompile Include="MENUchoose.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="notes.h">
+      <Filter>头文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,16 +69,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MENUchoose.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="struct.h">
-      <Filter>源文件</Filter>
+      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="print.h">
-      <Filter>源文件</Filter>
+      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="match.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MENUchoice.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

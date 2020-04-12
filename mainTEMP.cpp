@@ -14,8 +14,8 @@ using namespace std;
 int AdminMENU(FlightID*, FlightTicket[][999], int&);
 int AdminMENU_MainMENU(FlightID* ID, int IDcount);
 int AdminMENU_SearchMENU(FlightID* ID, int IDcount);
-int AdminMENU_AddMENU(FlightID* ID, int IDcount);
-int AdminMENU_DeleteMENU(FlightID* ID, int IDcount);
+int AdminMENU_AddMENU(FlightID* ID, int& IDcount);
+int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount);
 int AdminMENU_ChangeMENU(FlightID* ID, int IDcount);
 int AdminMENU_SearchMENU_SearchByID(FlightID*, int IDcount, int* SearchReasult, int& SearchCount);
 int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID*, int IDcount, int* SearchReasult, int& SearchCount);
@@ -70,7 +70,7 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	Sleep(1000);
 	cleardevice();
 	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BlackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 显示背景
 	int MENUchoice;
 	MENUchoice = AdminMENU_MainMENU(ID, IDcount);			//先进入主页
@@ -88,7 +88,7 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 			MENUchoice = AdminMENU_AddMENU(ID, IDcount);
 			break;
 		case 3:
-			MENUchoice = AdminMENU_DeleteMENU(ID, IDcount);
+			MENUchoice = AdminMENU_DeleteMENU(ID, DATA, IDcount);
 			break;
 		case 4:
 			MENUchoice = AdminMENU_ChangeMENU(ID, IDcount);
@@ -105,7 +105,7 @@ int AdminMENU_MainMENU(FlightID* ID, int IDcount)
 	setbkcolor(RGB(255, 255, 253));
 	setbkmode(TRANSPARENT);
 	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BlackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
 	MOUSEMSG m;
@@ -127,7 +127,7 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BlackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);						// 显示背景
 	settextcolor(BLACK);
 	MOUSEMSG m;
@@ -137,7 +137,7 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
-	char count[4];
+	char count[8];
 	_stprintf(count, _T("%d"), IDcount);
 	//过渡动画，最后再写
 	//for (int i = 0; i < =100; i++)
@@ -274,12 +274,12 @@ int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, int IDcount, int* 
 }
 
 
-int AdminMENU_AddMENU(FlightID* ID, int IDcount)
+int AdminMENU_AddMENU(FlightID* ID, int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BlackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
 	MOUSEMSG m;
@@ -288,70 +288,142 @@ int AdminMENU_AddMENU(FlightID* ID, int IDcount)
 	format.lfHeight = 25;						// 设置字体高度为 25
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	settextstyle(&format);							// 设置字体样式
-	outtextxy(240, 200, "添加");
-	while (true)
+	settextstyle(&format);						// 设置字体样式
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(140, 200, "当前数据库中有");
+	outtextxy(140, 230, count);
+	outtextxy(192, 230, "个航线数据");
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 20;						// 设置字体高度为 20
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
+	InputBox(Input, 12, "请输新航班的航班号\n完整航班号，eg CA101");
+	int SearchReasult[999];
+	int SearchCount;
+	if (SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount))
 	{
-		// 获取一条鼠标消息
-		m = GetMouseMsg();
-		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
-		{
-			if (m.y > 90 && m.y < 136 && m.x>220 && m.x < 325)//鼠标按在主页区域
-				return 0;
-			if (m.y > 90 && m.y < 136 && m.x>410 && m.x < 515)//鼠标按在查找区域
-				return 1;
-			if (m.y > 90 && m.y < 136 && m.x>600 && m.x < 705)//鼠标按在添加区域
-				return 2;
-			if (m.y > 90 && m.y < 136 && m.x>790 && m.x < 895)//鼠标按在删除区域
-				return 3;
-			if (m.y > 90 && m.y < 136 && m.x>980 && m.x < 1085)//鼠标按在更改区域
-				return 4;
-		}
+		outtextxy(380, 200, "航班号不能重复！\n已取消本次录入。");
+		return AdminMENU_MENUChoose();
 	}
-	_getch();
+	ID[IDcount].Carrier[0] = Input[0];
+	ID[IDcount].Carrier[1] = Input[1];
+	ID[IDcount].Carrier[2] = '\0';
+	ID[IDcount].ID[0] = Input[2];
+	ID[IDcount].ID[1] = Input[3];
+	ID[IDcount].ID[2] = Input[4];
+	ID[IDcount].ID[3] = Input[5];
+	ID[IDcount].ID[4] = Input[6];
+	ID[IDcount].ID[5] = Input[7];
+	ID[IDcount].ID[6] = Input[8];
+	ID[IDcount].ID[7] = Input[9];
+	InputBox(ID[IDcount].FlyDay, 9, "请输新航班的开航日期\n首位为0,然后1:开航,2:不开航");
+	InputBox(ID[IDcount].DepartureAirport, 8, "请输新航班的起飞机场\n三字代码，eg PEK");
+	InputBox(ID[IDcount].ArrivalAirport, 8, "请输新航班的降落机场\n三字代码，eg PEK");
+	InputBox(Input, 8, "请输新航班的起飞时间\n四字码，eg 1230");
+	sscanf(Input, "%d", &ID[IDcount].DepartureTime);
+	InputBox(Input, 8, "请输新航班的到达时间\n四字码，eg 1230");
+	sscanf(Input, "%d", &ID[IDcount].ArrivalTime);
+	InputBox(Input, 8, "请输新航班的飞行时间\n小时");
+	sscanf(Input, "%d", &ID[IDcount].TravelTimeHour);
+	InputBox(Input, 8, "请输新航班的飞行时间\n分钟");
+	sscanf(Input, "%d", &ID[IDcount].TravelTimeMinute);
+	InputBox(ID[IDcount].AircraftType, 4, "请输新航班的执飞机型\n三字码，eg 747");
+	InputBox(ID[IDcount].Class, 4, "请输新航班的舱位\neg CY");
+	ID[IDcount].Price = ID[IDcount].TravelTimeHour * 675 + ID[IDcount].TravelTimeMinute * 11.25;
+	loadimage(&BG, _T(".\\IMAGES\\Add.png"), 1280, 720);
+	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
+	PrintFlightDetail(ID, IDcount, IDcount);
+	int MENUchoice = AdminMENU_AddMENU_MENUChoose();
+	switch (MENUchoice)
+	{
+	case 22:
+		DeleteFlight(ID, IDcount, IDcount);
+		outtextxy(380, 170, "已取消添加");
+		MENUchoice = AdminMENU_MENUChoose();
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		return MENUchoice;
+	case 21:
+		loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
+		putimage(0, 0, &BG);	// 在另一个位置再次显示背景
+		outtextxy(380, 170, "已成功添加");
+		PrintFlightDetail(ID, IDcount, IDcount);
+		IDcount++;
+		return AdminMENU_MENUChoose();
+	}
 }
-int AdminMENU_DeleteMENU(FlightID* ID, int IDcount)
+
+
+int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BlackGround.png"), 1280, 720);
-	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
-	settextcolor(BLACK);
 	MOUSEMSG m;
 	LOGFONT format;
+	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
+	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
+	settextcolor(BLACK);
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);							// 设置字体样式
-	outtextxy(240, 200, "删除");
-	while (true)
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(140, 200, "当前数据库中有");
+	outtextxy(140, 230, count);
+	outtextxy(192, 230, "个航线数据");
+	char Delete[12];
+	int SearchReasult[999];
+	int SearchCount;
+	InputBox(Delete, 12, "请输入你想删除的航班号\n完整航班号，eg CA101");
+	SearchFlightID(ID, Delete, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
+	switch (SearchCount)
 	{
-		// 获取一条鼠标消息
-		m = GetMouseMsg();
-		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
+	case 0:
+		outtextxy(380, 200, "没有找到符合要求的航班！");
+		break;
+	case 1:
+		loadimage(&BG, _T(".\\IMAGES\\Delete.png"), 1280, 720);
+		putimage(0, 0, &BG);	// 显示删除界面背景
+		PrintFlightDetail(ID, IDcount, SearchReasult[0]);
+		int MENUchoice = AdminMENU_DeleteMENU_MENUChoose();
+		switch (MENUchoice)
 		{
-			if (m.y > 90 && m.y < 136 && m.x>220 && m.x < 325)//鼠标按在主页区域
-				return 0;
-			if (m.y > 90 && m.y < 136 && m.x>410 && m.x < 515)//鼠标按在查找区域
-				return 1;
-			if (m.y > 90 && m.y < 136 && m.x>600 && m.x < 705)//鼠标按在添加区域
-				return 2;
-			if (m.y > 90 && m.y < 136 && m.x>790 && m.x < 895)//鼠标按在删除区域
-				return 3;
-			if (m.y > 90 && m.y < 136 && m.x>980 && m.x < 1085)//鼠标按在更改区域
-				return 4;
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			return MENUchoice;
+		case 31:
+			clearrectangle(140, 200, 1220, 680);//把显示区域清空
+			DeleteFlight(ID, DATA, IDcount, SearchReasult[0]);
+			outtextxy(380, 200, "已成功删除");
+			break;
+		case 32:
+			clearrectangle(140, 200, 1220, 680);//把显示区域清空
+			outtextxy(380, 200, "已取消删除");
+			break;
 		}
 	}
-	_getch();
+	return AdminMENU_MENUChoose();
 }
+
+
 int AdminMENU_ChangeMENU(FlightID* ID, int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BlackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
 	MOUSEMSG m;

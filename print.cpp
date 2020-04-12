@@ -6,6 +6,11 @@ void PrintFlightDetail(FlightID* ID, int IDcount, int i)
 	IMAGE FlightDetail;
 	LOGFONT format;
 	loadimage(&FlightDetail, _T(".\\IMAGES\\FlightDetail.png"), 840, 55);
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 20;						// 设置字体高度为 20
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
 	char carrier[20];
 	char AircraftType[50];
 	char DepartureAirport[50];
@@ -64,7 +69,6 @@ void PrintFlightDetail(FlightID* ID, int IDcount, int i)
 	outtextxy(730, 500, _itoa(ID[i].TravelTimeMinute, IntChange, 10));
 	outtextxy(750, 500, "分钟");
 	return;
-
 }
 void PrintSingleFlight(FlightID* ID, int IDcount, int i)
 {
@@ -72,6 +76,7 @@ void PrintSingleFlight(FlightID* ID, int IDcount, int i)
 	PrintFlightDetail(ID, IDcount, i);
 	return;
 }
+
 
 int PrintMultiFlight(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount)//返回菜单选择
 {
@@ -156,9 +161,11 @@ int PrintMultiFlight(FlightID* ID, int IDcount, int* SearchReasult, int SearchCo
 				IMAGE PageChoiceImage;
 				loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
 				putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
-				PrintFlightDetail(ID, IDcount, SearchReasult[MENUchoice % 100 + Count-1]);
+				PrintFlightDetail(ID, IDcount, SearchReasult[MENUchoice % 100 + Count - 1]);
+				MENUchoice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
 			}
-			MENUchoice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
+			else
+				MENUchoice = AdminMENU_SearchMENU_MultiFlight_MENUChoose();
 			break;
 		}
 	}
@@ -220,6 +227,8 @@ void PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll)
 	outtextxy(1200, roll, "m");
 	return;
 }
+
+
 void PrintSearchDetail(FlightID* ID, int IDcount, int i)
 {
 

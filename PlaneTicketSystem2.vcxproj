@@ -142,7 +142,7 @@
     <ClCompile Include="easyx演示代码.cpp" />
     <ClCompile Include="mainTEMP.cpp" />
     <ClCompile Include="match.cpp" />
-    <ClCompile Include="MENUchoice.cpp" />
+    <ClCompile Include="MENUchoose.cpp" />
     <ClCompile Include="notes.cpp" />
     <ClCompile Include="notes.h" />
     <ClCompile Include="print.cpp" />
@@ -161,7 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="match.h" />
-    <ClInclude Include="MENUchoice.h" />
+    <ClInclude Include="MENUchoose.h" />
     <ClInclude Include="print.h" />
     <ClInclude Include="struct.h" />
   </ItemGroup>

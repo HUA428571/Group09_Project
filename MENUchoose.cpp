@@ -1,4 +1,4 @@
-#include"MENUchoice.h"
+#include"MENUchoose.h"
 
 int AdminMENU_MENUChoose()
 {
@@ -120,4 +120,56 @@ int AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose()
 		}
 	}
 }
+int AdminMENU_DeleteMENU_MENUChoose()
+{
+	while (true)
+	{
+		MOUSEMSG m;
+		// 获取一条鼠标消息
+		m = GetMouseMsg();
+		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
+		{
+			if (m.y > 90 && m.y < 136 && m.x>220 && m.x < 325)//鼠标按在主页区域
+				return 0;
+			if (m.y > 90 && m.y < 136 && m.x>410 && m.x < 515)//鼠标按在查找区域
+				return 1;
+			if (m.y > 90 && m.y < 136 && m.x>600 && m.x < 705)//鼠标按在添加区域
+				return 2;
+			if (m.y > 90 && m.y < 136 && m.x>790 && m.x < 895)//鼠标按在删除区域
+				return 3;
+			if (m.y > 90 && m.y < 136 && m.x>980 && m.x < 1085)//鼠标按在更改区域
+				return 4;
+			if (m.x > 140 && m.y > 320 && m.x < 320 && m.y < 360)//鼠标按在删除区域
+				return 31;
+			if (m.x > 140 && m.y > 420 && m.x < 320 && m.y < 460)//鼠标按在取消区域
+				return 32;
 
+		}
+	}
+}
+int AdminMENU_AddMENU_MENUChoose()
+{
+	while (true)
+	{
+		MOUSEMSG m;
+		// 获取一条鼠标消息
+		m = GetMouseMsg();
+		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
+		{
+			if (m.y > 90 && m.y < 136 && m.x>220 && m.x < 325)//鼠标按在主页区域
+				return 0;
+			if (m.y > 90 && m.y < 136 && m.x>410 && m.x < 515)//鼠标按在查找区域
+				return 1;
+			if (m.y > 90 && m.y < 136 && m.x>600 && m.x < 705)//鼠标按在添加区域
+				return 2;
+			if (m.y > 90 && m.y < 136 && m.x>790 && m.x < 895)//鼠标按在删除区域
+				return 3;
+			if (m.y > 90 && m.y < 136 && m.x>980 && m.x < 1085)//鼠标按在更改区域
+				return 4;
+			if (m.x > 140 && m.y > 320 && m.x < 320 && m.y < 360)//鼠标按在添加区域
+				return 21;
+			if (m.x > 140 && m.y > 420 && m.x < 320 && m.y < 460)//鼠标按在取消区域
+				return 22;
+		}
+	}
+}
