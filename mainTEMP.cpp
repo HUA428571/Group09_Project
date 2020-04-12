@@ -21,13 +21,15 @@ int AdminMENU_SearchMENU_SearchByID(FlightID*, int IDcount, int* SearchReasult, 
 int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID*, int IDcount, int* SearchReasult, int& SearchCount);
 int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID*, int IDcount, int* SearchReasult, int& SearchCount);
 
+int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount);
+
 
 char Input();
 
 int main()
 {
 	//所有的XXcount都是个数，不是对应下标！下标要减一
-	static FlightID ID[999];//默认最多存储999个航线 全局变量所有函数均可访问
+	static FlightID ID[999];//默认最多存储999个航线
 	static FlightTicket DATA[366][999];//存储一年的航班数
 	int FlightID_Count = 0;//存储当前航班号个数
 	FlightID_Count = ImportFlightDatabase(ID);
@@ -98,7 +100,6 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	closegraph();			// 关闭绘图窗口
 	return 0;
 }
-
 int AdminMENU_MainMENU(FlightID* ID, int IDcount)
 {
 	cleardevice();
@@ -122,6 +123,8 @@ int AdminMENU_MainMENU(FlightID* ID, int IDcount)
 	outtextxy(292, 230, "个航线数据");
 	return AdminMENU_MENUChoose();
 }
+
+
 int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 {
 	cleardevice();
@@ -185,6 +188,9 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 			break;
 		case 13:
 			MENUchoice = AdminMENU_SearchMENU_SearchByArrivalAirport(ID, IDcount, SearchReasult, SearchCount);
+			break;
+		case 14:
+			MENUchoice = AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(ID, IDcount, SearchReasult, SearchCount);
 			break;
 		}
 	}
@@ -259,6 +265,27 @@ int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, int IDcount, int* 
 	char search[12];
 	InputBox(search, 12, "请输入你想查询航班的降落地");
 	SearchFlightArrivalAirport(ID, search, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
+	switch (SearchCount)
+	{
+	case 0:
+		outtextxy(380, 200, "没有找到符合要求的航班！");
+		break;
+	case 1:
+		PrintSingleFlight(ID, IDcount, SearchReasult[0]);
+		break;
+	default:
+		return PrintMultiFlight(ID, IDcount, SearchReasult, SearchCount);
+	}
+	return AdminMENU_SearchMENU_MENUChoose();
+}
+int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount)
+{
+	clearrectangle(380, 170, 1220, 680);
+	char Departure[12];
+	InputBox(Departure, 12, "请输入你想查询航班的起飞地");
+	char Arrival[12];
+	InputBox(Arrival, 12, "请输入你想查询航班的降落地");
+	SearchFlightDepartureAndArrivalAirport(ID, Departure, Arrival, IDcount, SearchReasult, SearchCount);//查找航起飞地，返回查找到航班个数
 	switch (SearchCount)
 	{
 	case 0:
@@ -355,6 +382,16 @@ int AdminMENU_AddMENU(FlightID* ID, int& IDcount)
 		outtextxy(380, 170, "已成功添加");
 		PrintFlightDetail(ID, IDcount, IDcount);
 		IDcount++;
+		gettextstyle(&format);						// 获取当前字体设置
+		format.lfHeight = 25;						// 设置字体高度为 25
+		_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+		format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+		settextstyle(&format);						// 设置字体样式
+		char count[8];
+		_stprintf(count, _T("%d"), IDcount);
+		outtextxy(140, 200, "当前数据库中有");
+		outtextxy(140, 230, count);
+		outtextxy(192, 230, "个航线数据");
 		return AdminMENU_MENUChoose();
 	}
 }
@@ -413,7 +450,17 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 			outtextxy(380, 200, "已取消删除");
 			break;
 		}
+		break;
 	}
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(140, 200, "当前数据库中有");
+	outtextxy(140, 230, count);
+	outtextxy(192, 230, "个航线数据");
 	return AdminMENU_MENUChoose();
 }
 

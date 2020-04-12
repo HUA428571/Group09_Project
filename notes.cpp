@@ -210,7 +210,6 @@ int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, 
 	}
 	return SearchCount;
 }
-
 int SearchFlightDepartureAirport(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//查找航起飞地，返回查找到航班个数
 {
 	SearchCount = 0; //记录搜索到的航班个数,先置零
@@ -224,7 +223,6 @@ int SearchFlightDepartureAirport(FlightID* ID, char* search, int IDcount, int* S
 	}
 	return SearchCount;
 }
-
 int SearchFlightArrivalAirport(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//查找航起飞地，返回查找到航班个数
 {
 	SearchCount = 0; //记录搜索到的航班个数,先置零
@@ -238,6 +236,30 @@ int SearchFlightArrivalAirport(FlightID* ID, char* search, int IDcount, int* Sea
 	}
 	return SearchCount;
 }
+int SearchFlightDepartureAndArrivalAirport(FlightID* ID, char* Departure, char* Arrival, int IDcount, int* SearchReasult, int& SearchCount)//查找航起飞地，返回查找到航班个数
+{
+	SearchCount = 0; //记录搜索到的航班个数,先置零
+	int TempSearchCount = 0;			//临时搜索结果个数统计，用于存储符合起飞机场要求的航班
+	int TempSearchReasult[999];
+	for (int i = 0; i < IDcount; i++)
+	{
+		if (!_strnicmp(Departure, ID[i].DepartureAirport, 3))
+		{
+			TempSearchReasult[TempSearchCount] = i;
+			TempSearchCount++;
+		}
+	}
+	for (int i = 0; i < TempSearchCount; i++)
+	{
+		if (!_strnicmp(Arrival, ID[TempSearchReasult[i]].ArrivalAirport, 3))
+		{
+			SearchReasult[SearchCount] = TempSearchReasult[i];
+			SearchCount++;
+		}
+	}
+	return SearchCount;
+}
+
 
 int PrintSearch(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount)//展示查询的结果
 {
@@ -267,6 +289,7 @@ int PrintSearch(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount)
 	}
 }
 
+//这个已经用不到了
 int NewFlight(FlightID* ID, int& IDcount)
 {
 	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
@@ -348,6 +371,7 @@ int SaveFlightDatabase(FlightID* ID, int IDcount)
 	return IDcount;
 }
 
+//重载，全数据库排序/搜索结果数据库排序
 int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//冒泡排序法按照时间排序所有航班；注意此函数有重载
 {
 	int i;
@@ -374,7 +398,6 @@ int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//冒泡排序法
 	}
 	return 0;
 }
-
 int SortByDepartureTime(FlightID* ID, int * SearchReasult,int SearchCount, int* SortReasult)//冒泡排序法按照时间排序搜索航班结果；注意此函数有重载
 {
 	int i;
@@ -402,6 +425,7 @@ int SortByDepartureTime(FlightID* ID, int * SearchReasult,int SearchCount, int* 
 	return 0;
 }
 
+//重载，当添加航班取消时使用第二个
 int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete)
 {
 	for (int i = Delete; i < IDcount; i++)
@@ -415,7 +439,6 @@ int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delet
 	IDcount--;
 	return IDcount;
 }
-
 int DeleteFlight(FlightID* ID,  int& IDcount, int Delete)
 {
 	for (int i = Delete; i < IDcount; i++)

@@ -106,6 +106,7 @@ int PrintMultiFlight(FlightID* ID, int IDcount, int* SearchReasult, int SearchCo
 		case 11:
 		case 12:
 		case 13:
+		case 14:
 			return MENUchoice;
 		case 15:					//…œ“ª“≥
 			if(CurrentPage==1)

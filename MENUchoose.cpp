@@ -47,6 +47,8 @@ int AdminMENU_SearchMENU_MENUChoose()
 				return 12;
 			if (m.x > 140 && m.y > 370 && m.x < 320 && m.y < 410)//鼠标按在按降落地搜索区域
 				return 13;
+			if (m.x > 140 && m.y > 420 && m.x < 320 && m.y < 460)//鼠标按在按起降地搜索区域
+				return 14;
 		}
 	}
 }
@@ -75,6 +77,8 @@ int AdminMENU_SearchMENU_MultiFlight_MENUChoose()
 				return 12;
 			if (m.x > 140 && m.y > 370 && m.x < 320 && m.y < 410)//鼠标按在按降落地搜索区域
 				return 13;
+			if (m.x > 140 && m.y > 420 && m.x < 320 && m.y < 460)//鼠标按在按起降地搜索区域
+				return 14;
 			if (m.x > 1070 && m.y > 165 && m.x < 1100 && m.y < 195)//鼠标按在上一页区域
 				return 15;
 			if (m.x > 1190 && m.y > 165 && m.x < 1220 && m.y < 195)//鼠标按在下一页区域
@@ -115,6 +119,8 @@ int AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose()
 				return 12;
 			if (m.x > 140 && m.y > 370 && m.x < 320 && m.y < 410)//鼠标按在按降落地搜索区域
 				return 13;
+			if (m.x > 140 && m.y > 420 && m.x < 320 && m.y < 460)//鼠标按在按起降地搜索区域
+				return 14;
 			if (m.x > 1190 && m.y > 165 && m.x < 1220 && m.y < 195)//鼠标按在返回区域
 				return 18;
 		}

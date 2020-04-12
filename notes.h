@@ -13,7 +13,9 @@ int ImportFlightDatabase(FlightID*);
 void PrintFlight(FlightID*, int, int);
 int SearchFlightID(FlightID*, char*, int, int*, int&);//查找航班号，返回查找到航班个数
 int SearchFlightDepartureAirport(FlightID*, char*, int, int*, int&);//查找航起飞地，返回查找到航班个数
-int SearchFlightArrivalAirport(FlightID*, char*, int, int*, int&);//查找航起飞地，返回查找到航班个数
+int SearchFlightArrivalAirport(FlightID*, char*, int, int*, int&);
+int SearchFlightDepartureAndArrivalAirport(FlightID* ID, char* Departure, char* Arrival, int IDcount, int* SearchReasult, int& SearchCount);
+//查找航起飞地，返回查找到航班个数
 int PrintSearch(FlightID*, int, int*, int&);//展示查询的结果
 int NewFlight(FlightID*, int&);//创建新航线
 int SortByDepartureTime(FlightID*, int, int*);
