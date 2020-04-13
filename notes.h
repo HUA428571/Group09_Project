@@ -26,6 +26,12 @@ int DeleteFlight(FlightID* ID, int& IDcount, int Delete);
 //按照起飞时间排序
 int SaveFlightDatabase(FlightID*, int);
 
+int SaveFlightDatabase(FlightID* ID, int IDcount, char* Location);
+
+int ImportTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
+
+int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
+
 
 
 

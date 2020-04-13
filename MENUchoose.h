@@ -15,4 +15,6 @@ int AdminMENU_DeleteMENU_MENUChoose();
 
 int AdminMENU_AddMENU_MENUChoose();
 
+int AdminMENU_MainMENU_Import_MENUChoose();
+
 int AdminMENU_MainMENU_MENUChoose();

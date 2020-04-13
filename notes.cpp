@@ -158,13 +158,11 @@ int ImportFlightDatabase(FlightID* ID)//ÓÃÓÚÔÚ¿ªÍ·Ñ¯ÎÊÊÇ·ñÒªÒıÈëÏÖÓĞº½ÏßÊı¾İ¿â,º
 		return 0;
 	}
 }
-
 int ImportFlightDatabase(FlightID* ID, char* Location)//ÓÃÓÚÔÚ¿ªÍ·Ñ¯ÎÊÊÇ·ñÒªÒıÈëÏÖÓĞº½ÏßÊı¾İ¿â,º¯Êı·µ»Ø¶ÁÈ¡º½°à¸öÊı
 {
 	FILE* fp;
 	if ((fp = fopen(Location, "r")) == NULL)
 	{
-		printf("Fail to open file!\n");
 		return -1;
 	}
 	int FlightIDcount = 0;
@@ -234,13 +232,80 @@ int ImportFlightDatabase(FlightID* ID, char* Location)//ÓÃÓÚÔÚ¿ªÍ·Ñ¯ÎÊÊÇ·ñÒªÒıÈë
 	fclose(fp);
 	return FlightIDcount;
 }
+int SaveFlightDatabase(FlightID* ID, int IDcount)
+{
+	char choice;
+	FILE* fp;
+	do {
+		cout << "½¨Á¢ĞÂÊı¾İ¿â(A)/ÔÚÒÑÓĞÊı¾İ¿âÉÏÔö¼Ó(B)" << endl;
+		cin >> choice;
+	} while (choice != 'A' && choice != 'a' && choice != 'B' && choice != 'b');
+	if (choice == 'A' || choice == 'a')
+	{
+		if ((fp = fopen(".\\FlightID_Database.txt", "w")) == NULL)
+		{
+			printf("Fail to establish new file!\n");
+			return 0;
+		}
+	}
+	else
+	{
+		if ((fp = fopen(".\\FlightID_Database.txt", "a")) == NULL)
+		{
+			printf("Fail to open file!\n");
+			return 0;
+		}
+	}
+	for (int i = 0; i < IDcount; i++)
+	{
+		//printf("%c%c%c%c%c%c%c,%s,%04d,%04d,%s,%s%s,%s,%s,%d:%02d\n", ID[i].FlyDay[1], ID[i].FlyDay[2], ID[i].FlyDay[3], ID[i].FlyDay[4], ID[i].FlyDay[5], ID[i].FlyDay[6], ID[i].FlyDay[7], ID[i].DepartureAirport, ID[i].DepartureTime, ID[i].ArrivalTime, ID[i].ArrivalAirport, ID[i].Carrier, ID[i].ID, ID[i].AircraftType, ID[i].Class, ID[i].TravelTimeHour, ID[i].TravelTimeMinute);
+		fprintf(fp, "%c%c%c%c%c%c%c,%s,%04d,%04d,%s,%s%s,%s,%s,%d:%02d\n", ID[i].FlyDay[1], ID[i].FlyDay[2], ID[i].FlyDay[3], ID[i].FlyDay[4], ID[i].FlyDay[5], ID[i].FlyDay[6], ID[i].FlyDay[7], ID[i].DepartureAirport, ID[i].DepartureTime, ID[i].ArrivalTime, ID[i].ArrivalAirport, ID[i].Carrier, ID[i].ID, ID[i].AircraftType, ID[i].Class, ID[i].TravelTimeHour, ID[i].TravelTimeMinute);
+	}
+	cout << "ÒÑ³É¹¦µ¼³ö" << IDcount << "¸öº½ÏßÊı¾İ" << endl;
+	fclose(fp);
+	return IDcount;
+}
+int SaveFlightDatabase(FlightID* ID, int IDcount, char* Location)
+{
+	FILE* fp;
+	if ((fp = fopen(Location, "w")) == NULL)
+	{
+		return -1;
+	}
+	for (int i = 0; i < IDcount; i++)
+	{
+		fprintf(fp, "%c%c%c%c%c%c%c,%s,%04d,%04d,%s,%s%s,%s,%s,%d:%02d\n", ID[i].FlyDay[1], ID[i].FlyDay[2], ID[i].FlyDay[3], ID[i].FlyDay[4], ID[i].FlyDay[5], ID[i].FlyDay[6], ID[i].FlyDay[7], ID[i].DepartureAirport, ID[i].DepartureTime, ID[i].ArrivalTime, ID[i].ArrivalAirport, ID[i].Carrier, ID[i].ID, ID[i].AircraftType, ID[i].Class, ID[i].TravelTimeHour, ID[i].TravelTimeMinute);
+	}
+	fclose(fp);
+	return IDcount;
+}
+int ImportTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
+{
+	FILE* fp;
+	if ((fp = fopen(Location, "rb")) == NULL)
+	{
+		printf("Fail to open file!\n");
+		return -1;
+	}
+	fread(DATA, sizeof(FlightTicket), 366*999, fp);
+	fclose(fp);
+	return IDcount;
+
+}
+int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
+{
+	FILE* fp;
+	if ((fp = fopen(Location, "wb")) == NULL)
+	{
+		return -1;
+	}
+	fwrite(DATA, sizeof(FlightTicket), 366 * 999, fp);
+	fclose(fp);
+	return IDcount;
+}
 
 
-//void PrintFlightTitle()//´òÓ¡±êÌâÀ¸
-//{
-//	printf("±àºÅ\tº½°àºÅ\t\tÆğ·ÉÊ±¼ä\tÆğ·É»ú³¡\tµ½´ï»ú³¡\tµ½´ïÊ±¼ä\t·ÉĞĞÊ±¼ä\tÖ´·É»úĞÍ\n");
-//	return;
-//}
+
 
 void PrintFlight(FlightID* ID, int n, int i)//´«ÈëÊı×é£¬Êı×éÏÂ±ê£¬ĞòºÅ
 {
@@ -414,39 +479,6 @@ int NewFlight(FlightID* ID, int& IDcount)
 	return IDcount;
 }//¿ÉÑ¡¹¦ÄÜ£º¼ìÑéÊäÈëÊı¾İµÄÕıÈ·ĞÔ£¬²»¹ıÕâ¸öÌ«·±ÔÓÁË£¬ÏÈ²»×ö¡£
 
-int SaveFlightDatabase(FlightID* ID, int IDcount)
-{
-	char choice;
-	FILE* fp;
-	do {
-		cout << "½¨Á¢ĞÂÊı¾İ¿â(A)/ÔÚÒÑÓĞÊı¾İ¿âÉÏÔö¼Ó(B)" << endl;
-		cin >> choice;
-	} while (choice != 'A' && choice != 'a' && choice != 'B' && choice != 'b');
-	if (choice == 'A' || choice == 'a')
-	{
-		if ((fp = fopen(".\\FlightID_Database.txt", "w")) == NULL)
-		{
-			printf("Fail to establish new file!\n");
-			return 0;
-		}
-	}
-	else
-	{
-		if ((fp = fopen(".\\FlightID_Database.txt", "a")) == NULL)
-		{
-			printf("Fail to open file!\n");
-			return 0;
-		}
-	}
-	for (int i = 0; i < IDcount; i++)
-	{
-		//printf("%c%c%c%c%c%c%c,%s,%04d,%04d,%s,%s%s,%s,%s,%d:%02d\n", ID[i].FlyDay[1], ID[i].FlyDay[2], ID[i].FlyDay[3], ID[i].FlyDay[4], ID[i].FlyDay[5], ID[i].FlyDay[6], ID[i].FlyDay[7], ID[i].DepartureAirport, ID[i].DepartureTime, ID[i].ArrivalTime, ID[i].ArrivalAirport, ID[i].Carrier, ID[i].ID, ID[i].AircraftType, ID[i].Class, ID[i].TravelTimeHour, ID[i].TravelTimeMinute);
-		fprintf(fp, "%c%c%c%c%c%c%c,%s,%04d,%04d,%s,%s%s,%s,%s,%d:%02d\n", ID[i].FlyDay[1], ID[i].FlyDay[2], ID[i].FlyDay[3], ID[i].FlyDay[4], ID[i].FlyDay[5], ID[i].FlyDay[6], ID[i].FlyDay[7], ID[i].DepartureAirport, ID[i].DepartureTime, ID[i].ArrivalTime, ID[i].ArrivalAirport, ID[i].Carrier, ID[i].ID, ID[i].AircraftType, ID[i].Class, ID[i].TravelTimeHour, ID[i].TravelTimeMinute);
-	}
-	cout << "ÒÑ³É¹¦µ¼³ö" << IDcount << "¸öº½ÏßÊı¾İ" << endl;
-	fclose(fp);
-	return IDcount;
-}
 
 //ÖØÔØ£¬È«Êı¾İ¿âÅÅĞò/ËÑË÷½á¹ûÊı¾İ¿âÅÅĞò
 int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//Ã°ÅİÅÅĞò·¨°´ÕÕÊ±¼äÅÅĞòËùÓĞº½°à£»×¢Òâ´Ëº¯ÊıÓĞÖØÔØ

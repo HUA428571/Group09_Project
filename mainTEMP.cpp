@@ -13,10 +13,10 @@
 using namespace std;
 //管理员菜单界面
 int AdminMENU(FlightID*, FlightTicket[][999], int&);
-int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount);
-int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, int& IDcount);
+int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int &IDcount);
+int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][999], int& IDcount);
 int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount);
-int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, int IDcount);
+int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount);
 int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount);
 int AdminMENU_SearchMENU(FlightID* ID, int IDcount);
 int AdminMENU_AddMENU(FlightID* ID, int& IDcount);
@@ -39,30 +39,30 @@ int main()
 	int FlightID_Count = 0;//存储当前航班号个数
 	char choice;
 	do {
-		cout << "导入默认航线数据(1)/上次保存的航线数据(2)/不导入(N)？" << endl;
+		cout << "导入默认数据(1)/上次保存数据(2)/不导入(N)？" << endl;
 		cin >> choice;
 	} while (choice != '1' && choice != '2' && choice != 'n' && choice != 'N');
 	if (choice == '1' || choice == '2')
 	{
 		FILE* fp;
+		char Location[50];
 		if (choice == '1')
 		{
-			if ((fp = fopen(".\\Default_FlightID_Database_NEW.txt", "r")) == NULL)
-			{
-				printf("Fail to open file!\n");
-				return 0;
-			}
+			strcpy(Location ,".\\Default_FlightID_Database_NEW.txt");
 		}
 		else
 		{
-			if ((fp = fopen(".\\FlightID_Database.txt", "r")) == NULL)
-			{
-				printf("Fail to open file!\n");
-				return 0;
-			}
+			strcpy(Location, ".\\FlightID.txt");
 		}
-		FlightID_Count = ImportFlightDatabase(ID);
+		FlightID_Count = ImportFlightDatabase(ID, Location);
 	}
+	if (FlightID_Count == -1)
+	{
+		cout << "无法打开文件！程序正在退出" << endl;
+		Sleep(500);
+		exit(1);
+	}
+	cout << "成功导入" << FlightID_Count << "个航线数据！" << endl;
 	//int SearchReasult[999];//用于存储搜索结果
 		//int SearchCount = 0;//存储搜索结果数
 		//int SortReasult[999];//用于存储排序后的顺序，这样就不会更改原有的结构体数组顺序，不影响下标访问。
@@ -102,7 +102,7 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	Sleep(1000);
 	cleardevice();
 	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGES\\Home.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 显示背景
 	int MENUchoice;
 	MENUchoice = AdminMENU_MainMENU(ID, DATA,IDcount);			//先进入主页
@@ -130,7 +130,7 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	closegraph();			// 关闭绘图窗口
 	return 0;
 }
-int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
+int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int &IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -148,9 +148,9 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 	settextstyle(&format);							// 设置字体样式
 	char count[4];
 	_stprintf(count, _T("%d"), IDcount);
-	outtextxy(140, 200, "当前数据库中有");
-	outtextxy(140, 230, count);
-	outtextxy(192, 230, "个航线数据");
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
 	int MENUchoice = AdminMENU_MainMENU_MENUChoose();
 	while (true)
 	{
@@ -163,27 +163,28 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 		case 4:
 			return MENUchoice;
 		case 51:
-			AdminMENU_MainMENU_ImportFlightDatabase(ID, IDcount);
-
+			MENUchoice=AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA,IDcount);
 			break;
 		case 52:
+			MENUchoice = AdminMENU_MainMENU_ImportTicketDatabase(ID, DATA, IDcount);
 			break;
 		case 53:
+			MENUchoice = AdminMENU_MainMENU_SaveFlightDatabase(ID, DATA, IDcount);
 			break;
 		case 54:
+			MENUchoice = AdminMENU_MainMENU_SaveTicketDatabase(ID, DATA, IDcount);
 			break;
 		}
-
 	}
 
 	return AdminMENU_MENUChoose();
 }
-int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, int& IDcount)
+int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\ImportFlight.png"), 1280, 720);
+	loadimage(&BG, _T(".\\IMAGES\\Import.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
 	MOUSEMSG m;
@@ -196,32 +197,287 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, int& IDcount)
 	char count[8];
 	_stprintf(count, _T("%d"), IDcount);
 	char Location[100] = ".\\Default_FlightID_Database_NEW.txt";
-	outtextxy(140, 200, "当前数据库中有");
-	outtextxy(140, 230, count);
-	outtextxy(192, 230, "个航线数据");
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
 	settextcolor(RED);
-	outtextxy(420, 200, "特别提示：请注意航线与航班数据库的匹配");
+	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
 	settextcolor(BLACK);
-	outtextxy(420, 240, "将从以下目录导入航线数据库：");
-	settextstyle(20, 0,"黑体");
-	outtextxy(420, 280, Location);
-	//临时代码
-	IDcount=ImportFlightDatabase(ID, Location);
-
-	
-	return AdminMENU_MainMENU_MENUChoose();
+	outtextxy(400, 240, "将从以下目录导入航线数据库：");
+	settextstyle(20, 0, "黑体");
+	outtextxy(400, 280, Location);
+	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
+	switch (MENUchoice)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		return MENUchoice;
+	case 51:
+		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount);
+	case 52:
+		return AdminMENU_MainMENU_ImportTicketDatabase(ID, DATA, IDcount);
+	case 53:
+		return AdminMENU_MainMENU_SaveFlightDatabase(ID, DATA, IDcount);
+	case 54:
+		return AdminMENU_MainMENU_SaveTicketDatabase(ID, DATA, IDcount);
+	case 57:
+		//后期加点动画吧
+		//再加一个如果导入失败恢复的功能
+		IDcount = ImportFlightDatabase(ID, Location);
+		clearrectangle(400, 200, 1220, 400);
+		if (IDcount == -1)
+		{
+			outtextxy(400, 200, "导入失败");
+			IDcount++;//将idcount重置回零
+		}
+		else
+		{
+			settextstyle(25, 0, "黑体");
+			outtextxy(400, 200, "导入了");
+			char count[8];
+			_stprintf(count, _T("%d"), IDcount);
+			outtextxy(480, 200, count);
+			outtextxy(530, 200, "个航线数据");
+		}
+			Sleep(500);
+		return 0;
+	case 58:
+		clearrectangle(400, 200, 1220, 400);
+		outtextxy(420, 200, "已取消导入");
+		return 0;
+	case 59:
+		clearrectangle(400, 200, 1220, 400);
+		InputBox(Location, 100, "请输入新的文件路径：");
+		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount);
+	}
 }
 int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 {
-	return 0;
+	cleardevice();
+	setbkcolor(RGB(255, 255, 253));
+	IMAGE BG;
+	loadimage(&BG, _T(".\\IMAGES\\Import.png"), 1280, 720);
+	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
+	settextcolor(BLACK);
+	MOUSEMSG m;
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	char Location[100] = ".\\Default_Ticket_Database.dat";
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
+	settextcolor(RED);
+	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
+	settextcolor(BLACK);
+	outtextxy(400, 240, "将从以下目录导入机票数据库：");
+	settextstyle(20, 0, "黑体");
+	outtextxy(400, 280, Location);
+	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
+	switch (MENUchoice)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		return MENUchoice;
+	case 51:
+		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount);
+	case 52:
+		return AdminMENU_MainMENU_ImportTicketDatabase(ID, DATA, IDcount);
+	case 53:
+		return AdminMENU_MainMENU_SaveFlightDatabase(ID, DATA, IDcount);
+	case 54:
+		return AdminMENU_MainMENU_SaveTicketDatabase(ID, DATA, IDcount);
+	case 57:
+		//后期加点动画吧
+		//再加一个如果导入失败恢复的功能
+		IDcount = ImportTicketDatabase(DATA,IDcount, Location);
+		clearrectangle(400, 200, 1220, 400);
+		if (IDcount == -1)
+		{
+			outtextxy(400, 200, "导入失败");
+			IDcount++;//将idcount重置回零
+		}
+		else
+		{
+			settextstyle(25, 0, "黑体");
+			outtextxy(400, 200, "导入了全部机票数据库");
+			/*char count[8];
+			_stprintf(count, _T("%d"), IDcount);
+			outtextxy(480, 200, count);
+			outtextxy(530, 200, "个航线数据");*/
+		}
+		Sleep(500);
+		return 0;
+	case 58:
+		clearrectangle(400, 200, 1220, 400);
+		outtextxy(420, 200, "已取消导入");
+		return 0;
+	case 59:
+		clearrectangle(400, 200, 1220, 400);
+		InputBox(Location, 100, "请输入新的文件路径：");
+		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount);
+	}
 }
-int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, int IDcount)
+int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 {
-	return 0;
+	cleardevice();
+	setbkcolor(RGB(255, 255, 253));
+	IMAGE BG;
+	loadimage(&BG, _T(".\\IMAGES\\Import.png"), 1280, 720);
+	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
+	settextcolor(BLACK);
+	MOUSEMSG m;
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	char Location[100] = ".\\FlightID.txt";
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
+	settextcolor(RED);
+	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
+	settextcolor(BLACK);
+	outtextxy(400, 240, "将在以下目录导出航线数据库：");
+	settextstyle(20, 0, "黑体");
+	outtextxy(400, 280, Location);
+	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
+	switch (MENUchoice)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		return MENUchoice;
+	case 51:
+		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount);
+	case 52:
+		return AdminMENU_MainMENU_ImportTicketDatabase(ID, DATA, IDcount);
+	case 53:
+		return AdminMENU_MainMENU_SaveFlightDatabase(ID, DATA, IDcount);
+	case 54:
+		return AdminMENU_MainMENU_SaveTicketDatabase(ID, DATA, IDcount);
+	case 57:
+		//后期加点动画吧
+		//再加一个如果导入失败恢复的功能
+		IDcount = SaveFlightDatabase(ID,IDcount, Location);
+		clearrectangle(400, 200, 1220, 400);
+		if (IDcount == -1)
+		{
+			outtextxy(400, 200, "导出失败");
+			IDcount++;//将idcount重置回零
+		}
+		else
+		{
+			settextstyle(25, 0, "黑体");
+			outtextxy(400, 200, "导出了");
+			char count[8];
+			_stprintf(count, _T("%d"), IDcount);
+			outtextxy(480, 200, count);
+			outtextxy(530, 200, "个航线数据");
+		}
+		Sleep(500);
+		return 0;
+	case 58:
+		clearrectangle(400, 200, 1220, 400);
+		outtextxy(420, 200, "已取消导出");
+		return 0;
+	case 59:
+		clearrectangle(400, 200, 1220, 400);
+		InputBox(Location, 100, "请输入新的文件路径：");
+		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount);
+	}
 }
 int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 {
-	return 0;
+	cleardevice();
+	setbkcolor(RGB(255, 255, 253));
+	IMAGE BG;
+	loadimage(&BG, _T(".\\IMAGES\\Import.png"), 1280, 720);
+	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
+	settextcolor(BLACK);
+	MOUSEMSG m;
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	char Location[100] = ".\\Ticket.dat";
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
+	settextcolor(RED);
+	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
+	settextcolor(BLACK);
+	outtextxy(400, 240, "将在以下目录导出机票数据库：");
+	settextstyle(20, 0, "黑体");
+	outtextxy(400, 280, Location);
+	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
+	switch (MENUchoice)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		return MENUchoice;
+	case 51:
+		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount);
+	case 52:
+		return AdminMENU_MainMENU_ImportTicketDatabase(ID, DATA, IDcount);
+	case 53:
+		return AdminMENU_MainMENU_SaveFlightDatabase(ID, DATA, IDcount);
+	case 54:
+		return AdminMENU_MainMENU_SaveTicketDatabase(ID, DATA, IDcount);
+	case 57:
+		//后期加点动画吧
+		//再加一个如果导入失败恢复的功能
+		IDcount = ImportFlightDatabase(ID, Location);
+		clearrectangle(400, 200, 1220, 400);
+		if (IDcount == -1)
+		{
+			outtextxy(400, 200, "导出失败");
+			IDcount++;//将idcount重置回零
+		}
+		else
+		{
+			settextstyle(25, 0, "黑体");
+			outtextxy(400, 200, "导出了所有机票数据");
+			/*char count[8];
+			_stprintf(count, _T("%d"), IDcount);
+			outtextxy(480, 200, count);
+			outtextxy(530, 200, "个航线数据");*/
+		}
+		Sleep(500);
+		return 0;
+	case 58:
+		clearrectangle(400, 200, 1220, 400);
+		outtextxy(420, 200, "已取消导出");
+		return 0;
+	case 59:
+		clearrectangle(400, 200, 1220, 400);
+		InputBox(Location, 100, "请输入新的文件路径：");
+		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount);
+	}
 }
 
 
@@ -229,10 +485,8 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
-	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
-	putimage(0, 0, &BG);						// 显示背景
 	settextcolor(BLACK);
+	IMAGE BG;
 	MOUSEMSG m;
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
@@ -244,15 +498,9 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 	_stprintf(count, _T("%d"), IDcount);
 	loadimage(&BG, _T(".\\IMAGES\\Search.png"), 1280, 720);
 	putimage(0, 0, &BG);						// 更新背景
-	outtextxy(140, 200, "当前数据库中有");
-	outtextxy(140, 230, count);
-	outtextxy(192, 230, "个航线数据");
-
-	//setlinecolor(BLACK);
-	//fillrectangle(140, 270, 320, 310);
-	//fillrectangle(140, 320, 320, 360);
-	//fillrectangle(140, 370, 320, 410);
-	//fillrectangle(140, 420, 320, 460);
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
@@ -396,12 +644,12 @@ int AdminMENU_AddMENU(FlightID* ID, int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
-	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
-	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
+	IMAGE BG;
 	MOUSEMSG m;
 	LOGFONT format;
+	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
+	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
@@ -409,9 +657,9 @@ int AdminMENU_AddMENU(FlightID* ID, int& IDcount)
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
 	_stprintf(count, _T("%d"), IDcount);
-	outtextxy(140, 200, "当前数据库中有");
-	outtextxy(140, 230, count);
-	outtextxy(192, 230, "个航线数据");
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
@@ -480,9 +728,9 @@ int AdminMENU_AddMENU(FlightID* ID, int& IDcount)
 		settextstyle(&format);						// 设置字体样式
 		char count[8];
 		_stprintf(count, _T("%d"), IDcount);
-		outtextxy(140, 200, "当前数据库中有");
-		outtextxy(140, 230, count);
-		outtextxy(192, 230, "个航线数据");
+		outtextxy(110, 200, "当前数据库中有");
+		outtextxy(110, 230, count);
+		outtextxy(162, 230, "个航线数据");
 		return AdminMENU_MENUChoose();
 	}
 }
@@ -505,9 +753,9 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	settextstyle(&format);							// 设置字体样式
 	char count[8];
 	_stprintf(count, _T("%d"), IDcount);
-	outtextxy(140, 200, "当前数据库中有");
-	outtextxy(140, 230, count);
-	outtextxy(192, 230, "个航线数据");
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
 	char Delete[12];
 	int SearchReasult[999];
 	int SearchCount;
@@ -532,12 +780,12 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 		case 4:
 			return MENUchoice;
 		case 31:
-			clearrectangle(140, 200, 1220, 680);//把显示区域清空
+			clearrectangle(100, 200, 1220, 680);//把显示区域清空
 			DeleteFlight(ID, DATA, IDcount, SearchReasult[0]);
 			outtextxy(380, 200, "已成功删除");
 			break;
 		case 32:
-			clearrectangle(140, 200, 1220, 680);//把显示区域清空
+			clearrectangle(100, 200, 1220, 680);//把显示区域清空
 			outtextxy(380, 200, "已取消删除");
 			break;
 		}
@@ -549,9 +797,9 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	_stprintf(count, _T("%d"), IDcount);
-	outtextxy(140, 200, "当前数据库中有");
-	outtextxy(140, 230, count);
-	outtextxy(192, 230, "个航线数据");
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
 	return AdminMENU_MENUChoose();
 }
 
@@ -560,18 +808,22 @@ int AdminMENU_ChangeMENU(FlightID* ID, int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
-	IMAGE BG;
-	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
-	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
+	IMAGE BG;
 	MOUSEMSG m;
 	LOGFONT format;
+	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
+	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
+	char count[8];
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);							// 设置字体样式
-	outtextxy(240, 200, "更改");
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
 	while (true)
 	{
 		// 获取一条鼠标消息
