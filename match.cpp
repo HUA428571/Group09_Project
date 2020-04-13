@@ -546,8 +546,6 @@ void MatchFlyDay(char* flyday, char* FLYDAY)
 
 void MatchCity_Airport(char* airport, char* AIRPORT)
 {
-	strncpy(airport, airport, 3);
-	airport[3] = '\0';
 	if (!strcmp(airport, "¾É½ðÉ½")) { strcpy(AIRPORT, "SFO"); return; }
 	if (!strcmp(airport, "ÂåÉ¼í¶")) { strcpy(AIRPORT, "LAX"); return; }
 	if (!strcmp(airport, "°ÄÃÅ")) { strcpy(AIRPORT, "MFM"); return; }

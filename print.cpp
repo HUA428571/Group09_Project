@@ -1,5 +1,5 @@
 #include"print.h"
-void PrintFlightDetail(FlightID* ID, int IDcount, int i)
+void PrintFlightDetail(FlightID* ID,int i)
 {
 	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
 	IMAGE plane;
@@ -70,13 +70,12 @@ void PrintFlightDetail(FlightID* ID, int IDcount, int i)
 	outtextxy(750, 500, "分钟");
 	return;
 }
-void PrintSingleFlight(FlightID* ID, int IDcount, int i)
+void PrintSingleFlight(FlightID* ID, int i)
 {
 	outtextxy(380, 170, "共找到一个航班");
-	PrintFlightDetail(ID, IDcount, i);
+	PrintFlightDetail(ID, i);
 	return;
 }
-
 
 int PrintMultiFlight(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount)//返回菜单选择
 {
@@ -162,7 +161,7 @@ int PrintMultiFlight(FlightID* ID, int IDcount, int* SearchReasult, int SearchCo
 				IMAGE PageChoiceImage;
 				loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
 				putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
-				PrintFlightDetail(ID, IDcount, SearchReasult[MENUchoice % 100 + Count - 1]);
+				PrintFlightDetail(ID,  SearchReasult[MENUchoice % 100 + Count - 1]);
 				MENUchoice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
 			}
 			else

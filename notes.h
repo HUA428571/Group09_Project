@@ -9,6 +9,7 @@ int WeekDayTransfer(int, int, int);//使用蔡勒公式转换日期与星期
 int DateTransfer(int, int, int);//返回日期对应天数
 int JudgeAircraftSize(FlightID*, int);//判断飞机是小飞机还是大飞机，小飞机返回1，大飞机返回2
 int ImportFlightDatabase(FlightID*);
+int ImportFlightDatabase(FlightID* ID, char* Location);
 //void PrintFlightTitle();//打印标题栏
 void PrintFlight(FlightID*, int, int);
 int SearchFlightID(FlightID*, char*, int, int*, int&);//查找航班号，返回查找到航班个数

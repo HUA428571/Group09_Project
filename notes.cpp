@@ -159,6 +159,83 @@ int ImportFlightDatabase(FlightID* ID)//ÓÃÓÚÔÚ¿ªÍ·Ñ¯ÎÊÊÇ·ñÒªÒıÈëÏÖÓĞº½ÏßÊı¾İ¿â,º
 	}
 }
 
+int ImportFlightDatabase(FlightID* ID, char* Location)//ÓÃÓÚÔÚ¿ªÍ·Ñ¯ÎÊÊÇ·ñÒªÒıÈëÏÖÓĞº½ÏßÊı¾İ¿â,º¯Êı·µ»Ø¶ÁÈ¡º½°à¸öÊı
+{
+	FILE* fp;
+	if ((fp = fopen(Location, "r")) == NULL)
+	{
+		printf("Fail to open file!\n");
+		return -1;
+	}
+	int FlightIDcount = 0;
+	char c;
+	while (!feof(fp))
+	{
+		int i = 1;
+		while ((c = fgetc(fp)) != ',')//¶ÁÈ¡°àÆÚ
+		{
+			ID[FlightIDcount].FlyDay[i] = c;
+			i++;
+		}
+		i = 0;
+		while ((c = fgetc(fp)) != ',')//¶ÁÈ¡³ö·¢»ú³¡
+		{
+			ID[FlightIDcount].DepartureAirport[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].DepartureAirport[i] = '\0';//×Ö·û´®½áÎ²
+		fscanf_s(fp, "%d", &ID[FlightIDcount].DepartureTime);//¶ÁÈ¡³ö·¢Ê±¼ä
+		fgetc(fp);
+		fscanf_s(fp, "%d", &ID[FlightIDcount].ArrivalTime);//¶ÁÈ¡µ½´ïÊ±¼ä
+		i = 0;
+		fgetc(fp);
+		while ((c = fgetc(fp)) != ',')//¶ÁÈ¡µ½´ï»ú³¡
+		{
+			ID[FlightIDcount].ArrivalAirport[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].ArrivalAirport[i] = '\0';//×Ö·û´®½áÎ²
+		i = 0;
+		while (i < 2)//¶ÁÈ¡º½¿Õ¹«Ë¾
+		{
+			c = fgetc(fp);
+			ID[FlightIDcount].Carrier[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].Carrier[i] = '\0';//×Ö·û´®½áÎ²
+		i = 0;
+		while ((c = fgetc(fp)) != ',')//¶ÁÈ¡º½°àºÅ
+		{
+			ID[FlightIDcount].ID[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].ID[i] = '\0';//×Ö·û´®½áÎ²
+		i = 0;
+		while ((c = fgetc(fp)) != ',')//¶ÁÈ¡»úĞÍ
+		{
+			ID[FlightIDcount].AircraftType[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].AircraftType[i] = '\0';//×Ö·û´®½áÎ²
+		i = 0;
+		while (((c = fgetc(fp)) != ','))//¶ÁÈ¡²ÕÎ»
+		{
+			ID[FlightIDcount].Class[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].Class[i] = '\0';//×Ö·û´®½áÎ²
+		fscanf_s(fp, "%d", &ID[FlightIDcount].TravelTimeHour);//¶ÁÈ¡·ÉĞĞÊ±¼ä
+		c = fgetc(fp);//¶ÁÈ¡Ã°ºÅ
+		fscanf_s(fp, "%2d", &ID[FlightIDcount].TravelTimeMinute);
+		ID[FlightIDcount].Price = ID[FlightIDcount].TravelTimeHour * 675 + ID[FlightIDcount].TravelTimeMinute * 11.25;
+		FlightIDcount++;
+		if ((c = fgetc(fp)) == EOF)break;
+	}
+	fclose(fp);
+	return FlightIDcount;
+}
+
+
 //void PrintFlightTitle()//´òÓ¡±êÌâÀ¸
 //{
 //	printf("±àºÅ\tº½°àºÅ\t\tÆğ·ÉÊ±¼ä\tÆğ·É»ú³¡\tµ½´ï»ú³¡\tµ½´ïÊ±¼ä\t·ÉĞĞÊ±¼ä\tÖ´·É»úĞÍ\n");

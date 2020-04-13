@@ -14,3 +14,5 @@ int AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
 int AdminMENU_DeleteMENU_MENUChoose();
 
 int AdminMENU_AddMENU_MENUChoose();
+
+int AdminMENU_MainMENU_MENUChoose();
