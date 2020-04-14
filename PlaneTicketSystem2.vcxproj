@@ -138,6 +138,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AdminMENU.cpp" />
+    <ClCompile Include="control.cpp" />
     <ClCompile Include="easyXclass.cpp" />
     <ClCompile Include="easyx演示代码.cpp" />
     <ClCompile Include="mainTEMP.cpp" />
@@ -160,6 +162,7 @@
     <None Include="..\机场信息\机场代码.csv" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdminMENU.h" />
     <ClInclude Include="match.h" />
     <ClInclude Include="MENUchoose.h" />
     <ClInclude Include="print.h" />

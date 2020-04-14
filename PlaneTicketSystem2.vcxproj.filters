@@ -42,6 +42,12 @@
     <ClCompile Include="notes.h">
       <Filter>头文件</Filter>
     </ClCompile>
+    <ClCompile Include="AdminMENU.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="control.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="缩写.txt">
@@ -79,6 +85,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="match.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AdminMENU.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

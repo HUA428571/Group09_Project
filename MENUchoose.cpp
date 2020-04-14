@@ -247,7 +247,8 @@ int AdminMENU_MainMENU_MENUChoose()
 				return 53;
 			if (m.x > 100 && m.y > 450 && m.x < 300 && m.y < 490)//鼠标按在导出机票数据库区域
 				return 54;
+			if (m.x > 100 && m.y > 550 && m.x < 300 && m.y < 590)//鼠标按在退出区域
+				return 5;
 		}
 	}
-
 }
