@@ -5,7 +5,7 @@ void PrintFlightDetail(FlightID* ID,int i)
 	IMAGE plane;
 	IMAGE FlightDetail;
 	LOGFONT format;
-	loadimage(&FlightDetail, _T(".\\IMAGES\\FlightDetail.png"), 840, 55);
+	loadimage(&FlightDetail, _T(".\\IMAGES\\FlightDetail.png"), 680, 40);
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
@@ -23,57 +23,66 @@ void PrintFlightDetail(FlightID* ID,int i)
 	MatchAirport(ID[i].ArrivalAirport, ArrivalAirport);
 	MatchFlyDay(ID[i].FlyDay, Flyday);
 	putimage(1280 - 60 - 240, 200, &plane);						//飞机图片
-	putimage(380, 400, &FlightDetail);							//航线示意图
-	outtextxy(1280 - 60 - 240, 200 + 160 + 5, AircraftType);	//飞机型号
 	char IntChange[8];
-	//信息输出以30px为行距
+	//信息输出以25px为行距
 	outtextxy(380, 200, "航班号：");
-	outtextxy(550, 200, ID[i].Carrier);
-	outtextxy(570, 200, ID[i].ID);
-	outtextxy(380, 230, "执飞航空公司：");
-	outtextxy(550, 230, carrier);
+	outtextxy(540, 200, ID[i].Carrier);
+	outtextxy(560, 200, ID[i].ID);
+	outtextxy(380, 225, "执飞航空公司：");
+	outtextxy(540, 225, carrier);
 	//显示开航日期的底色（浅灰色）
 	settextcolor(RGB(220, 220, 220));
-	outtextxy(550, 260, "一  二  三  四  五  六  日");
+	outtextxy(540, 250, "一  二  三  四  五  六  日");
 	//恢复原有颜色
 	settextcolor(BLACK);
-	outtextxy(380, 260, "开航日期：");
-	outtextxy(550, 260, Flyday);
-	outtextxy(380, 290, "基准票价：");
-	outtextxy(550, 290, _itoa(ID[i].Price, IntChange, 10));
-	outtextxy(380, 320, "舱位：");
-	outtextxy(550, 320, ID[i].Class);
-	outtextxy(380, 460, DepartureAirport);
-	outtextxy(380, 490, ID[i].DepartureAirport);
+	outtextxy(380, 250, "开航日期：");
+	outtextxy(540, 250, Flyday);
+	outtextxy(380, 275, "基准票价：");
+	outtextxy(540, 275, _itoa(ID[i].Price, IntChange, 10));
+	outtextxy(380, 300, "舱位：");
+	outtextxy(540, 300, ID[i].Class);
+	outtextxy(380, 325, "机型：");
+	outtextxy(540, 325, AircraftType);		//飞机型号
+	//飞行信息展示
+	outtextxy(380, 400, "起降机场：");
+	outtextxy(380, 425, "IATA代码：");
+	outtextxy(380, 450, "起降时间：");
+	outtextxy(540, 400, DepartureAirport);
+	outtextxy(540, 425, ID[i].DepartureAirport);
 	_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
-	outtextxy(380, 520, IntChange);
+	outtextxy(540, 450, IntChange);
+	outtextxy(600, 450, "预计");
 	//航线飞机飞行小动画
 	setlinecolor(RGB(255, 255, 253));
 	setfillcolor(RGB(255, 255, 253));
-	for (int i = 480; i < 1000; i += 2)
+	for (int i = 540; i < 1280; i += 2)
 	{
-		putimage(380, 400, &FlightDetail);							//航线示意图
-		fillrectangle(i, 400, 1280, 440);
+		putimage(500, 360, &FlightDetail);							//航线示意图
+		fillrectangle(i, 360, 1280, 400);
 		Sleep(1);
 	}
-	putimage(380, 400, &FlightDetail);								//航线示意图
+	putimage(500, 360, &FlightDetail);								//航线示意图
 	//小动画到此结束
-	outtextxy(980, 460, ArrivalAirport);
-	outtextxy(980, 490, ID[i].ArrivalAirport);
+	outtextxy(1020, 400, ArrivalAirport);
+	outtextxy(1020, 425, ID[i].ArrivalAirport);
 	_stprintf(IntChange, _T("%04d"), ID[i].ArrivalTime);
-	outtextxy(980, 520, IntChange);
+	outtextxy(1020, 450, IntChange);
+	outtextxy(1190, 450, "预计");
 	Sleep(50);
-	outtextxy(680, 480, "飞行时长");
-	outtextxy(660, 500, _itoa(ID[i].TravelTimeHour, IntChange, 10));
-	outtextxy(680, 500, "小时");
-	outtextxy(730, 500, _itoa(ID[i].TravelTimeMinute, IntChange, 10));
-	outtextxy(750, 500, "分钟");
+	outtextxy(810, 420, "飞行时长");
+	_stprintf(IntChange, _T("%2d"), ID[i].TravelTimeHour);
+	outtextxy(790, 440, IntChange);
+	outtextxy(810, 440, "小时");
+	_stprintf(IntChange, _T("%2d"), ID[i].TravelTimeMinute);
+	outtextxy(855, 440, IntChange);
+	outtextxy(880, 440, "分钟");
 	return;
 }
-void PrintSingleFlight(FlightID* ID, int i)
+void PrintSingleFlight(FlightID* ID, FlightTicket DATA[][999], int i)
 {
 	outtextxy(380, 170, "共找到一个航班");
 	PrintFlightDetail(ID, i);
+	PrintTimeAccuracyBar(ID, DATA, i);
 	return;
 }
 
@@ -231,5 +240,60 @@ void PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll)
 
 void PrintSearchDetail(FlightID* ID, int IDcount, int i)
 {
+
+}
+
+
+void PrintTimeAccuracyBar(FlightID*ID,FlightTicket DATA[][999], int n)
+{
+	clearrectangle(380, 500, 1220,  650);//开始前把显示区域清空
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 20;						// 设置字体高度为 20
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char IntChange[8];
+	time_t NOW;
+	tm* Local;
+	NOW = time(NULL);
+	Local = localtime(&NOW);
+	int yday = Local->tm_yday;
+	int wday = Local->tm_wday+1;
+	int Fly[5] = {-1,-1,-1,-1,-1};//获取最近的五次飞行
+	for (int i = 0; ; )
+	{
+		if (yday == -1)//如果到一年的开头，就不在往前找了（本程序只考虑2020年的数据）
+			break;
+		if (ID[n].FlyDay[wday] != '0')
+		{
+			Fly[i] = yday;
+			i++;
+		}
+		yday--;
+		if (wday == 1)//再往前是星期日不是星期零
+			wday = 7;
+		else
+			wday--;
+		if (i > 4)
+			break;
+	}
+	outtextxy(380, 500, "近期航班正晚点：");
+	char Date[20];
+	COLORREF TextColor;
+	for (int i = 0; i < 5; i ++)
+	{
+		if (Fly[i] == -1)
+		break;
+		MatchDate(2020, Fly[i], Date);
+		outtextxy(380,525 + 25 * i, Date);
+		_stprintf(IntChange, _T("%04d"),DATA[Fly[i]][n].ActuralDepartureTime);
+		outtextxy(540, 525 + 25 * i, IntChange);
+
+		_stprintf(IntChange, _T("%04d"), DATA[Fly[i]][n].ActuralDepartureTime);
+		outtextxy(1020, 525 + 25 * i, IntChange);
+
+	}
+
 
 }

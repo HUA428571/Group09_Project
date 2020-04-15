@@ -543,6 +543,66 @@ void MatchFlyDay(char* flyday, char* FLYDAY)
 	if (flyday[7] == '7')strcat(FLYDAY, "日"); else strcat(FLYDAY, "  ");
 	return;
 }
+void MatchDate(int year, int  date, char* Date)//输入一年开始的天数，返回字符串形式的日期
+{
+	int mday[12]={ 0,31,59,90,120,151,181,212,243,273,304,334};
+	int month=1;
+	char IntChange[8];
+	//_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
+
+	if (year % 4 == 0 && year % 100 != 0)
+	{
+		for (int i = 1; i < 12; i++)
+			mday[i]++;
+	}
+	for (int i = 11; i > 0; i--)
+	{
+		if ((date - mday[i]) >= 0)
+		{
+			month = i;
+			date = date - mday[i];
+			break;
+		}
+	}
+	_stprintf(IntChange, _T("%4d"), year);
+	strcpy(Date, IntChange);
+	strcat(Date, "/");
+	_stprintf(IntChange, _T("%2d"), month+1);
+	strcat(Date, IntChange);
+	strcat(Date, "/");
+	_stprintf(IntChange, _T("%2d"), date+1);
+	strcat(Date, IntChange);
+	return;
+}
+void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n,int day, char* ACCURACY, COLORREF &TextColor)
+{
+	if (DATA[day][n].ActuralDepartureTime == 2500)
+	{
+		strcpy(ACCURACY, "取消");
+		TextColor = RGB(220, 20, 60);//设置颜色为猩红
+	}
+	if (DATA[day][n].ActuralDepartureTime == 2500)
+	{
+		strcpy(ACCURACY, "取消");
+		TextColor = RGB(220, 20, 60);//设置颜色为猩红
+	}
+	if (DATA[day][n].ActuralDepartureTime == 2500)
+	{
+		strcpy(ACCURACY, "取消");
+		TextColor = RGB(220, 20, 60);//设置颜色为猩红
+	}
+	if (DATA[day][n].ActuralDepartureTime == 2500)
+	{
+		strcpy(ACCURACY, "取消");
+		TextColor = RGB(220, 20, 60);//设置颜色为猩红
+	}
+	if (DATA[day][n].ActuralDepartureTime == 2500)
+	{
+		strcpy(ACCURACY, "取消");
+		TextColor = RGB(220, 20, 60);//设置颜色为猩红
+	}
+
+}
 
 void MatchCity_Airport(char* airport, char* AIRPORT)
 {
@@ -680,3 +740,4 @@ void MatchCity_Airport(char* airport, char* AIRPORT)
 	strcat(AIRPORT, airport);
 	return;
 }
+

@@ -69,10 +69,7 @@ int main()
 	//strcpy(Location, ".\\Ticket.dat");
 	//SaveTicketDatabase(DATA, FlightID_Count, Location);
 
-	initgraph(1280, 720);	// 创建绘图窗口，大小为 1280x720 像素
-	closegraph();
-	
-	_getch();
+
 	return 0;
 }
 

@@ -43,18 +43,20 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 			MENUchoice = AdminMENU_MainMENU(ID, DATA, IDcount);
 			break;
 		case 1:
-			MENUchoice = AdminMENU_SearchMENU(ID, IDcount);
+			MENUchoice = AdminMENU_SearchMENU(ID, DATA, IDcount);
 			break;
 		case 2:
-			MENUchoice = AdminMENU_AddMENU(ID, IDcount);
+			MENUchoice = AdminMENU_AddMENU(ID, DATA, IDcount);
 			break;
 		case 3:
 			MENUchoice = AdminMENU_DeleteMENU(ID, DATA, IDcount);
 			break;
 		case 4:
-			MENUchoice = AdminMENU_ChangeMENU(ID, IDcount);
+			MENUchoice = AdminMENU_ChangeMENU(ID, DATA, IDcount);
 			break;
 		case 5:
+			//Resize(NULL,480, 640);
+			//_getch();
 			closegraph();			// 关闭绘图窗口
 			return 0;
 		}
@@ -84,7 +86,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	_stprintf(count, _T("%d"),Local->tm_year+1900);
 	outtextxy(1073, 55, count);
 	outtextxy(1113, 55, "年");
-	_stprintf(count, _T("%2d"), Local->tm_mon);
+	_stprintf(count, _T("%2d"), Local->tm_mon+1);
 	outtextxy(1133, 55, count);
 	outtextxy(1153, 55, "月");
 	_stprintf(count, _T("%2d"), Local->tm_mday);
@@ -422,7 +424,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999]
 }
 
 
-int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
+int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -461,16 +463,16 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 		case 4:
 			return MENUchoice;
 		case 11:
-			MENUchoice = AdminMENU_SearchMENU_SearchByID(ID, IDcount, SearchReasult, SearchCount);
+			MENUchoice = AdminMENU_SearchMENU_SearchByID(ID, DATA, IDcount, SearchReasult, SearchCount);
 			break;
 		case 12:
-			MENUchoice = AdminMENU_SearchMENU_SearchByDepartureAirport(ID, IDcount, SearchReasult, SearchCount);
+			MENUchoice = AdminMENU_SearchMENU_SearchByDepartureAirport(ID, DATA, IDcount, SearchReasult, SearchCount);
 			break;
 		case 13:
-			MENUchoice = AdminMENU_SearchMENU_SearchByArrivalAirport(ID, IDcount, SearchReasult, SearchCount);
+			MENUchoice = AdminMENU_SearchMENU_SearchByArrivalAirport(ID, DATA, IDcount, SearchReasult, SearchCount);
 			break;
 		case 14:
-			MENUchoice = AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(ID, IDcount, SearchReasult, SearchCount);
+			MENUchoice = AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(ID, DATA, IDcount, SearchReasult, SearchCount);
 			break;
 		}
 	}
@@ -501,7 +503,7 @@ int AdminMENU_SearchMENU(FlightID* ID, int IDcount)
 	//	textbox.Draw();
 	//}
 }
-int AdminMENU_SearchMENU_SearchByID(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
@@ -513,14 +515,14 @@ int AdminMENU_SearchMENU_SearchByID(FlightID* ID, int IDcount, int* SearchReasul
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, SearchReasult[0]);
+		PrintSingleFlight(ID, DATA, SearchReasult[0]);
 		break;
 	default:
 		return PrintMultiFlight(ID, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
-int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
@@ -532,14 +534,14 @@ int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, int IDcount, int
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, SearchReasult[0]);
+		PrintSingleFlight(ID, DATA, SearchReasult[0]);
 		break;
 	default:
 		return PrintMultiFlight(ID, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
-int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
@@ -551,14 +553,14 @@ int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, int IDcount, int* 
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, SearchReasult[0]);
+		PrintSingleFlight(ID, DATA, SearchReasult[0]);
 		break;
 	default:
 		return PrintMultiFlight(ID, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
-int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char Departure[12];
@@ -572,7 +574,7 @@ int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, int ID
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, SearchReasult[0]);
+		PrintSingleFlight(ID, DATA, SearchReasult[0]);
 		break;
 	default:
 		return PrintMultiFlight(ID, IDcount, SearchReasult, SearchCount);
@@ -581,7 +583,7 @@ int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, int ID
 }
 
 
-int AdminMENU_AddMENU(FlightID* ID, int& IDcount)
+int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -745,7 +747,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 }
 
 
-int AdminMENU_ChangeMENU(FlightID* ID, int IDcount)
+int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
