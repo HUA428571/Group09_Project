@@ -79,14 +79,14 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	time_t NOW;
-	tm *Local;
+	tm* Local;
 	NOW = time(NULL);
 	Local = localtime(&NOW);
 	char count[8];
-	_stprintf(count, _T("%d"),Local->tm_year+1900);
+	_stprintf(count, _T("%d"), Local->tm_year + 1900);
 	outtextxy(1073, 55, count);
 	outtextxy(1113, 55, "年");
-	_stprintf(count, _T("%2d"), Local->tm_mon+1);
+	_stprintf(count, _T("%2d"), Local->tm_mon + 1);
 	outtextxy(1133, 55, count);
 	outtextxy(1153, 55, "月");
 	_stprintf(count, _T("%2d"), Local->tm_mday);
@@ -121,7 +121,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 			MENUchoice = AdminMENU_MainMENU_SaveFlightDatabase(ID, DATA, IDcount, Location);
 			break;
 		case 54:
-			MENUchoice = AdminMENU_MainMENU_SaveTicketDatabase(ID, DATA, IDcount,  Location);
+			MENUchoice = AdminMENU_MainMENU_SaveTicketDatabase(ID, DATA, IDcount, Location);
 			break;
 		}
 	}
@@ -163,7 +163,7 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][99
 	case 4:
 		return MENUchoice;
 	case 51:
-		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount,Location);
+		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount, Location);
 	case 52:
 		return AdminMENU_MainMENU_ImportTicketDatabase(ID, DATA, IDcount, Location);
 	case 53:
@@ -395,7 +395,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999]
 	case 57:
 		//后期加点动画吧
 		//再加一个如果导入失败恢复的功能
-		success=SaveTicketDatabase(DATA,IDcount, Location[3]);
+		success = SaveTicketDatabase(DATA, IDcount, Location[3]);
 		clearrectangle(400, 200, 1220, 400);
 		if (success == -1)
 		{
@@ -515,10 +515,10 @@ int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int 
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, DATA, SearchReasult[0]);
+		PrintSingleFlight(ID, DATA, IDcount,SearchReasult[0]);
 		break;
 	default:
-		return PrintMultiFlight(ID, IDcount, SearchReasult, SearchCount);
+		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
@@ -534,10 +534,10 @@ int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DAT
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, DATA, SearchReasult[0]);
+		PrintSingleFlight(ID, DATA,IDcount, SearchReasult[0]);
 		break;
 	default:
-		return PrintMultiFlight(ID, IDcount, SearchReasult, SearchCount);
+		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
@@ -553,10 +553,10 @@ int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, DATA, SearchReasult[0]);
+		PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
 		break;
 	default:
-		return PrintMultiFlight(ID, IDcount, SearchReasult, SearchCount);
+		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
@@ -574,10 +574,10 @@ int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, Flight
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, DATA, SearchReasult[0]);
+		PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
 		break;
 	default:
-		return PrintMultiFlight(ID, IDcount, SearchReasult, SearchCount);
+		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
@@ -644,7 +644,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	ID[IDcount].Price = ID[IDcount].TravelTimeHour * 675 + ID[IDcount].TravelTimeMinute * 11.25;
 	loadimage(&BG, _T(".\\IMAGES\\Add.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
-	PrintFlightDetail(ID, IDcount);
+	PrintFlightDetail(ID, DATA, IDcount, IDcount);
 	int MENUchoice = AdminMENU_AddMENU_MENUChoose();
 	switch (MENUchoice)
 	{
@@ -662,7 +662,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 		loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
 		putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 		outtextxy(380, 170, "已成功添加");
-		PrintFlightDetail(ID, IDcount);
+		PrintFlightDetail(ID, DATA, IDcount, IDcount);
 		IDcount++;
 		gettextstyle(&format);						// 获取当前字体设置
 		format.lfHeight = 25;						// 设置字体高度为 25
@@ -712,7 +712,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	case 1:
 		loadimage(&BG, _T(".\\IMAGES\\Delete.png"), 1280, 720);
 		putimage(0, 0, &BG);	// 显示删除界面背景
-		PrintFlightDetail(ID, SearchReasult[0]);
+		PrintFlightDetail(ID, DATA, IDcount, SearchReasult[0]);
 		int MENUchoice = AdminMENU_DeleteMENU_MENUChoose();
 		switch (MENUchoice)
 		{

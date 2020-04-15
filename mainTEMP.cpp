@@ -28,7 +28,7 @@ int main()
 		char TicketLication[50];
 		if (choice == '1')
 		{
-			strcpy(FlightLocation ,".\\Default_FlightID_Database_NEW.txt");
+			strcpy(FlightLocation, ".\\Default_FlightID_Database_NEW.txt");
 			strcpy(TicketLication, ".\\Default_Ticket_Database.dat");
 		}
 		else

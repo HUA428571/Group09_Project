@@ -287,7 +287,7 @@ int ImportTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
 		printf("Fail to open file!\n");
 		return -1;
 	}
-	fread(DATA, sizeof(FlightTicket), 366*999, fp);
+	fread(DATA, sizeof(FlightTicket), 366 * 999, fp);
 	fclose(fp);
 	return IDcount;
 
@@ -303,8 +303,6 @@ int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
 	fclose(fp);
 	return IDcount;
 }
-
-
 
 
 void PrintFlight(FlightID* ID, int n, int i)//传入数组，数组下标，序号
@@ -357,7 +355,7 @@ int SearchFlightDepartureAirport(FlightID* ID, char* search, int IDcount, int* S
 	SearchCount = 0; //记录搜索到的航班个数,先置零
 	for (int i = 0; i < IDcount; i++)
 	{
-		if (!_strnicmp(search,ID[i].DepartureAirport,3))
+		if (!_strnicmp(search, ID[i].DepartureAirport, 3))
 		{
 			SearchReasult[SearchCount] = i;
 			SearchCount++;
@@ -507,7 +505,7 @@ int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//冒泡排序法
 	}
 	return 0;
 }
-int SortByDepartureTime(FlightID* ID, int * SearchReasult,int SearchCount, int* SortReasult)//冒泡排序法按照时间排序搜索航班结果；注意此函数有重载
+int SortByDepartureTime(FlightID* ID, int* SearchReasult, int SearchCount, int* SortReasult)//冒泡排序法按照时间排序搜索航班结果；注意此函数有重载
 {
 	int i;
 	//首先要初始化一下存储排序结果的数组
@@ -548,7 +546,7 @@ int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delet
 	IDcount--;
 	return IDcount;
 }
-int DeleteFlight(FlightID* ID,  int& IDcount, int Delete)
+int DeleteFlight(FlightID* ID, int& IDcount, int Delete)
 {
 	for (int i = Delete; i < IDcount; i++)
 	{

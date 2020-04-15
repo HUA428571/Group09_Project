@@ -8,8 +8,6 @@
 #include<string>
 #include<stdlib.h>
 #include<time.h>
-
-
 using namespace std;
 
 int AdminMENU(FlightID*, FlightTicket[][999], int&);

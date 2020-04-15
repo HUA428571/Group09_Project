@@ -7,40 +7,40 @@ void MatchPlaneImage(IMAGE& plane, char* AircraftType)
 	{
 	case 737:
 	case 738:
-		loadimage(&plane, _T(".\\IMAGES\\plane\\737.jpg"), 240, 160);
+		loadimage(&plane, _T(".\\IMAGES\\plane\\737.jpg"), 219, 146);
 		return;
 	case 74:
 	case 744:
 	case 747:
-		loadimage(&plane, _T(".\\IMAGES\\plane\\747.jpg"), 240, 160);
+		loadimage(&plane, _T(".\\IMAGES\\plane\\747.jpg"), 219, 146);
 		return;
 	case 76:
-		loadimage(&plane, _T(".\\IMAGES\\plane\\767.jpg"), 240, 160);
+		loadimage(&plane, _T(".\\IMAGES\\plane\\767.jpg"), 219, 146);
 		return;
 	case 77:
 	case 772:
 	case 773:
 	case 777:
-		loadimage(&plane, _T(".\\IMAGES\\plane\\777.jpg"), 240, 160);
+		loadimage(&plane, _T(".\\IMAGES\\plane\\777.jpg"), 219, 146);
 		return;
 	case 788:
 	case 789:
-		loadimage(&plane, _T(".\\IMAGES\\plane\\787.jpg"), 240, 160);
+		loadimage(&plane, _T(".\\IMAGES\\plane\\787.jpg"), 219, 146);
 		return;
 	case 319:
 	case 320:
 	case 321:
-		loadimage(&plane, _T(".\\IMAGES\\plane\\320.jpg"), 240, 160);
+		loadimage(&plane, _T(".\\IMAGES\\plane\\320.jpg"), 219, 146);
 		return;
 	case 330:
 	case 333:
-		loadimage(&plane, _T(".\\IMAGES\\plane\\330.jpg"), 240, 160);
+		loadimage(&plane, _T(".\\IMAGES\\plane\\330.jpg"), 219, 146);
 		return;
 	case 343:
-		loadimage(&plane, _T(".\\IMAGES\\plane\\340.jpg"), 240, 160);
+		loadimage(&plane, _T(".\\IMAGES\\plane\\340.jpg"), 219, 146);
 		return;
 	default:
-		loadimage(&plane, _T(".\\IMAGES\\plane\\default.png"), 240, 160);
+		loadimage(&plane, _T(".\\IMAGES\\plane\\default.png"), 219, 146);
 		return;
 	}
 }
@@ -545,8 +545,8 @@ void MatchFlyDay(char* flyday, char* FLYDAY)
 }
 void MatchDate(int year, int  date, char* Date)//ÊäÈëÒ»Äê¿ªÊ¼µÄÌìÊı£¬·µ»Ø×Ö·û´®ĞÎÊ½µÄÈÕÆÚ
 {
-	int mday[12]={ 0,31,59,90,120,151,181,212,243,273,304,334};
-	int month=1;
+	int mday[12] = { 0,31,59,90,120,151,181,212,243,273,304,334 };
+	int month = 1;
 	char IntChange[8];
 	//_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
 
@@ -567,41 +567,81 @@ void MatchDate(int year, int  date, char* Date)//ÊäÈëÒ»Äê¿ªÊ¼µÄÌìÊı£¬·µ»Ø×Ö·û´®Ğ
 	_stprintf(IntChange, _T("%4d"), year);
 	strcpy(Date, IntChange);
 	strcat(Date, "/");
-	_stprintf(IntChange, _T("%2d"), month+1);
+	_stprintf(IntChange, _T("%2d"), month + 1);
 	strcat(Date, IntChange);
 	strcat(Date, "/");
-	_stprintf(IntChange, _T("%2d"), date+1);
+	_stprintf(IntChange, _T("%2d"), date + 1);
 	strcat(Date, IntChange);
 	return;
 }
-void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n,int day, char* ACCURACY, COLORREF &TextColor)
+void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor)
 {
+	int Arrival;
+	if (DATA[day][n].ActuralDepartureTime == 2500)
+	{
+		strcpy(ACCURACY, "º½°àÈ¡Ïû");
+		TextColor = RGB(220, 20, 60);//ÉèÖÃÑÕÉ«ÎªĞÉºì
+		return;
+	}
+	if ((ID[n].ArrivalTime / 100) >= 45)
+		Arrival = ID[n].ArrivalTime + 65;
+	else
+		Arrival = ID[n].ArrivalTime + 25;
+	if (DATA[day][n].ActuralArrivalTime > Arrival)
+	{
+		strcpy(ACCURACY, "º½°àÑÓÎó");
+		TextColor = RGB(255, 165, 0);//ÉèÖÃÑÕÉ«Îª³ÈÉ«
+		return;
+	}
+	strcpy(ACCURACY, "Õıµãµ½´ï");
+	TextColor = RGB(0, 128, 0);//ÉèÖÃÑÕÉ«ÎªÂÌÉ«
+	return;
+}
+void MatchDepartureTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor)
+{
+	int Arrival;
 	if (DATA[day][n].ActuralDepartureTime == 2500)
 	{
 		strcpy(ACCURACY, "È¡Ïû");
 		TextColor = RGB(220, 20, 60);//ÉèÖÃÑÕÉ«ÎªĞÉºì
+		return;
 	}
+	if ((ID[n].ArrivalTime / 100) >= 45)
+		Arrival = ID[n].ArrivalTime + 65;
+	else
+		Arrival = ID[n].ArrivalTime + 25;
+	if (DATA[day][n].ActuralArrivalTime > Arrival)
+	{
+		strcpy(ACCURACY, "ÑÓÎó");
+		TextColor = RGB(255, 165, 0);//ÉèÖÃÑÕÉ«Îª³ÈÉ«
+		return;
+	}
+	strcpy(ACCURACY, "Õıµã");
+	TextColor = RGB(0, 128, 0);//ÉèÖÃÑÕÉ«ÎªÂÌÉ«
+	return;
+}
+void MatchArrivalTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor)
+{
+	int Arrival;
 	if (DATA[day][n].ActuralDepartureTime == 2500)
 	{
-		strcpy(ACCURACY, "È¡Ïû");
+		strcpy(ACCURACY, "º½°àÈ¡Ïû");
 		TextColor = RGB(220, 20, 60);//ÉèÖÃÑÕÉ«ÎªĞÉºì
+		return;
 	}
-	if (DATA[day][n].ActuralDepartureTime == 2500)
+	if ((ID[n].ArrivalTime / 100) >= 45)
+		Arrival = ID[n].ArrivalTime + 65;
+	else
+		Arrival = ID[n].ArrivalTime + 25;
+	if (DATA[day][n].ActuralArrivalTime > Arrival)
 	{
-		strcpy(ACCURACY, "È¡Ïû");
-		TextColor = RGB(220, 20, 60);//ÉèÖÃÑÕÉ«ÎªĞÉºì
+		strcpy(ACCURACY, "º½°àÑÓÎó");
+		TextColor = RGB(255, 165, 0);//ÉèÖÃÑÕÉ«Îª³ÈÉ«
+		return;
 	}
-	if (DATA[day][n].ActuralDepartureTime == 2500)
-	{
-		strcpy(ACCURACY, "È¡Ïû");
-		TextColor = RGB(220, 20, 60);//ÉèÖÃÑÕÉ«ÎªĞÉºì
-	}
-	if (DATA[day][n].ActuralDepartureTime == 2500)
-	{
-		strcpy(ACCURACY, "È¡Ïû");
-		TextColor = RGB(220, 20, 60);//ÉèÖÃÑÕÉ«ÎªĞÉºì
-	}
-
+	strcpy(ACCURACY, "Õıµãµ½´ï");
+	TextColor = RGB(0, 128, 0);//ÉèÖÃÑÕÉ«ÎªÂÌÉ«
+	return;
 }
 
 void MatchCity_Airport(char* airport, char* AIRPORT)
