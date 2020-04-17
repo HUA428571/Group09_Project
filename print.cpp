@@ -1,21 +1,25 @@
 #include"print.h"
-void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
+void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i)
 {
-	cleardevice();
-	IMAGE BG;
+	clearrectangle(380, 200, 1220, 720);
+	//cleardevice();
+	//IMAGE BG;
 	IMAGE plane;
 	IMAGE FlightDetail;
 	LOGFONT format;
-	loadimage(&BG, _T(".\\IMAGES\\Search2.png"), 1280, 720);
+	//loadimage(&BG, _T(".\\IMAGES\\Search2.png"), 1280, 720);
 	loadimage(&FlightDetail, _T(".\\IMAGES\\FlightDetail.png"), 680, 40);
-	putimage(0, 0, &BG);						// 更新背景
+	//putimage(0, 0, &BG);						// 更新背景
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
-	char count[8];
-	_stprintf(count, _T("%d"), IDcount);
+	//char count[8];
+	//_stprintf(count, _T("%d"), IDcount);
+	//outtextxy(110, 200, "当前数据库中有");
+	//outtextxy(110, 230, count);
+	//outtextxy(162, 230, "个航线数据");
 	settextstyle(20, 0, "黑体");
 	char carrier[20];
 	char AircraftType[50];
@@ -61,20 +65,23 @@ void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int 
 	//航线飞机飞行小动画
 	setlinecolor(RGB(255, 255, 253));
 	setfillcolor(RGB(255, 255, 253));
-	for (int i = 540; i < 1280; i += 2)
+	int timer=0;
+	putimage(480, 360, &FlightDetail);							//航线示意图
+	for (int i = 520; i < 1120; i += 3)
 	{
-		putimage(500, 360, &FlightDetail);							//航线示意图
+		putimage(480, 360, &FlightDetail);							//航线示意图
 		fillrectangle(i, 360, 1280, 400);
-		Sleep(1);
+		Sleep((int)((timer-300)* (timer - 300)/10000));
+		timer += 3;
 	}
-	putimage(500, 360, &FlightDetail);								//航线示意图
+	putimage(480, 360, &FlightDetail);								//航线示意图
 	//小动画到此结束
 	outtextxy(1020, 400, ArrivalAirport);
 	outtextxy(1020, 425, ID[i].ArrivalAirport);
 	_stprintf(IntChange, _T("%04d"), ID[i].ArrivalTime);
 	outtextxy(1020, 450, IntChange);
 	outtextxy(1080, 450, "预计");
-	Sleep(50);
+	//Sleep(50);
 	//飞行时间
 	outtextxy(790, 420, "飞行时长");
 	_stprintf(IntChange, _T("%2d"), ID[i].TravelTimeHour);
@@ -85,20 +92,75 @@ void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int 
 	outtextxy(860, 440, "分钟");
 	return;
 }
-void PrintSingleFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
+int PrintSingleFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i)
 {
+	cleardevice();
+	IMAGE BG;
+	IMAGE TimeAccuracy;
+	loadimage(&BG, _T(".\\IMAGES\\Search.png"), 1280, 720);
+	loadimage(&TimeAccuracy, _T(".\\IMAGES\\TimeAccuracy.png"), 200, 40);
+	putimage(0, 0, &BG);						//显示背景
+	putimage(100, 550, &TimeAccuracy);			//查询正晚点图片
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
+	settextstyle(20, 0, "黑体");
 	outtextxy(380, 170, "共找到一个航班");
-	PrintFlightDetail(ID, DATA, IDcount,i);
+	PrintFlightDetail(ID, DATA, IDcount, i);
 	PrintTimeAccuracyBar(ID, DATA, i);
-	return;
+	int MENUchoice = AdminMENU_SearchMENU_SingleFlight_MENUChoose();
+	while (true)
+	{
+		switch (MENUchoice)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 11:
+		case 12:
+		case 13:
+		case 14:
+			return MENUchoice;
+		case 17:
+			MENUchoice = PrintTicket(ID, DATA, i);
+			break;
+		case 18:
+			return PrintSingleFlight(ID, DATA, IDcount, i);
+		}
+	}
 }
-
-int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int SearchCount)//返回菜单选择
+int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int SearchCount)//返回菜单选择
 {
-	clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
-	IMAGE PageChoiceImage;
+	//clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
+	cleardevice();
+	IMAGE BG;
+	IMAGE PageChoiceImage;	
+	loadimage(&BG, _T(".\\IMAGES\\Search.png"), 1280, 720);
 	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
-	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
+	putimage(0, 0, &BG);									//显示背景
+	putimage(1280 - 60 - 150, 165, &PageChoiceImage);		//上下页图片
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
+	settextstyle(20, 0, "黑体");
 	char IntChange[8];
 	int Page = (SearchCount - 1) / 15 + 1;
 	int CurrentPage = 1;
@@ -173,13 +235,34 @@ int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* S
 			int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
 			if ((MENUchoice % 100 + Count) <= SearchCount)
 			{
-				clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
-				IMAGE PageChoiceImage;
-				loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
-				putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
+				//clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
+				cleardevice();
+				IMAGE Back;
+				IMAGE TimeAccuracy;
+				loadimage(&TimeAccuracy, _T(".\\IMAGES\\TimeAccuracy.png"), 200, 40);
+				loadimage(&Back, _T(".\\IMAGES\\Back.png"), 30, 30);
+				putimage(0, 0, &BG);										//显示背景
+				putimage(1280 - 60 - 30, 165, &Back);						//返回键图片
+				putimage(100, 550, &TimeAccuracy);							//查询正晚点图片
+				settextstyle(25, 0, "黑体");
+				outtextxy(110, 200, "当前数据库中有");
+				outtextxy(110, 230, count);
+				outtextxy(162, 230, "个航线数据");
+				settextstyle(20, 0, "黑体");
+				outtextxy(380, 170, "共找到");
+				outtextxy(450, 170, IntChange);
+				outtextxy(485, 170, "个航班");
 				PrintFlightDetail(ID, DATA, IDcount, SearchReasult[MENUchoice % 100 + Count - 1]);
 				PrintTimeAccuracyBar(ID, DATA, SearchReasult[MENUchoice % 100 + Count - 1]);
-				MENUchoice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
+				int MenuCloice;
+				MenuCloice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
+				if (MenuCloice == 17)
+				{
+					MenuCloice =PrintTicket(ID, DATA, SearchReasult[MENUchoice % 100 + Count - 1]);
+					if (MenuCloice == 18)
+						break;
+				}
+				MENUchoice = MenuCloice;
 			}
 			else
 				MENUchoice = AdminMENU_SearchMENU_MultiFlight_MENUChoose();
@@ -198,13 +281,33 @@ void PrintFlightTitle()
 	outtextxy(1140, 200, "飞行时间");
 	return;
 }
-void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page)//page表示当前显示第几页
+void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page)//page表示当前显示第几页
 {
-	char IntChange[8];
-	clearrectangle(380, 230, 1220, 680);//开始前把显示区域清空
-	IMAGE PageChoiceImage;
+	cleardevice();
+	IMAGE BG;
+	IMAGE PageChoiceImage;	
+	loadimage(&BG, _T(".\\IMAGES\\Search.png"), 1280, 720);
 	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
+	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
+	settextstyle(20, 0, "黑体");
 	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
+	char IntChange[8];
+	outtextxy(380, 170, "共找到");
+	_stprintf(IntChange, _T("%d"), SearchCount);
+	outtextxy(450, 170, IntChange);
+	outtextxy(485, 170, "个航班");
+	PrintFlightTitle();
 	_stprintf(IntChange, _T("%d"), CurrentPage);
 	outtextxy(1280 - 60 - 120, 170, IntChange);
 	outtextxy(1280 - 60 - 95, 170, "/");
@@ -220,7 +323,7 @@ void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][999], int IDcount, i
 	}
 	return;
 }
-void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i, int roll)
+void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i, int roll)
 {
 	char DepartureAirport[50];
 	char ArrivalAirport[50];
@@ -246,13 +349,13 @@ void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, 
 }
 
 
-void PrintSearchDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
+void PrintSearchDetail(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i)
 {
 
 }
 
 
-void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n) 
+void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][699], int n)
 {
 	clearrectangle(380, 500, 1220, 650);		//开始前把显示区域清空
 	LOGFONT format;
@@ -279,12 +382,13 @@ void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 	Local = localtime(&NOW);
 	int yday = Local->tm_yday;
 	int wday = Local->tm_wday;
+	int year = Local->tm_year+1900;
 	if (wday == 0)
 		wday = 7;
-	int Fly[10] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };//获取最近的五次飞行
+	int Fly[10] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };//获取最近的10次飞行
 	for (int i = 0; ; )
 	{
-		if (yday == -1)//如果到一年的开头，就不在往前找了（本程序只考虑2020年的数据）
+		if (yday == -1)//如果到一年的开头，就不在往前找了（本程序只考虑本年的数据）
 			break;
 		if (ID[n].FlyDay[wday] != '0')
 		{
@@ -314,7 +418,7 @@ void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 	{
 		if (Fly[i] == -1)
 			break;
-		MatchDate(2020, Fly[i], Date);
+		MatchDate(year, Fly[i], Date);
 		outtextxy(380, 525 + 25 * i, Date);
 		_stprintf(IntChange, _T("%04d"), DATA[Fly[i]][n].ActuralDepartureTime);
 		outtextxy(520, 525 + 25 * i, IntChange);
@@ -329,7 +433,7 @@ void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 	{
 		if (Fly[i + 5] == -1)
 			break;
-		MatchDate(2020, Fly[i + 5], Date);
+		MatchDate(year, Fly[i + 5], Date);
 		outtextxy(800, 525 + 25 * i, Date);
 		_stprintf(IntChange, _T("%04d"), DATA[Fly[i + 5]][n].ActuralDepartureTime);
 		outtextxy(940, 525 + 25 * i, IntChange);
@@ -340,22 +444,31 @@ void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 		outtextxy(1080, 525 + 25 * i, Accuracy);
 		settextcolor(BLACK);
 	}
-
 }
 
-void PrintTickstTitle()
+void PrintTicketTitle()
 {
-	for (int i = 60; i < 900; i += 400)
-	{
-		outtextxy(410, 500, "日期");
-		outtextxy(520, 500, "起飞");
-		outtextxy(580, 500, "到达");
-		outtextxy(680, 500, "状态");
-	}
+		outtextxy(90, 200, "日期");
+		outtextxy(180, 200, "起飞");
+		outtextxy(240, 200, "到达");
+		outtextxy(320, 200, "状态");
+		outtextxy(405, 200, "头等");
+		outtextxy(475, 200, "商务");
+		outtextxy(555, 200, "经济");
+		outtextxy(90 + 610, 200, "日期");
+		outtextxy(180 + 610, 200, "起飞");
+		outtextxy(240 + 610, 200, "到达");
+		outtextxy(320 + 610, 200, "状态");
+		outtextxy(405 + 610, 200, "头等");
+		outtextxy(475 + 610, 200, "商务");
+		outtextxy(555 + 610, 200, "经济");
 }
-void PrintTickst(FlightID* ID, FlightTicket DATA[][999], int n)
+int PrintTicket(FlightID* ID, FlightTicket DATA[][699],int n)
 {
-	IMAGE BG;
+	cleardevice();
+	IMAGE BG;									//背景图片
+	IMAGE PageChoiceImage;
+	IMAGE Back;
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
@@ -363,13 +476,252 @@ void PrintTickst(FlightID* ID, FlightTicket DATA[][999], int n)
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
+	loadimage(&Back, _T(".\\IMAGES\\Back.png"), 30, 30);
+	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
 	putimage(0, 0, &BG);						// 更新背景
+	putimage(1280 - 60 - 200, 165, &Back);						//返回键图片
+	putimage(1280 - 60 - 150, 165, &PageChoiceImage);
+	outtextxy(60, 170, ID[n].Carrier);
+	outtextxy(80, 170, ID[n].ID);
+	char IntChange[8];
+	outtextxy(160, 170, ID[n].DepartureAirport);
+	outtextxy(210, 170, "->");
+	outtextxy(235, 170, ID[n].ArrivalAirport);
+	outtextxy(310, 170, "时刻表:");
+	_stprintf(IntChange, _T("%04d"), ID[n].DepartureTime);
+	outtextxy(390, 170, IntChange);
+	outtextxy(440, 170, "->");
+	_stprintf(IntChange, _T("%04d"), ID[n].ArrivalTime);
+	outtextxy(470, 170, IntChange);
+	outtextxy(550, 170, ID[n].AircraftType);
+	time_t NOW;									//获取当前时间
+	tm* Local;
+	NOW = time(NULL);
+	Local = localtime(&NOW);
+	int ydayNOW = Local->tm_yday;
+	int year = Local->tm_year + 1900;//今年是哪年
+	int Fly[366] = { 0 };//获取飞行日期
+	int FlyDayCountCurrent=0;//从今年开始到现在的飞行日数
+	int FlyDayCountAll=0;//今年的总飞行日数
+	int wday = WeekDayTransfer(year, 1, 1);//计算今年第一天是周几
+	int ydayCount;
+	if (year % 4 == 0 && year % 100 != 0)
+		ydayCount = 366;
+	else
+		ydayCount = 365;
+	for (int yday = 0; yday < ydayCount; yday++)//本程序只考虑本年度的数据
+	{
+		if (ID[n].FlyDay[wday] != '0')
+		{
+			Fly[FlyDayCountAll] = yday;
+			FlyDayCountAll++;				//年度总飞行日加一
+			if (yday <= ydayNOW)
+				FlyDayCountCurrent++;		//截止今天的飞行日加一
+		}
+		if (wday == 7)//星期日的下一天不是星期零
+			wday = 1;
+		else
+			wday++;
+	}
+	int Page = (FlyDayCountAll-1) / 36 + 1;
+	//为什么要加一呢，你想想万一正好有36个
+	//默认从今天开始显示
+	int CurrentPage = (FlyDayCountCurrent- 1) / 36 + 1;
+	PrintTicketTitle();
+	PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+	int MENUchoice = AdminMENU_Ticket_MENUChoose();
+	while (true)
+	{
+		switch (MENUchoice)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 11:
+		case 12:
+		case 13:
+		case 14:
+		case 18:
+			return MENUchoice;
+		case 15:					//上一页
+			if (CurrentPage == 1)
+				PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			else
+			{
+				CurrentPage--;
+				PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			}
+			MENUchoice = AdminMENU_Ticket_MENUChoose();
+			break;
+		case 16:					//下一页
+			if (CurrentPage == Page)
+				PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			else
+			{
+				CurrentPage++;
+				PrintTicketPage(ID, DATA, Fly,n, Page, CurrentPage, FlyDayCountAll);
+			}
+			MENUchoice = AdminMENU_Ticket_MENUChoose();
+			break;
+		/*
+		case 19:					//按起飞时间排序
+			int SortReasult[999];//用于存储排序后的顺序，这样就不会更改原有的结构体数组顺序，不影响下标访问。
+			SortByDepartureTime(ID, SearchReasult, SearchCount, SortReasult);//冒泡排序法按照时间排序搜索航班结果；注意此函数有重载
+			return PrintMultiFlight(ID, DATA, IDcount, SortReasult, SearchCount);
+		case 101:
+		case 102:
+		case 103:
+		case 104:
+		case 105:
+		case 106:
+		case 107:
+		case 108:
+		case 109:
+		case 110:
+		case 111:
+		case 112:
+		case 113:
+		case 114:
+		case 115:									//跳转到详情页面
+			//首先判断该页的航班数量
+			int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
+			if ((MENUchoice % 100 + Count) <= SearchCount)
+			{
+				clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
+				IMAGE PageChoiceImage;
+				loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
+				putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
+				PrintFlightDetail(ID, DATA, IDcount, SearchReasult[MENUchoice % 100 + Count - 1]);
+				PrintTimeAccuracyBar(ID, DATA, SearchReasult[MENUchoice % 100 + Count - 1]);
+				MENUchoice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
+			}
+			else
+				MENUchoice = AdminMENU_SearchMENU_MultiFlight_MENUChoose();
+			break;
+			*/
+		}
+	}
 }
-void PrintTickstPage(FlightID* ID, FlightTicket DATA[][999], int n)
+void PrintTicketPage(FlightID* ID, FlightTicket DATA[][699], int* Fly,int n,int Page,int CurrentPage, int FlyDayCountAll)
 {
-	;
+	clearrectangle(60, 230, 1220, 720);//开始前把显示区域清空
+	IMAGE PageChoiceImage;
+	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
+	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
+	char IntChange[8];
+	_stprintf(IntChange, _T("%d"), CurrentPage);
+	outtextxy(1280 - 60 - 120, 170, IntChange);
+	outtextxy(1280 - 60 - 95, 170, "/");
+	_stprintf(IntChange, _T("%d"), Page);
+	outtextxy(1280 - 60 - 80, 170, IntChange);
+	outtextxy(1280 - 60 - 55, 170, "页");
+	char Date[20];
+	char Accuracy[20];
+	COLORREF TextColor;
+	time_t NOW;
+	tm* Local;
+	NOW = time(NULL);
+	Local = localtime(&NOW);
+	int year = Local->tm_year+1900;
+	//int Count =(35-FlyDayCountCurrent%36)+(CurrentPage-1)*36;//count表示此页要从第几天开始显示（由上至下，由左至右日期向前，默认从下一次飞行开始显示）
+	int Count = (CurrentPage-1) * 36;
+	for (int i = 0; i < 18; i++)
+	{
+		if (Count==FlyDayCountAll)
+			break;
+		MatchDate(year, Fly[Count], Date);
+		outtextxy(60, 230 + 25 * i, Date);
+		_stprintf(IntChange, _T("%04d"), DATA[Fly[Count]][n].ActuralDepartureTime);
+		outtextxy(180, 230 + 25 * i, IntChange);
+		_stprintf(IntChange, _T("%04d"), DATA[Fly[Count]][n].ActuralArrivalTime);
+		outtextxy(240, 230 + 25 * i, IntChange);
+		MatchTimeAccuracy(ID, DATA, n, Fly[Count], Accuracy, TextColor);
+		settextcolor(TextColor);
+		outtextxy(300, 230 + 25 * i, Accuracy);
+		settextcolor(BLACK);
+		if (JudgeAircraftSize(ID, n) == 2)
+		{
+			_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].FirstClassTicketRemain);
+			outtextxy(400, 230 + 25 * i, IntChange);
+			outtextxy(420, 230 + 25 * i, "/6");
+		}
+		else
+		{
+			outtextxy(400, 230 + 25 * i, " N/A");
+		}
+		_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].BusinessClassTicketRemain);
+		outtextxy(470, 230 + 25 * i, IntChange);
+		if (JudgeAircraftSize(ID, n) == 2)
+		{
+			outtextxy(490, 230 + 25 * i, "/36");
+		}
+		else
+		{
+			outtextxy(490, 230 + 25 * i, "/8");
+		}
+		_stprintf(IntChange, _T("%3d"), DATA[Fly[Count]][n].EconomyClassTicketRemain);
+		outtextxy(540, 230 + 25 * i, IntChange);
+		if (JudgeAircraftSize(ID, n) == 2)
+		{
+			outtextxy(570, 230 + 25 * i, "/400");
+		}
+		else
+		{
+			outtextxy(570, 230 + 25 * i, "/180");
+		}
+		Count++;
+	}
+	for (int i = 0; i < 18; i++)
+	{
+		if (Count == FlyDayCountAll)
+			break;
+		MatchDate(year, Fly[Count], Date);
+		outtextxy(60+610, 230 + 25 * i, Date);
+		_stprintf(IntChange, _T("%04d"), DATA[Fly[Count]][n].ActuralDepartureTime);
+		outtextxy(180 + 610, 230 + 25 * i, IntChange);
+		_stprintf(IntChange, _T("%04d"), DATA[Fly[Count]][n].ActuralArrivalTime);
+		outtextxy(240 + 610, 230 + 25 * i, IntChange);
+		MatchTimeAccuracy(ID, DATA, n, Fly[Count], Accuracy, TextColor);
+		settextcolor(TextColor);
+		outtextxy(300 + 610, 230 + 25 * i, Accuracy);
+		settextcolor(BLACK);
+		if (JudgeAircraftSize(ID, n) == 2)
+		{
+			_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].FirstClassTicketRemain);
+			outtextxy(400 + 610, 230 + 25 * i, IntChange);
+			outtextxy(420 + 610, 230 + 25 * i, "/6");
+		}
+		else
+		{
+			outtextxy(400 + 610, 230 + 25 * i, " N/A");
+		}
+		_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].BusinessClassTicketRemain);
+		outtextxy(470 + 610, 230 + 25 * i, IntChange);
+		if (JudgeAircraftSize(ID, n) == 2)
+		{
+			outtextxy(490 + 610, 230 + 25 * i, "/36");
+		}
+		else
+		{
+			outtextxy(490 + 610, 230 + 25 * i, "/8");
+		}
+		_stprintf(IntChange, _T("%3d"), DATA[Fly[Count]][n].EconomyClassTicketRemain);
+		outtextxy(540 + 610, 230 + 25 * i, IntChange);
+		if (JudgeAircraftSize(ID, n) == 2)
+		{
+			outtextxy(570 + 610, 230 + 25 * i, "/400");
+		}
+		else
+		{
+			outtextxy(570+610, 230 + 25 * i, "/180");
+		}
+		Count++;
+	}
+	return;	
 }
-void PrintTickstdetail(FlightID* ID, FlightTicket DATA[][999], int n)
+void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][699], int n)
 {
 	;
 }

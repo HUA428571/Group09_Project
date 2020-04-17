@@ -552,10 +552,10 @@ void MatchDate(int year, int  date, char* Date)//ÊäÈëÒ»Äê¿ªÊ¼µÄÌìÊı£¬·µ»Ø×Ö·û´®Ğ
 
 	if (year % 4 == 0 && year % 100 != 0)
 	{
-		for (int i = 1; i < 12; i++)
+		for (int i = 2; i < 12; i++)
 			mday[i]++;
 	}
-	for (int i = 11; i > 0; i--)
+	for (int i = 11; i >= 0; i--)
 	{
 		if ((date - mday[i]) >= 0)
 		{
@@ -574,55 +574,32 @@ void MatchDate(int year, int  date, char* Date)//ÊäÈëÒ»Äê¿ªÊ¼µÄÌìÊı£¬·µ»Ø×Ö·û´®Ğ
 	strcat(Date, IntChange);
 	return;
 }
-void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor)
+void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][699], int n, int day, char* ACCURACY, COLORREF& TextColor)
 {
+	time_t NOW;
+	tm* Local;
 	int Arrival;
-	if (DATA[day][n].ActuralDepartureTime == 2500)
+	int NowTime;//ËÄ×ÖÂë±íÊ¾µÄÏÖÔÚÊ±¼ä
+	NOW = time(NULL);
+	Local = localtime(&NOW);
+	NowTime = Local->tm_hour * 100 + Local->tm_min;
+	if (day > Local->tm_yday)//Î´À´µÄÈÕÆÚ
 	{
-		strcpy(ACCURACY, "º½°àÈ¡Ïû");
-		TextColor = RGB(220, 20, 60);//ÉèÖÃÑÕÉ«ÎªĞÉºì
+		strcpy(ACCURACY, "  ¼Æ»®");
+		TextColor = RGB(112, 128, 144);//ÉèÖÃÑÕÉ«ÎªÊ¯°å»Ò
 		return;
 	}
-	if ((ID[n].ArrivalTime / 100) >= 45)
-		Arrival = ID[n].ArrivalTime + 65;
-	else
-		Arrival = ID[n].ArrivalTime + 25;
-	if (DATA[day][n].ActuralArrivalTime > Arrival)
+	if (day == Local->tm_yday)//Èç¹ûÊÇ½ñÌì
 	{
-		strcpy(ACCURACY, "º½°àÑÓÎó");
-		TextColor = RGB(255, 165, 0);//ÉèÖÃÑÕÉ«Îª³ÈÉ«
-		return;
+		if (NowTime < DATA[day][n].ActuralArrivalTime)//·É»ú»¹Î´µ½´ï£¬
+		//µ±È»ÔÚÏÖÊµÉú»îÖĞÊÇ²»»á³öÏÖÕâ¸öÎÊÌâµÄ£¬Ã»µ½´ïµÄ·É»úÊÇ²»¿ÉÄÜÓĞÊµ¼Êµ½´ïÊ±¼äµÄ¡£
+		//µ«ÊÇ±¾³ÌĞòµÄÊı¾İ¿âÀïÖ±½Óµ¼ÈëÁË¼Æ»®Ê±¼ä×÷ÎªÊµ¼ÊÊ±¼ä£¬¹ÊĞèÒªÏÈÅÅ³ıÒ»ÏÂ¡£
+		{
+			strcpy(ACCURACY, "  ¼Æ»®");
+			TextColor = RGB(112, 128, 144);//ÉèÖÃÑÕÉ«ÎªÊ¯°å»Ò
+			return;
+		}
 	}
-	strcpy(ACCURACY, "Õıµãµ½´ï");
-	TextColor = RGB(0, 128, 0);//ÉèÖÃÑÕÉ«ÎªÂÌÉ«
-	return;
-}
-void MatchDepartureTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor)
-{
-	int Arrival;
-	if (DATA[day][n].ActuralDepartureTime == 2500)
-	{
-		strcpy(ACCURACY, "È¡Ïû");
-		TextColor = RGB(220, 20, 60);//ÉèÖÃÑÕÉ«ÎªĞÉºì
-		return;
-	}
-	if ((ID[n].ArrivalTime / 100) >= 45)
-		Arrival = ID[n].ArrivalTime + 65;
-	else
-		Arrival = ID[n].ArrivalTime + 25;
-	if (DATA[day][n].ActuralArrivalTime > Arrival)
-	{
-		strcpy(ACCURACY, "ÑÓÎó");
-		TextColor = RGB(255, 165, 0);//ÉèÖÃÑÕÉ«Îª³ÈÉ«
-		return;
-	}
-	strcpy(ACCURACY, "Õıµã");
-	TextColor = RGB(0, 128, 0);//ÉèÖÃÑÕÉ«ÎªÂÌÉ«
-	return;
-}
-void MatchArrivalTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor)
-{
-	int Arrival;
 	if (DATA[day][n].ActuralDepartureTime == 2500)
 	{
 		strcpy(ACCURACY, "º½°àÈ¡Ïû");
