@@ -16,6 +16,7 @@ int main()
 	static FlightID ID[699];//默认最多存储999个航线
 	static FlightTicket DATA[366][699];//存储一年的航班数
 	int FlightID_Count = 0;//存储当前航班号个数
+	int fail = 0;
 	char choice;
 	do {
 		cout << "导入默认数据(1)/上次保存数据(2)/不导入(N)？" << endl;
@@ -36,12 +37,12 @@ int main()
 			strcpy(TicketLication, ".\\Ticket.dat");
 		}
 		FlightID_Count = ImportFlightDatabase(ID, FlightLocation);
-		ImportTicketDatabase(DATA, FlightID_Count, TicketLication);
+		fail=ImportTicketDatabase(DATA, FlightID_Count, TicketLication);
 	}
-	if (FlightID_Count == -1)
+	if (FlightID_Count == -1||fail==-1)
 	{
-		cout << "无法打开文件！程序正在退出" << endl;
-		Sleep(500);
+		cout << "无法打开默认数据库文件！程序正在退出" << endl;
+		Sleep(1000);
 		exit(1);
 	}
 	cout << "成功导入" << FlightID_Count << "个航线数据！" << endl;

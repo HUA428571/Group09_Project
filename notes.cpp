@@ -284,13 +284,11 @@ int ImportTicketDatabase(FlightTicket DATA[][699], int IDcount, char* Location)
 	FILE* fp;
 	if ((fp = fopen(Location, "rb")) == NULL)
 	{
-		printf("Fail to open file!\n");
 		return -1;
 	}
 	fread(DATA, sizeof(FlightTicket), 366 * 699, fp);
 	fclose(fp);
 	return IDcount;
-
 }
 int SaveTicketDatabase(FlightTicket DATA[][699], int IDcount, char* Location)
 {

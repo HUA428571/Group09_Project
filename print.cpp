@@ -1,4 +1,135 @@
 #include"print.h"
+void PrintLoading()
+{
+	IMAGE Loading;
+	char Location[50];
+	char IntChange[4];
+	cleardevice();
+	for (int i = 0; i < 156; i++)
+	{
+		strcpy(Location, ".\\IMAGES\\Loading\\loading");
+		_stprintf(IntChange, _T("%03d"), i);
+		strcat(Location, IntChange);
+		strcat(Location, ".png");
+		loadimage(&Loading, Location, 800, 600);
+		putimage(240, 60, &Loading);
+		if (i < 60)
+			outtextxy(610, 550, "你好！");
+		else
+			outtextxy(480, 550, "欢迎访问管理员后台管理系统");
+		Sleep(8);
+	}
+	cleardevice();
+	for (int i = 0; i < 156; i++)
+	{
+		strcpy(Location, ".\\IMAGES\\Loading\\loading");
+		_stprintf(IntChange, _T("%03d"), i);
+		strcat(Location, IntChange);
+		strcat(Location, ".png");
+		loadimage(&Loading, Location, 800, 600);
+		putimage(240, 60, &Loading);
+		outtextxy(460, 550, "版权所有 CopyRight 2020 HuaCL");
+		Sleep(8);
+	}
+	cleardevice();
+	for (int i = 0; i < 156; i++)
+	{
+		strcpy(Location, ".\\IMAGES\\Loading\\loading");
+		_stprintf(IntChange, _T("%03d"), i);
+		strcat(Location, IntChange);
+		strcat(Location, ".png");
+		loadimage(&Loading, Location, 800, 600);
+		putimage(240, 60, &Loading);
+		if ((i / 20) % 5 == 0)
+			outtextxy(470, 550, "正在加载系统及数据，请稍候");
+		if ((i / 20) % 5 == 1)
+			outtextxy(468, 550, "正在加载系统及数据，请稍候.");
+		if ((i / 20) % 5 == 2)
+			outtextxy(466, 550, "正在加载系统及数据，请稍候..");
+		if ((i / 20) % 5 == 3)
+			outtextxy(464, 550, "正在加载系统及数据，请稍候...");
+		if ((i / 20) % 5 == 4)
+			outtextxy(462, 550, "正在加载系统及数据，请稍候....");
+		Sleep(8);
+	}
+}
+void PrintExit(FlightID* ID, FlightTicket DATA[][699],int IDcount)
+{
+	IMAGE Exit;
+	char Location[100];
+	char IntChange[8];
+	cleardevice();
+	setbkcolor(RGB(255, 255, 255));
+	for (int i = 0; i < 156; i++)
+	{
+		strcpy(Location, ".\\IMAGES\\Exit\\Exit");
+		_stprintf(IntChange, _T("%03d"), i);
+		strcat(Location, IntChange);
+		strcat(Location, ".png");
+		loadimage(&Exit, Location, 800, 600);
+		putimage(240, 60, &Exit);
+		outtextxy(480, 550, "正在退出管理员后台管理系统");
+		Sleep(8);
+	}
+	cleardevice();
+	for (int i = 0; i < 156; i++)
+	{
+		strcpy(Location, ".\\IMAGES\\Exit\\Exit");
+		_stprintf(IntChange, _T("%03d"), i);
+		strcat(Location, IntChange);
+		strcat(Location, ".png");
+		loadimage(&Exit, Location, 800, 600);
+		putimage(240, 60, &Exit);
+		outtextxy(460, 550, "版权所有 CopyRight 2020 HuaCL");
+		Sleep(8);
+	}
+	cleardevice();
+	for (int i = 0; i < 156; i++)
+	{
+		strcpy(Location, ".\\IMAGES\\Exit\\Exit");
+		_stprintf(IntChange, _T("%03d"), i);
+		strcat(Location, IntChange);
+		strcat(Location, ".png");
+		loadimage(&Exit, Location, 800, 600);
+		putimage(240, 60, &Exit);
+		if ((i / 20) % 5 == 0)
+			outtextxy(480, 550, "正在自动保存数据，请稍候");
+		if ((i / 20) % 5 == 1)
+			outtextxy(478, 550, "正在自动保存数据，请稍候.");
+		if ((i / 20) % 5 == 2)
+			outtextxy(476, 550, "正在自动保存数据，请稍候..");
+		if ((i / 20) % 5 == 3)
+			outtextxy(474, 550, "正在自动保存数据，请稍候...");
+		if ((i / 20) % 5 == 4)
+			outtextxy(472, 550, "正在自动保存数据，请稍候....");
+		Sleep(8);
+	}
+	time_t NOW;									//获取当前时间
+	tm* Local;
+	NOW = time(NULL);
+	Local = localtime(&NOW);
+	strcpy(Location, "AutoSAVE_FlightID_");
+	_stprintf(IntChange, _T("%4d"), Local->tm_year+1900);
+	strcat(Location, IntChange);
+	_stprintf(IntChange, _T("%02d"), Local->tm_mon+1);
+	strcat(Location, IntChange);
+	_stprintf(IntChange, _T("%02d"), Local->tm_mday);
+	strcat(Location, IntChange);
+	strcat(Location, ".txt");
+	SaveFlightDatabase(ID, IDcount, Location);
+	strcpy(Location, "AutoSAVE_Ticket_");
+	_stprintf(IntChange, _T("%4d"), Local->tm_year + 1900);
+	strcat(Location, IntChange);
+	_stprintf(IntChange, _T("%02d"), Local->tm_mon + 1);
+	strcat(Location, IntChange);
+	_stprintf(IntChange, _T("%02d"), Local->tm_mday);
+	strcat(Location, IntChange);
+	strcat(Location, ".dat");
+	SaveTicketDatabase(DATA, IDcount, Location);
+	return;
+}
+
+
 void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i)
 {
 	clearrectangle(380, 200, 1220, 720);
@@ -12,7 +143,7 @@ void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][699], int IDcount, int 
 	//putimage(0, 0, &BG);						// 更新背景
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	//char count[8];
@@ -20,7 +151,7 @@ void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][699], int IDcount, int 
 	//outtextxy(110, 200, "当前数据库中有");
 	//outtextxy(110, 230, count);
 	//outtextxy(162, 230, "个航线数据");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	char carrier[20];
 	char AircraftType[50];
 	char DepartureAirport[50];
@@ -104,7 +235,7 @@ int PrintSingleFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -112,7 +243,7 @@ int PrintSingleFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i
 	outtextxy(110, 200, "当前数据库中有");
 	outtextxy(110, 230, count);
 	outtextxy(162, 230, "个航线数据");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	outtextxy(380, 170, "共找到一个航班");
 	PrintFlightDetail(ID, DATA, IDcount, i);
 	PrintTimeAccuracyBar(ID, DATA, i);
@@ -152,7 +283,7 @@ int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* S
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -160,7 +291,7 @@ int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* S
 	outtextxy(110, 200, "当前数据库中有");
 	outtextxy(110, 230, count);
 	outtextxy(162, 230, "个航线数据");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	char IntChange[8];
 	int Page = (SearchCount - 1) / 15 + 1;
 	int CurrentPage = 1;
@@ -244,11 +375,11 @@ int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* S
 				putimage(0, 0, &BG);										//显示背景
 				putimage(1280 - 60 - 30, 165, &Back);						//返回键图片
 				putimage(100, 550, &TimeAccuracy);							//查询正晚点图片
-				settextstyle(25, 0, "黑体");
+				settextstyle(25, 0, FONT);
 				outtextxy(110, 200, "当前数据库中有");
 				outtextxy(110, 230, count);
 				outtextxy(162, 230, "个航线数据");
-				settextstyle(20, 0, "黑体");
+				settextstyle(20, 0, FONT);
 				outtextxy(380, 170, "共找到");
 				outtextxy(450, 170, IntChange);
 				outtextxy(485, 170, "个航班");
@@ -292,7 +423,7 @@ void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][699], int IDcount, i
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -300,7 +431,7 @@ void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][699], int IDcount, i
 	outtextxy(110, 200, "当前数据库中有");
 	outtextxy(110, 230, count);
 	outtextxy(162, 230, "个航线数据");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
 	char IntChange[8];
 	outtextxy(380, 170, "共找到");
@@ -361,7 +492,7 @@ void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][699], int n)
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char IntChange[8];
@@ -472,7 +603,7 @@ int PrintTicket(FlightID* ID, FlightTicket DATA[][699],int n)
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
@@ -725,3 +856,4 @@ void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][699], int n)
 {
 	;
 }
+

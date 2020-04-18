@@ -11,6 +11,10 @@
 #include<string>
 #include<stdlib.h>
 using namespace std;
+//加载动画800*600
+void PrintLoading();
+//退出加载动画
+void PrintExit(FlightID* ID, FlightTicket DATA[][699], int IDcount);
 //打印单个航线的详细信息:整页（航线数据数组，需要打印航班的数组下标）
 void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i);
 //打印单个航线（航线数据数组，需要打印航班的数组下标）

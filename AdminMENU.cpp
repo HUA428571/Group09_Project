@@ -13,23 +13,37 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 	// 用背景色清空屏幕
 	cleardevice();
 	settextcolor(BLACK);
-	//settextstyle(20, 0, _T("等线"));
+	//settextstyle(20, 0, _T(FONT));
 	//char s2[] = "欢迎访问管理员后台";
+
+
+	//LOGFONT format;
+	//gettextstyle(&format);						// 获取当前字体设置
+	//format.lfHeight = 25;						// 设置字体高度为 25
+	//_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
+	//format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	//settextstyle(&format);							// 设置字体样式
+	//outtextxy(20, 20, "你好！");
+	//Sleep(500);
+	//cleardevice();
+	//outtextxy(20, 20, "欢迎访问管理员后台管理系统");
+	//Sleep(1000);
+	//cleardevice();
+	//outtextxy(20, 20, "版权所有 CopyRight 2020 HuaCL");
+	//Sleep(1000);
+	//cleardevice();
+
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	settextstyle(&format);							// 设置字体样式
-	outtextxy(20, 20, "你好！");
-	Sleep(500);
-	cleardevice();
-	outtextxy(20, 20, "欢迎访问管理员后台管理系统");
-	Sleep(1000);
-	cleardevice();
-	outtextxy(20, 20, "版权所有 CopyRight 2020 HuaCL");
-	Sleep(1000);
-	cleardevice();
+	//format.lfWeight = FW_LIGHT;			// 设置字重为Light 
+	//format.lfOutPrecision = OUT_TT_PRECIS;
+	format.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
+	settextstyle(&format);						// 设置字体样式
+	PrintLoading();
+
 	IMAGE BG;
 	loadimage(&BG, _T(".\\IMAGES\\Home.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 显示背景
@@ -55,8 +69,7 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 			MENUchoice = AdminMENU_ChangeMENU(ID, DATA, IDcount);
 			break;
 		case 5:
-			//Resize(NULL,480, 640);
-			//_getch();
+			PrintExit(ID, DATA, IDcount);
 			closegraph();			// 关闭绘图窗口
 			return 0;
 		}
@@ -75,7 +88,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 	settextcolor(BLACK);
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	time_t NOW;
@@ -93,7 +106,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 	outtextxy(1173, 55, count);
 	outtextxy(1193, 55, "日");
 
-	settextstyle(25, 0, "黑体");
+	settextstyle(25, 0, FONT);
 	_stprintf(count, _T("%d"), IDcount);
 	outtextxy(110, 200, "当前数据库中有");
 	outtextxy(110, 230, count);
@@ -139,7 +152,7 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][69
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -151,7 +164,7 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][69
 	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
 	settextcolor(BLACK);
 	outtextxy(400, 240, "将从以下目录导入航线数据库：");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	outtextxy(400, 280, Location[0]);
 	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
 	switch (MENUchoice)
@@ -182,7 +195,7 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][69
 		}
 		else
 		{
-			settextstyle(25, 0, "黑体");
+			settextstyle(25, 0, FONT);
 			outtextxy(400, 200, "导入了");
 			char count[8];
 			_stprintf(count, _T("%d"), IDcount);
@@ -224,7 +237,7 @@ int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][69
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -236,7 +249,7 @@ int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][69
 	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
 	settextcolor(BLACK);
 	outtextxy(400, 240, "将从以下目录导入机票数据库：");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	outtextxy(400, 280, Location[1]);
 	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
 	switch (MENUchoice)
@@ -267,7 +280,7 @@ int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][69
 		}
 		else
 		{
-			settextstyle(25, 0, "黑体");
+			settextstyle(25, 0, FONT);
 			outtextxy(400, 200, "导入了全部机票数据库");
 			/*char count[8];
 			_stprintf(count, _T("%d"), IDcount);
@@ -308,7 +321,7 @@ int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][699]
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -320,7 +333,7 @@ int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][699]
 	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
 	settextcolor(BLACK);
 	outtextxy(400, 240, "将在以下目录导出航线数据库：");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	outtextxy(400, 280, Location[2]);
 	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
 	int success;
@@ -349,7 +362,7 @@ int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][699]
 		}
 		else
 		{
-			settextstyle(25, 0, "黑体");
+			settextstyle(25, 0, FONT);
 			outtextxy(400, 200, "导出了");
 			char count[8];
 			_stprintf(count, _T("%d"), IDcount);
@@ -390,7 +403,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][699]
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -402,7 +415,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][699]
 	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
 	settextcolor(BLACK);
 	outtextxy(400, 240, "将在以下目录导出机票数据库：");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	outtextxy(400, 280, Location[3]);
 	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
 	int success;
@@ -433,7 +446,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][699]
 		}
 		else
 		{
-			settextstyle(25, 0, "黑体");
+			settextstyle(25, 0, FONT);
 			outtextxy(400, 200, "导出了所有机票数据");
 			/*char count[8];
 			_stprintf(count, _T("%d"), IDcount);
@@ -474,7 +487,7 @@ int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][699], int IDcount)
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -486,7 +499,7 @@ int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][699], int IDcount)
 	outtextxy(162, 230, "个航线数据");
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	int SearchReasult[999];//用于存储搜索结果
@@ -631,7 +644,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -641,7 +654,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 	outtextxy(162, 230, "个航线数据");
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
@@ -702,7 +715,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 		IDcount++;
 		gettextstyle(&format);						// 获取当前字体设置
 		format.lfHeight = 25;						// 设置字体高度为 25
-		_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+		_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 		format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 		settextstyle(&format);						// 设置字体样式
 		char count[8];
@@ -727,7 +740,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 	settextcolor(BLACK);
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);							// 设置字体样式
 	char count[8];
@@ -772,7 +785,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 	}
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	_stprintf(count, _T("%d"), IDcount);
@@ -796,7 +809,7 @@ int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][699], int IDcount)
 	char count[8];
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);							// 设置字体样式
 	_stprintf(count, _T("%d"), IDcount);
