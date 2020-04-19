@@ -15,22 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="机场票务系统参考代码1.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="notes.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="mainTEMP.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="easyx演示代码.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="easyXclass.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="print.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="match.cpp">
@@ -45,8 +33,14 @@
     <ClCompile Include="AdminMENU.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="control.cpp">
+    <ClCompile Include="Source.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="print.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="机场票务系统参考代码1.cpp">
+      <Filter>资源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

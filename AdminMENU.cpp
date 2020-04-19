@@ -1,7 +1,6 @@
 #include"AdminMENU.h"
 
 int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
-
 {
 	int SearchReasult[999];//用于存储搜索结果
 	int SearchCount = 0;//存储搜索结果数
@@ -13,31 +12,11 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	// 用背景色清空屏幕
 	cleardevice();
 	settextcolor(BLACK);
-	//settextstyle(20, 0, _T(FONT));
-	//char s2[] = "欢迎访问管理员后台";
-
-
-	//LOGFONT format;
-	//gettextstyle(&format);						// 获取当前字体设置
-	//format.lfHeight = 25;						// 设置字体高度为 25
-	//_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
-	//format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	//settextstyle(&format);							// 设置字体样式
-	//outtextxy(20, 20, "你好！");
-	//Sleep(500);
-	//cleardevice();
-	//outtextxy(20, 20, "欢迎访问管理员后台管理系统");
-	//Sleep(1000);
-	//cleardevice();
-	//outtextxy(20, 20, "版权所有 CopyRight 2020 HuaCL");
-	//Sleep(1000);
-	//cleardevice();
-
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	//format.lfWeight = FW_LIGHT;			// 设置字重为Light 
+	//format.lfWeight = FW_LIGHT;				// 设置字重为Light 
 	//format.lfOutPrecision = OUT_TT_PRECIS;
 	format.lfPitchAndFamily = FIXED_PITCH;
 	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
@@ -485,11 +464,7 @@ int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 	IMAGE BG;
 	MOUSEMSG m;
 	LOGFONT format;
-	gettextstyle(&format);						// 获取当前字体设置
-	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
-	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	settextstyle(&format);						// 设置字体样式
+	settextstyle(25, 0, FONT);
 	char count[8];
 	_stprintf(count, _T("%d"), IDcount);
 	loadimage(&BG, _T(".\\IMAGES\\Search.png"), 1280, 720);
@@ -497,11 +472,7 @@ int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 	outtextxy(110, 200, "当前数据库中有");
 	outtextxy(110, 230, count);
 	outtextxy(162, 230, "个航线数据");
-	gettextstyle(&format);						// 获取当前字体设置
-	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
-	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	settextstyle(&format);						// 设置字体样式
+	settextstyle(20, 0, FONT);
 	int SearchReasult[999];//用于存储搜索结果
 	int SearchCount = 0;
 	int MENUchoice = AdminMENU_SearchMENU_MENUChoose();
@@ -560,11 +531,13 @@ int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int 
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
-	InputBox(search, 12, "请输入你想查询的航班号");
+	//InputBox(search, 12, "请输入你想查询的航班号");
+	C_InputBox(search, 11, 135, 300);
 	SearchFlightID(ID, search, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
 	switch (SearchCount)
 	{
 	case 0:
+		settextstyle(20, 0, FONT);
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:

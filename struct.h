@@ -3,7 +3,12 @@
 //#define FONT "OPPOSans M"
 //#define FONT "华文细黑"
 #define FONT "黑体"
+#define FONT2 "宋体"
+//#define FONT "宋体"
 //#define FONT "Source Han Sans"
+//#define FONT "Microsoft YaHei UI Light"
+//#define FONT "Microsoft YaHei UI"
+
 
 using namespace std;
 

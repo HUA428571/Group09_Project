@@ -1,7 +1,11 @@
 #pragma once
-#include <iostream>
+#include<iostream>
 #include<stdio.h>
 #include<string.h>
+#include<graphics.h>
+#include<easyx.h>
+#include<stdlib.h>
+#include<conio.h>
 #include"struct.h"
 
 using namespace std;
@@ -28,6 +32,8 @@ int SortByDepartureTime(FlightID*, int, int*);
 int SortByDepartureTime(FlightID* ID, int* SearchReasult, int SearchCount, int* SortReasult);
 int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete);
 int DeleteFlight(FlightID* ID, int& IDcount, int Delete);
+//输入框（输入内容，长度限制）
+int C_InputBox(char* Input, int Limit, int x, int y);
 //按照起飞时间排序
 int SaveFlightDatabase(FlightID*, int);
 

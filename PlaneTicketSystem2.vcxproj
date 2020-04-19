@@ -139,15 +139,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdminMENU.cpp" />
-    <ClCompile Include="control.cpp" />
-    <ClCompile Include="easyXclass.cpp" />
-    <ClCompile Include="easyx演示代码.cpp" />
     <ClCompile Include="mainTEMP.cpp" />
     <ClCompile Include="match.cpp" />
     <ClCompile Include="MENUchoose.cpp" />
     <ClCompile Include="notes.cpp" />
     <ClCompile Include="notes.h" />
     <ClCompile Include="print.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="机场票务系统参考代码1.cpp" />
   </ItemGroup>
   <ItemGroup>

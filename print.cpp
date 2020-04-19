@@ -1,10 +1,13 @@
 #include"print.h"
+//加载动画1280*720
 void PrintLoading()
 {
 	IMAGE Loading;
 	char Location[50];
 	char IntChange[4];
 	cleardevice();
+	settextstyle(25, 0, FONT2);
+	setbkcolor(RGB(255, 255, 255));
 	for (int i = 0; i < 156; i++)
 	{
 		strcpy(Location, ".\\IMAGES\\Loading\\loading");
@@ -52,13 +55,16 @@ void PrintLoading()
 			outtextxy(462, 550, "正在加载系统及数据，请稍候....");
 		Sleep(8);
 	}
+	settextstyle(25, 0, FONT);
 }
+//退出动画和自动保存1280*720（）
 void PrintExit(FlightID* ID, FlightTicket DATA[][999],int IDcount)
 {
 	IMAGE Exit;
 	char Location[100];
 	char IntChange[8];
 	cleardevice();
+	settextstyle(25, 0, FONT2);
 	setbkcolor(RGB(255, 255, 255));
 	for (int i = 0; i < 156; i++)
 	{
@@ -130,6 +136,7 @@ void PrintExit(FlightID* ID, FlightTicket DATA[][999],int IDcount)
 }
 
 
+//打印单个航线的详细信息:整页（航线数据数组，需要打印航班的数组下标）
 void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
 {
 	clearrectangle(380, 200, 1220, 720);
@@ -223,6 +230,7 @@ void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int 
 	outtextxy(860, 440, "分钟");
 	return;
 }
+//打印单个航线（航线数据数组，需要打印航班的数组下标）
 int PrintSingleFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
 {
 	cleardevice();
@@ -270,6 +278,7 @@ int PrintSingleFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i
 		}
 	}
 }
+//按页打印多个航线（航线数据数组，航线数据计数，搜索结果数组，搜索结果计数）
 int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int SearchCount)//返回菜单选择
 {
 	//clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
@@ -401,6 +410,7 @@ int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* S
 		}
 	}
 }
+//按页打印时的表格表头（）
 void PrintFlightTitle()
 {
 	outtextxy(380, 200, "航班号");
@@ -412,6 +422,7 @@ void PrintFlightTitle()
 	outtextxy(1140, 200, "飞行时间");
 	return;
 }
+//按页打印时的打印一页航线数据（航线数据数组，航线数据计数，搜索结果数组，搜索结果计数，当前页数，总页数）
 void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page)//page表示当前显示第几页
 {
 	cleardevice();
@@ -454,6 +465,7 @@ void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][999], int IDcount, i
 	}
 	return;
 }
+//打印单个航线的详细信息:一行（航线数据数组，航线数据计数，需要打印航班的数组下标，行数:x位置）
 void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i, int roll)
 {
 	char DepartureAirport[50];
@@ -480,12 +492,7 @@ void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, 
 }
 
 
-void PrintSearchDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
-{
-
-}
-
-
+//在详情页下方打印近期正晚点情况
 void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 {
 	clearrectangle(380, 500, 1220, 650);		//开始前把显示区域清空
@@ -577,6 +584,7 @@ void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 	}
 }
 
+//打印机票页标题栏
 void PrintTicketTitle()
 {
 		outtextxy(90, 200, "日期");
@@ -594,6 +602,7 @@ void PrintTicketTitle()
 		outtextxy(475 + 610, 200, "商务");
 		outtextxy(555 + 610, 200, "经济");
 }
+//打印每日机票详细信息
 int PrintTicket(FlightID* ID, FlightTicket DATA[][999],int n)
 {
 	cleardevice();
@@ -735,6 +744,7 @@ int PrintTicket(FlightID* ID, FlightTicket DATA[][999],int n)
 		}
 	}
 }
+//打印每日机票详细信息:整页
 void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n,int Page,int CurrentPage, int FlyDayCountAll)
 {
 	clearrectangle(60, 230, 1220, 720);//开始前把显示区域清空
@@ -852,8 +862,13 @@ void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n,int 
 	}
 	return;	
 }
+//打印每日机票详细信息：座位表等
 void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][999], int n)
 {
 	;
 }
 
+void PrintSearchBG(int IDcount)
+{
+
+}

@@ -1,13 +1,16 @@
 ﻿#pragma once
-#define BUFF_LEN 11 // 12 may fix the Run-Time Check Failure #2 
+//#define BUFF_LEN 11 // 12 may fix the Run-Time Check Failure #2 
 #include"notes.h"
 #include"print.h"
 #include"AdminMENU.h"
-//#include"easyXclass.cpp"
 using namespace std;
 //管理员菜单界面
 
-//char Input();
+
+
+
+
+
 
 int main()
 {
@@ -81,42 +84,3 @@ int main()
 
 	return 0;
 }
-
-//char Input()
-//{
-//	char c = 0;
-//
-//	if (_kbhit())
-//	{
-//		c = _getwch();
-//		if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) && c != 8)
-//			c = 0;
-//	}
-//	return c;
-//}
-//void InputBox()
-//{
-//
-//	static int fps = 0;				// 统计字母个数计算光标位置
-//	int		m_x1 = 140, m_y1 = 260, m_x2 = 340, m_y2 = 290;
-//	// 设置文字输出样式
-//	settextstyle(20, 0, "Verdana");
-//
-//	// 画边框
-//	setlinecolor(WHITE);
-//	rectangle(m_x1, m_y1, m_x2, m_y2);
-//
-//	// 输出用户输入的字符串
-//	outtextxy(m_x1 + 30, m_y1 + (m_y2 - m_y1 - 20) / 2, m_text);
-//	// 绘制光标 
-//	fps++;
-//	if (fps < (m_fps / 4))
-//	{
-//		setlinecolor(WHITE);
-//		int sx = m_x1 + 31 + textwidth(m_text);
-//		line(sx, m_y1 + (m_y2 - m_y1 - 20) / 2, sx, m_y1 + (m_y2 - m_y1 - 20) / 2 + 20);
-//	}
-//	else if (fps > (m_fps / 2))
-//		fps = 0;
-//
-//}

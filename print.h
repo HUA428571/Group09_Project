@@ -11,9 +11,9 @@
 #include<string>
 #include<stdlib.h>
 using namespace std;
-//加载动画800*600
+//加载动画1280*720
 void PrintLoading();
-//退出加载动画
+//退出动画和自动保存1280*720（）
 void PrintExit(FlightID* ID, FlightTicket DATA[][999], int IDcount);
 //打印单个航线的详细信息:整页（航线数据数组，需要打印航班的数组下标）
 void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i);
@@ -27,15 +27,16 @@ void PrintFlightTitle();
 void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page);
 //打印单个航线的详细信息:一行（航线数据数组，航线数据计数，需要打印航班的数组下标，行数:x位置）
 void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i, int roll);
-//作废
-void PrintSearchDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i);
 //在详情页下方打印近期正晚点情况
 void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int i);
-//打印机票页标题栏
+//打印每日机票页标题栏
 void PrintTicketTitle();
-//
+//打印每日机票详细信息
 int PrintTicket(FlightID* ID, FlightTicket DATA[][999], int n);
-//
+//打印每日机票详细信息:整页
 void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n, int Page, int CurrentPage, int FlyDayCountAll);
-//打印标题栏
+//打印每日机票详细信息：座位表等
+void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][999], int n);
+//打印搜索页背景
+void PrintSearchBG(int IDcount);
 

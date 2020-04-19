@@ -553,3 +553,48 @@ int DeleteFlight(FlightID* ID, int& IDcount, int Delete)
 	IDcount--;
 	return IDcount;
 }
+
+int C_InputBox(char* Input, int Limit, int x, int y)
+{
+	clearrectangle(x, y, x + 160, y + 40);
+	fflush(stdin);
+	char c;
+	int Length=0;
+	char InputBuf[100] = { '\0' };
+	settextstyle(25, 0, "Consolas");
+	while (true)
+	{
+		c = _getch();
+		if (c != 13)//如果输入的不是回车
+		{
+			if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
+			{
+				if (Length == Limit - 1)
+				{
+					;
+				}
+				else
+				{
+					InputBuf[Length] = c;
+					InputBuf[Length + 1] = '\0';
+					outtextxy(x + 10 + 10 * Length, y + 8, c);
+					Length++;
+				}
+			}
+			if (c == 8)
+			{
+				if (Length != 0)
+				{
+					InputBuf[Length] = '\0';
+					Length--;
+					clearrectangle(x + 10 + 10 * Length, y, x + 20 + 10 * Length, y + 40);
+				}
+			}
+		}
+		else
+		{
+			strcpy(Input, InputBuf);
+			return Length;
+		}
+	}
+}
