@@ -279,27 +279,25 @@ int SaveFlightDatabase(FlightID* ID, int IDcount, char* Location)
 	fclose(fp);
 	return IDcount;
 }
-int ImportTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
+int ImportTicketDatabase(FlightTicket DATA[][699], int IDcount, char* Location)
 {
 	FILE* fp;
 	if ((fp = fopen(Location, "rb")) == NULL)
 	{
-		printf("Fail to open file!\n");
 		return -1;
 	}
-	fread(DATA, sizeof(FlightTicket), 366 * 999, fp);
+	fread(DATA, sizeof(FlightTicket), 366 * 699, fp);
 	fclose(fp);
 	return IDcount;
-
 }
-int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
+int SaveTicketDatabase(FlightTicket DATA[][699], int IDcount, char* Location)
 {
 	FILE* fp;
 	if ((fp = fopen(Location, "wb")) == NULL)
 	{
 		return -1;
 	}
-	fwrite(DATA, sizeof(FlightTicket), 366 * 999, fp);
+	fwrite(DATA, sizeof(FlightTicket), 366 * 699, fp);
 	fclose(fp);
 	return IDcount;
 }
@@ -533,7 +531,7 @@ int SortByDepartureTime(FlightID* ID, int* SearchReasult, int SearchCount, int* 
 }
 
 //重载，当添加航班取消时使用第二个
-int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete)
+int DeleteFlight(FlightID* ID, FlightTicket DATA[][699], int& IDcount, int Delete)
 {
 	for (int i = Delete; i < IDcount; i++)
 	{

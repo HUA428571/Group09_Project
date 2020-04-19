@@ -1,6 +1,6 @@
 #include"AdminMENU.h"
 
-int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
+int AdminMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 
 {
 	int SearchReasult[999];//用于存储搜索结果
@@ -13,23 +13,37 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	// 用背景色清空屏幕
 	cleardevice();
 	settextcolor(BLACK);
-	//settextstyle(20, 0, _T("等线"));
+	//settextstyle(20, 0, _T(FONT));
 	//char s2[] = "欢迎访问管理员后台";
+
+
+	//LOGFONT format;
+	//gettextstyle(&format);						// 获取当前字体设置
+	//format.lfHeight = 25;						// 设置字体高度为 25
+	//_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
+	//format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	//settextstyle(&format);							// 设置字体样式
+	//outtextxy(20, 20, "你好！");
+	//Sleep(500);
+	//cleardevice();
+	//outtextxy(20, 20, "欢迎访问管理员后台管理系统");
+	//Sleep(1000);
+	//cleardevice();
+	//outtextxy(20, 20, "版权所有 CopyRight 2020 HuaCL");
+	//Sleep(1000);
+	//cleardevice();
+
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	settextstyle(&format);							// 设置字体样式
-	outtextxy(20, 20, "你好！");
-	Sleep(500);
-	cleardevice();
-	outtextxy(20, 20, "欢迎访问管理员后台管理系统");
-	Sleep(1000);
-	cleardevice();
-	outtextxy(20, 20, "版权所有 CopyRight 2020 HuaCL");
-	Sleep(1000);
-	cleardevice();
+	//format.lfWeight = FW_LIGHT;			// 设置字重为Light 
+	//format.lfOutPrecision = OUT_TT_PRECIS;
+	format.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
+	settextstyle(&format);						// 设置字体样式
+	PrintLoading();
+
 	IMAGE BG;
 	loadimage(&BG, _T(".\\IMAGES\\Home.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 显示背景
@@ -55,14 +69,13 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 			MENUchoice = AdminMENU_ChangeMENU(ID, DATA, IDcount);
 			break;
 		case 5:
-			//Resize(NULL,480, 640);
-			//_getch();
+			PrintExit(ID, DATA, IDcount);
 			closegraph();			// 关闭绘图窗口
 			return 0;
 		}
 	}
 }
-int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
+int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -75,7 +88,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	settextcolor(BLACK);
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	time_t NOW;
@@ -93,7 +106,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	outtextxy(1173, 55, count);
 	outtextxy(1193, 55, "日");
 
-	settextstyle(25, 0, "黑体");
+	settextstyle(25, 0, FONT);
 	_stprintf(count, _T("%d"), IDcount);
 	outtextxy(110, 200, "当前数据库中有");
 	outtextxy(110, 230, count);
@@ -127,7 +140,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	}
 	return AdminMENU_MENUChoose();
 }
-int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][999], int& IDcount, char Location[][100])
+int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][699], int& IDcount, char Location[][100])
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -139,7 +152,7 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][99
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -151,7 +164,7 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][99
 	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
 	settextcolor(BLACK);
 	outtextxy(400, 240, "将从以下目录导入航线数据库：");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	outtextxy(400, 280, Location[0]);
 	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
 	switch (MENUchoice)
@@ -182,7 +195,7 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][99
 		}
 		else
 		{
-			settextstyle(25, 0, "黑体");
+			settextstyle(25, 0, FONT);
 			outtextxy(400, 200, "导入了");
 			char count[8];
 			_stprintf(count, _T("%d"), IDcount);
@@ -198,11 +211,21 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][99
 		return 0;
 	case 59:
 		clearrectangle(400, 200, 1220, 400);
-		InputBox(Location[0], 100, "请输入新的文件路径：");
+		char LocationTEMP[100] = "\0";
+		InputBox(LocationTEMP, 100, "请输入新的文件路径：");
+		if (LocationTEMP[1] == 0)//如果输入为空，则返回原有目录
+		{
+			outtextxy(400, 280, "无效的目录！");
+			Sleep(50);
+		}
+		else
+		{
+			strcpy(Location[0], LocationTEMP);
+		}
 		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount, Location);
 	}
 }
-int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount, char Location[][100])
+int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][699], int IDcount, char Location[][100])
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -214,7 +237,7 @@ int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][99
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -226,7 +249,7 @@ int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][99
 	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
 	settextcolor(BLACK);
 	outtextxy(400, 240, "将从以下目录导入机票数据库：");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	outtextxy(400, 280, Location[1]);
 	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
 	switch (MENUchoice)
@@ -257,7 +280,7 @@ int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][99
 		}
 		else
 		{
-			settextstyle(25, 0, "黑体");
+			settextstyle(25, 0, FONT);
 			outtextxy(400, 200, "导入了全部机票数据库");
 			/*char count[8];
 			_stprintf(count, _T("%d"), IDcount);
@@ -272,11 +295,21 @@ int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][99
 		return 0;
 	case 59:
 		clearrectangle(400, 200, 1220, 400);
-		InputBox(Location[1], 100, "请输入新的文件路径：");
+		char LocationTEMP[100] = "\0";
+		InputBox(LocationTEMP, 100, "请输入新的文件路径：");
+		if (LocationTEMP[1] == 0)//如果输入为空，则返回原有目录
+		{
+			outtextxy(400, 280, "无效的目录！");
+			Sleep(50);
+		}
+		else
+		{
+			strcpy(Location[1], LocationTEMP);
+		}
 		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount, Location);
 	}
 }
-int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount, char Location[][100])
+int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][699], int IDcount, char Location[][100])
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -288,7 +321,7 @@ int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][999]
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -300,7 +333,7 @@ int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][999]
 	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
 	settextcolor(BLACK);
 	outtextxy(400, 240, "将在以下目录导出航线数据库：");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	outtextxy(400, 280, Location[2]);
 	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
 	int success;
@@ -329,7 +362,7 @@ int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][999]
 		}
 		else
 		{
-			settextstyle(25, 0, "黑体");
+			settextstyle(25, 0, FONT);
 			outtextxy(400, 200, "导出了");
 			char count[8];
 			_stprintf(count, _T("%d"), IDcount);
@@ -344,11 +377,21 @@ int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][999]
 		return 0;
 	case 59:
 		clearrectangle(400, 200, 1220, 400);
-		InputBox(Location[2], 100, "请输入新的文件路径：");
+		char LocationTEMP[100] = "\0";
+		InputBox(LocationTEMP, 100, "请输入新的文件路径：");
+		if (LocationTEMP[1] == 0)//如果输入为空，则返回原有目录
+		{
+			outtextxy(400, 280, "无效的目录！");
+			Sleep(50);
+		}
+		else
+		{
+			strcpy(Location[2], LocationTEMP);
+		}
 		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount, Location);
 	}
 }
-int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount, char Location[][100])
+int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][699], int IDcount, char Location[][100])
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -360,7 +403,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999]
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -372,7 +415,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999]
 	outtextxy(400, 200, "特别提示：请注意航线与航班数据库的匹配");
 	settextcolor(BLACK);
 	outtextxy(400, 240, "将在以下目录导出机票数据库：");
-	settextstyle(20, 0, "黑体");
+	settextstyle(20, 0, FONT);
 	outtextxy(400, 280, Location[3]);
 	int MENUchoice = AdminMENU_MainMENU_Import_MENUChoose();
 	int success;
@@ -403,7 +446,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999]
 		}
 		else
 		{
-			settextstyle(25, 0, "黑体");
+			settextstyle(25, 0, FONT);
 			outtextxy(400, 200, "导出了所有机票数据");
 			/*char count[8];
 			_stprintf(count, _T("%d"), IDcount);
@@ -418,13 +461,23 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999]
 		return 0;
 	case 59:
 		clearrectangle(400, 200, 1220, 400);
-		InputBox(Location[3], 100, "请输入新的文件路径：");
+		char LocationTEMP[100] = "\0";
+		InputBox(LocationTEMP, 100, "请输入新的文件路径：");
+		if (LocationTEMP[1] == 0)//如果输入为空，则返回原有目录
+		{
+			outtextxy(400, 280, "无效的目录！");
+			Sleep(50);
+		}
+		else
+		{
+			strcpy(Location[3], LocationTEMP);
+		}
 		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount, Location);
 	}
 }
 
 
-int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
+int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][699], int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -434,7 +487,7 @@ int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -446,7 +499,7 @@ int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 	outtextxy(162, 230, "个航线数据");
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	int SearchReasult[999];//用于存储搜索结果
@@ -503,7 +556,7 @@ int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 	//	textbox.Draw();
 	//}
 }
-int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
@@ -515,14 +568,13 @@ int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int 
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, DATA, IDcount,SearchReasult[0]);
-		break;
+		return PrintSingleFlight(ID, DATA, IDcount,SearchReasult[0]);
 	default:
 		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
-int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
@@ -534,14 +586,13 @@ int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DAT
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, DATA,IDcount, SearchReasult[0]);
-		break;
+		return PrintSingleFlight(ID, DATA,IDcount, SearchReasult[0]);
 	default:
 		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
-int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
@@ -553,14 +604,13 @@ int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
-		break;
+		return PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
 	default:
 		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
-int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char Departure[12];
@@ -574,8 +624,7 @@ int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, Flight
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
-		break;
+		return PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
 	default:
 		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
@@ -583,7 +632,7 @@ int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, Flight
 }
 
 
-int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
+int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -595,7 +644,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char count[8];
@@ -605,7 +654,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	outtextxy(162, 230, "个航线数据");
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
@@ -666,7 +715,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 		IDcount++;
 		gettextstyle(&format);						// 获取当前字体设置
 		format.lfHeight = 25;						// 设置字体高度为 25
-		_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+		_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 		format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 		settextstyle(&format);						// 设置字体样式
 		char count[8];
@@ -679,7 +728,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 }
 
 
-int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
+int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -691,7 +740,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	settextcolor(BLACK);
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);							// 设置字体样式
 	char count[8];
@@ -736,7 +785,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	}
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	_stprintf(count, _T("%d"), IDcount);
@@ -747,7 +796,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 }
 
 
-int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
+int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][699], int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -760,7 +809,7 @@ int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 	char count[8];
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);							// 设置字体样式
 	_stprintf(count, _T("%d"), IDcount);

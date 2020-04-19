@@ -1,5 +1,10 @@
 #pragma once
 #include<iostream>
+//#define FONT "OPPOSans M"
+//#define FONT "华文细黑"
+#define FONT "黑体"
+//#define FONT "Source Han Sans"
+
 using namespace std;
 
 typedef struct FlightID //用于表示航班号，航班号只代表航班基本信息。
