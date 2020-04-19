@@ -20,7 +20,7 @@ void MatchFlyDay(char* flyday, char* FLYDAY);
 //将日期输出为中文字符串（输入字符串，输出字符串）
 void MatchDate(int year, int date, char* Date);
 //计算正晚点情况并返回字符串（航线数据库，航班数据库，航线数据下标，查询日期，返回字符串）
-void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][699], int n, int day, char* ACCURACY, COLORREF& TextColor);
+void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor);
 
 //void MatchDepartureTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor);
 

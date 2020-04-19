@@ -53,7 +53,7 @@ void PrintLoading()
 		Sleep(8);
 	}
 }
-void PrintExit(FlightID* ID, FlightTicket DATA[][699],int IDcount)
+void PrintExit(FlightID* ID, FlightTicket DATA[][999],int IDcount)
 {
 	IMAGE Exit;
 	char Location[100];
@@ -130,7 +130,7 @@ void PrintExit(FlightID* ID, FlightTicket DATA[][699],int IDcount)
 }
 
 
-void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i)
+void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
 {
 	clearrectangle(380, 200, 1220, 720);
 	//cleardevice();
@@ -223,7 +223,7 @@ void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][699], int IDcount, int 
 	outtextxy(860, 440, "分钟");
 	return;
 }
-int PrintSingleFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i)
+int PrintSingleFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
 {
 	cleardevice();
 	IMAGE BG;
@@ -270,7 +270,7 @@ int PrintSingleFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i
 		}
 	}
 }
-int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int SearchCount)//返回菜单选择
+int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int SearchCount)//返回菜单选择
 {
 	//clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
 	cleardevice();
@@ -412,7 +412,7 @@ void PrintFlightTitle()
 	outtextxy(1140, 200, "飞行时间");
 	return;
 }
-void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page)//page表示当前显示第几页
+void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page)//page表示当前显示第几页
 {
 	cleardevice();
 	IMAGE BG;
@@ -454,7 +454,7 @@ void PrintMultiFlightPage(FlightID* ID, FlightTicket DATA[][699], int IDcount, i
 	}
 	return;
 }
-void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i, int roll)
+void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i, int roll)
 {
 	char DepartureAirport[50];
 	char ArrivalAirport[50];
@@ -480,13 +480,13 @@ void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][699], int IDcount, 
 }
 
 
-void PrintSearchDetail(FlightID* ID, FlightTicket DATA[][699], int IDcount, int i)
+void PrintSearchDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
 {
 
 }
 
 
-void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][699], int n)
+void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 {
 	clearrectangle(380, 500, 1220, 650);		//开始前把显示区域清空
 	LOGFONT format;
@@ -594,7 +594,7 @@ void PrintTicketTitle()
 		outtextxy(475 + 610, 200, "商务");
 		outtextxy(555 + 610, 200, "经济");
 }
-int PrintTicket(FlightID* ID, FlightTicket DATA[][699],int n)
+int PrintTicket(FlightID* ID, FlightTicket DATA[][999],int n)
 {
 	cleardevice();
 	IMAGE BG;									//背景图片
@@ -735,7 +735,7 @@ int PrintTicket(FlightID* ID, FlightTicket DATA[][699],int n)
 		}
 	}
 }
-void PrintTicketPage(FlightID* ID, FlightTicket DATA[][699], int* Fly,int n,int Page,int CurrentPage, int FlyDayCountAll)
+void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n,int Page,int CurrentPage, int FlyDayCountAll)
 {
 	clearrectangle(60, 230, 1220, 720);//开始前把显示区域清空
 	IMAGE PageChoiceImage;
@@ -852,7 +852,7 @@ void PrintTicketPage(FlightID* ID, FlightTicket DATA[][699], int* Fly,int n,int 
 	}
 	return;	
 }
-void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][699], int n)
+void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][999], int n)
 {
 	;
 }

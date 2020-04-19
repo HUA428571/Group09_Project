@@ -26,16 +26,16 @@ int PrintSearch(FlightID*, int, int*, int&);//展示查询的结果
 int NewFlight(FlightID*, int&);//创建新航线
 int SortByDepartureTime(FlightID*, int, int*);
 int SortByDepartureTime(FlightID* ID, int* SearchReasult, int SearchCount, int* SortReasult);
-int DeleteFlight(FlightID* ID, FlightTicket DATA[][699], int& IDcount, int Delete);
+int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete);
 int DeleteFlight(FlightID* ID, int& IDcount, int Delete);
 //按照起飞时间排序
 int SaveFlightDatabase(FlightID*, int);
 
 int SaveFlightDatabase(FlightID* ID, int IDcount, char* Location);
 
-int ImportTicketDatabase(FlightTicket DATA[][699], int IDcount, char* Location);
+int ImportTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
 
-int SaveTicketDatabase(FlightTicket DATA[][699], int IDcount, char* Location);
+int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
 
 
 

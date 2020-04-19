@@ -574,7 +574,7 @@ void MatchDate(int year, int  date, char* Date)//ÊäÈëÒ»Äê¿ªÊ¼µÄÌìÊý£¬·µ»Ø×Ö·û´®Ð
 	strcat(Date, IntChange);
 	return;
 }
-void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][699], int n, int day, char* ACCURACY, COLORREF& TextColor)
+void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor)
 {
 	time_t NOW;
 	tm* Local;

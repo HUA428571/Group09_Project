@@ -1,6 +1,6 @@
 #include"AdminMENU.h"
 
-int AdminMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
+int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 
 {
 	int SearchReasult[999];//用于存储搜索结果
@@ -75,7 +75,7 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 		}
 	}
 }
-int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
+int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -140,7 +140,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 	}
 	return AdminMENU_MENUChoose();
 }
-int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][699], int& IDcount, char Location[][100])
+int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][999], int& IDcount, char Location[][100])
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -225,7 +225,7 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][69
 		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount, Location);
 	}
 }
-int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][699], int IDcount, char Location[][100])
+int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount, char Location[][100])
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -309,7 +309,7 @@ int AdminMENU_MainMENU_ImportTicketDatabase(FlightID* ID, FlightTicket DATA[][69
 		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount, Location);
 	}
 }
-int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][699], int IDcount, char Location[][100])
+int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount, char Location[][100])
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -391,7 +391,7 @@ int AdminMENU_MainMENU_SaveFlightDatabase(FlightID* ID, FlightTicket DATA[][699]
 		return AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount, Location);
 	}
 }
-int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][699], int IDcount, char Location[][100])
+int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999], int IDcount, char Location[][100])
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -477,7 +477,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][699]
 }
 
 
-int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][699], int IDcount)
+int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -556,7 +556,7 @@ int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][699], int IDcount)
 	//	textbox.Draw();
 	//}
 }
-int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
@@ -574,7 +574,7 @@ int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][699], int 
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
-int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
@@ -592,7 +592,7 @@ int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DAT
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
-int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char search[12];
@@ -610,7 +610,7 @@ int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
-int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, FlightTicket DATA[][699], int IDcount, int* SearchReasult, int& SearchCount)
+int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
 	clearrectangle(380, 170, 1220, 680);
 	char Departure[12];
@@ -632,7 +632,7 @@ int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, Flight
 }
 
 
-int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
+int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -728,7 +728,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 }
 
 
-int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
+int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -796,7 +796,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][699], int& IDcount)
 }
 
 
-int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][699], int IDcount)
+int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));

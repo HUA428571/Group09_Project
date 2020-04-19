@@ -13,8 +13,8 @@ int main()
 {
 
 	//所有的XXcount都是个数，不是对应下标！下标要减一
-	static FlightID ID[699];//默认最多存储999个航线
-	static FlightTicket DATA[366][699];//存储一年的航班数
+	static FlightID ID[999];//默认最多存储999个航线
+	static FlightTicket DATA[366][999];//存储一年的航班数
 	int FlightID_Count = 0;//存储当前航班号个数
 	int fail = 0;
 	char choice;
@@ -37,9 +37,9 @@ int main()
 			strcpy(TicketLication, ".\\Ticket.dat");
 		}
 		FlightID_Count = ImportFlightDatabase(ID, FlightLocation);
-		fail=ImportTicketDatabase(DATA, FlightID_Count, TicketLication);
+		fail = ImportTicketDatabase(DATA, FlightID_Count, TicketLication);
 	}
-	if (FlightID_Count == -1||fail==-1)
+	if (FlightID_Count == -1 || fail == -1)
 	{
 		cout << "无法打开默认数据库文件！程序正在退出" << endl;
 		Sleep(1000);
@@ -47,8 +47,8 @@ int main()
 	}
 	cout << "成功导入" << FlightID_Count << "个航线数据！" << endl;
 	//int SearchReasult[999];//用于存储搜索结果
-		//int SearchCount = 0;//存储搜索结果数
-		//int SortReasult[999];//用于存储排序后的顺序，这样就不会更改原有的结构体数组顺序，不影响下标访问。
+	//int SearchCount = 0;//存储搜索结果数
+	//int SortReasult[999];//用于存储排序后的顺序，这样就不会更改原有的结构体数组顺序，不影响下标访问。
 
 	//cout << sizeof(DATA) << endl;
 
