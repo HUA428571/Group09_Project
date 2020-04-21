@@ -2,13 +2,11 @@
 
 int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
-	int SearchReasult[999];//用于存储搜索结果
-	int SearchCount = 0;//存储搜索结果数
-	int SortReasult[999];//用于存储排序后的顺序，这样就不会更改原有的结构体数组顺序，不影响下标访问。
 	//Resize();
 	initgraph(1280, 720, EW_SHOWCONSOLE | EW_NOCLOSE);	// 创建绘图窗口，大小为 1280x720 像素
 	// 设置背景色为淡白色
 	setbkcolor(RGB(255, 255, 253));
+	setbkmode(TRANSPARENT);
 	// 用背景色清空屏幕
 	cleardevice();
 	settextcolor(BLACK);
@@ -47,8 +45,12 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 		case 4:
 			MENUchoice = AdminMENU_ChangeMENU(ID, DATA, IDcount);
 			break;
-		case 5:
-			PrintExit(ID, DATA, IDcount);
+		case 61:
+			PrintExit_AutoSAVE(ID, DATA, IDcount);
+			closegraph();			// 关闭绘图窗口
+			return 0;
+		case 62:
+			PrintExit();
 			closegraph();			// 关闭绘图窗口
 			return 0;
 		}
@@ -56,40 +58,7 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 }
 int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
-	cleardevice();
-	setbkcolor(RGB(255, 255, 253));
-	setbkmode(TRANSPARENT);
-	IMAGE BG;
-	MOUSEMSG m;
-	LOGFONT format;
-	loadimage(&BG, _T(".\\IMAGES\\Home.png"), 1280, 720);
-	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
-	settextcolor(BLACK);
-	gettextstyle(&format);						// 获取当前字体设置
-	format.lfHeight = 20;						// 设置字体高度为 20
-	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
-	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	settextstyle(&format);						// 设置字体样式
-	time_t NOW;
-	tm* Local;
-	NOW = time(NULL);
-	Local = localtime(&NOW);
-	char count[8];
-	_stprintf(count, _T("%d"), Local->tm_year + 1900);
-	outtextxy(1073, 55, count);
-	outtextxy(1113, 55, "年");
-	_stprintf(count, _T("%2d"), Local->tm_mon + 1);
-	outtextxy(1133, 55, count);
-	outtextxy(1153, 55, "月");
-	_stprintf(count, _T("%2d"), Local->tm_mday);
-	outtextxy(1173, 55, count);
-	outtextxy(1193, 55, "日");
-
-	settextstyle(25, 0, FONT);
-	_stprintf(count, _T("%d"), IDcount);
-	outtextxy(110, 200, "当前数据库中有");
-	outtextxy(110, 230, count);
-	outtextxy(162, 230, "个航线数据");
+	PrintHomeBG(IDcount);
 	char Location[4][100] = { ".\\Default_FlightID_Database_NEW.txt",".\\Default_Ticket_Database.dat",".\\FlightID.txt",".\\Ticket.dat" };
 	int MENUchoice = AdminMENU_MainMENU_MENUChoose();
 	while (true)
@@ -101,7 +70,8 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 		case 2:
 		case 3:
 		case 4:
-		case 5:
+		case 61:
+		case 62:
 			return MENUchoice;
 		case 51:
 			MENUchoice = AdminMENU_MainMENU_ImportFlightDatabase(ID, DATA, IDcount, Location);
@@ -458,21 +428,7 @@ int AdminMENU_MainMENU_SaveTicketDatabase(FlightID* ID, FlightTicket DATA[][999]
 
 int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 {
-	cleardevice();
-	setbkcolor(RGB(255, 255, 253));
-	settextcolor(BLACK);
-	IMAGE BG;
-	MOUSEMSG m;
-	LOGFONT format;
-	settextstyle(25, 0, FONT);
-	char count[8];
-	_stprintf(count, _T("%d"), IDcount);
-	loadimage(&BG, _T(".\\IMAGES\\Search.png"), 1280, 720);
-	putimage(0, 0, &BG);						// 更新背景
-	outtextxy(110, 200, "当前数据库中有");
-	outtextxy(110, 230, count);
-	outtextxy(162, 230, "个航线数据");
-	settextstyle(20, 0, FONT);
+	PrintSearchBG(IDcount);
 	int SearchReasult[999];//用于存储搜索结果
 	int SearchCount = 0;
 	int MENUchoice = AdminMENU_SearchMENU_MENUChoose();
@@ -529,15 +485,17 @@ int AdminMENU_SearchMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 }
 int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
-	clearrectangle(380, 170, 1220, 680);
+	PrintSearchBG(IDcount);
 	char search[12];
 	//InputBox(search, 12, "请输入你想查询的航班号");
-	C_InputBox(search, 11, 135, 300);
+	C_InputBox(search, 11, 135, 300, "CA101");
 	SearchFlightID(ID, search, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
+	PrintProcess();
 	switch (SearchCount)
 	{
 	case 0:
-		settextstyle(20, 0, FONT);
+		settextstyle(25, 0, FONT);
+		PrintSearchBG(IDcount);
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
@@ -549,13 +507,17 @@ int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int 
 }
 int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
-	clearrectangle(380, 170, 1220, 680);
+	PrintSearchBG(IDcount);
 	char search[12];
-	InputBox(search, 12, "请输入你想查询航班的起飞地");
+	//InputBox(search, 12, "请输入你想查询航班的起飞地");
+	C_InputBox(search, 11, 135, 350, "PEK");
 	SearchFlightDepartureAirport(ID, search, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
+	PrintProcess();
 	switch (SearchCount)
 	{
 	case 0:
+		PrintSearchBG(IDcount);
+		settextstyle(25, 0, FONT);
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
@@ -567,13 +529,17 @@ int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DAT
 }
 int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
-	clearrectangle(380, 170, 1220, 680);
+	PrintSearchBG(IDcount);
 	char search[12];
-	InputBox(search, 12, "请输入你想查询航班的降落地");
+	//InputBox(search, 12, "请输入你想查询航班的降落地");
+	C_InputBox(search, 11, 135, 400, "PEK");
 	SearchFlightArrivalAirport(ID, search, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
+	PrintProcess();
 	switch (SearchCount)
 	{
 	case 0:
+		PrintSearchBG(IDcount);
+		settextstyle(25, 0, FONT);
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
@@ -585,15 +551,25 @@ int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[
 }
 int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int& SearchCount)
 {
-	clearrectangle(380, 170, 1220, 680);
+	PrintSearchBG(IDcount);
 	char Departure[12];
-	InputBox(Departure, 12, "请输入你想查询航班的起飞地");
+	//InputBox(Departure, 12, "请输入你想查询航班的起飞地");
+	settextstyle(28, 0, FONT2_EN);
+	outtextxy(105, 506, "TO:");
+	setlinecolor(RGB(220, 220, 220));
+	line(140, 535, 290, 535);
+	setlinecolor(BLACK);
+	C_InputBox(Departure, 11, 135, 450, "PEK");
 	char Arrival[12];
-	InputBox(Arrival, 12, "请输入你想查询航班的降落地");
+	//InputBox(Arrival, 12, "请输入你想查询航班的降落地");
+	C_InputBox(Arrival, 11, 135, 500, "PVG");
 	SearchFlightDepartureAndArrivalAirport(ID, Departure, Arrival, IDcount, SearchReasult, SearchCount);//查找航起飞地，返回查找到航班个数
+	PrintProcess();
 	switch (SearchCount)
 	{
 	case 0:
+		PrintSearchBG(IDcount);
+		settextstyle(25, 0, FONT);
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:

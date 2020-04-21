@@ -6,7 +6,7 @@ void PrintLoading()
 	char Location[50];
 	char IntChange[4];
 	cleardevice();
-	settextstyle(25, 0, FONT2);
+	settextstyle(25, 0, FONT2_ZH);
 	setbkcolor(RGB(255, 255, 255));
 	for (int i = 0; i < 156; i++)
 	{
@@ -31,7 +31,8 @@ void PrintLoading()
 		strcat(Location, ".png");
 		loadimage(&Loading, Location, 800, 600);
 		putimage(240, 60, &Loading);
-		outtextxy(460, 550, "版权所有 CopyRight 2020 HuaCL");
+		outtextxy(460, 550, "版权所有");
+		outtextxy(570, 550, "CopyRight 2020 HuaCL");
 		Sleep(8);
 	}
 	cleardevice();
@@ -57,14 +58,36 @@ void PrintLoading()
 	}
 	settextstyle(25, 0, FONT);
 }
-//退出动画和自动保存1280*720（）
-void PrintExit(FlightID* ID, FlightTicket DATA[][999],int IDcount)
+//退出动画且不自动保存1280*720（）
+void PrintExit()
 {
 	IMAGE Exit;
 	char Location[100];
 	char IntChange[8];
 	cleardevice();
-	settextstyle(25, 0, FONT2);
+	settextstyle(25, 0, FONT2_ZH);
+	setbkcolor(RGB(255, 255, 255));
+	for (int i = 0; i < 156; i++)
+	{
+		strcpy(Location, ".\\IMAGES\\Exit\\Exit");
+		_stprintf(IntChange, _T("%03d"), i);
+		strcat(Location, IntChange);
+		strcat(Location, ".png");
+		loadimage(&Exit, Location, 800, 600);
+		putimage(240, 60, &Exit);
+		outtextxy(590, 550, "正在退出");
+		Sleep(8);
+	}
+	return;
+}
+//退出动画并自动保存1280*720（）
+void PrintExit_AutoSAVE(FlightID* ID, FlightTicket DATA[][999],int IDcount)
+{
+	IMAGE Exit;
+	char Location[100];
+	char IntChange[8];
+	cleardevice();
+	settextstyle(25, 0, FONT2_ZH);
 	setbkcolor(RGB(255, 255, 255));
 	for (int i = 0; i < 156; i++)
 	{
@@ -86,7 +109,10 @@ void PrintExit(FlightID* ID, FlightTicket DATA[][999],int IDcount)
 		strcat(Location, ".png");
 		loadimage(&Exit, Location, 800, 600);
 		putimage(240, 60, &Exit);
-		outtextxy(460, 550, "版权所有 CopyRight 2020 HuaCL");
+		outtextxy(460, 550, "版权所有");
+		settextstyle(25, 0, FONT2_EN);
+		outtextxy(570, 550, "CopyRight 2020 HuaCL");
+		settextstyle(25, 0, FONT2_ZH);
 		Sleep(8);
 	}
 	cleardevice();
@@ -134,6 +160,41 @@ void PrintExit(FlightID* ID, FlightTicket DATA[][999],int IDcount)
 	SaveTicketDatabase(DATA, IDcount, Location);
 	return;
 }
+//加载中动画
+void PrintProcess()
+{
+	IMAGE BG;
+	IMAGE Process;
+	char Location[100];
+	char IntChange[8];
+	setbkcolor(RGB(255, 255, 255));
+	strcpy(Location, ".\\IMAGES\\Process\\Search4.png");
+	loadimage(&BG, Location, 1280, 720);
+	putimage(0, 0, &BG);
+	for (int i = 0; i < 53; i++)
+	{
+		strcpy(Location, ".\\IMAGES\\Process\\Process");
+		_stprintf(IntChange, _T("%02d"), i);
+		strcat(Location, IntChange);
+		strcat(Location, ".png");
+		loadimage(&Process, Location, 200, 200);
+		putimage(540, 260, &Process);
+		Sleep(12);
+	}
+	for (int i = 0; i < 53; i++)
+	{
+		strcpy(Location, ".\\IMAGES\\Process\\Process");
+		_stprintf(IntChange, _T("%02d"), i);
+		strcat(Location, IntChange);
+		strcat(Location, ".png");
+		loadimage(&Process, Location, 200, 200);
+		putimage(540, 260, &Process);
+		Sleep(12);
+	}
+	return;
+}
+
+
 
 
 //打印单个航线的详细信息:整页（航线数据数组，需要打印航班的数组下标）
@@ -867,8 +928,65 @@ void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][999], int n)
 {
 	;
 }
-
+//打印搜索页背景
 void PrintSearchBG(int IDcount)
 {
-
+	cleardevice();
+	setbkcolor(RGB(255, 255, 253));
+	settextcolor(BLACK);
+	IMAGE BG;
+	loadimage(&BG, _T(".\\IMAGES\\Search.png"), 1280, 720);
+	putimage(0, 0, &BG);						// 更新背景
+	settextstyle(25, 0, FONT);
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
+	//显示日期
+	settextstyle(20, 0, FONT);
+	time_t NOW;
+	tm* Local;
+	NOW = time(NULL);
+	Local = localtime(&NOW);
+	_stprintf(count, _T("%d"), Local->tm_year + 1900);
+	outtextxy(1073, 55, count);
+	outtextxy(1113, 55, "年");
+	_stprintf(count, _T("%2d"), Local->tm_mon + 1);
+	outtextxy(1133, 55, count);
+	outtextxy(1153, 55, "月");
+	_stprintf(count, _T("%2d"), Local->tm_mday);
+	outtextxy(1173, 55, count);
+	outtextxy(1193, 55, "日");
+}
+//打印主页背景
+void PrintHomeBG(int IDcount)
+{
+	cleardevice();
+	setbkcolor(RGB(255, 255, 253));
+	settextcolor(BLACK);
+	IMAGE BG;
+	loadimage(&BG, _T(".\\IMAGES\\Home.png"), 1280, 720);
+	putimage(0, 0, &BG);						// 更新背景
+	settextstyle(25, 0, FONT);
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
+	//显示日期
+	settextstyle(20, 0, FONT);
+	time_t NOW;
+	tm* Local;
+	NOW = time(NULL);
+	Local = localtime(&NOW);
+	_stprintf(count, _T("%d"), Local->tm_year + 1900);
+	outtextxy(1073, 55, count);
+	outtextxy(1113, 55, "年");
+	_stprintf(count, _T("%2d"), Local->tm_mon + 1);
+	outtextxy(1133, 55, count);
+	outtextxy(1153, 55, "月");
+	_stprintf(count, _T("%2d"), Local->tm_mday);
+	outtextxy(1173, 55, count);
+	outtextxy(1193, 55, "日");
 }
