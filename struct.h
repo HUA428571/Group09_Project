@@ -36,5 +36,5 @@ typedef struct FlightTicket //每日机票情况
 	short BusinessClassTicketRemain = 0;
 	short EconomyClassTicketRemain = 0;
 	short ActuralDepartureTime = 2600;		//2400及以下的是正常时间，2500代表航班取消，2600代表没有相关信息
-	short ActuralArrivalTime = 2600;			//2400及以下的是正常时间，2500代表航班取消，2600代表没有相关信息
+	short ActuralArrivalTime = 2600;		//2400及以下的是正常时间，2500代表航班取消，2600代表没有相关信息
 }FlightTicket;

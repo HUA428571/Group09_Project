@@ -34,10 +34,6 @@ int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delet
 int DeleteFlight(FlightID* ID, int& IDcount, int Delete);
 //输入框（输入内容，长度限制）
 int C_InputBox(char* Input, int Limit, int x, int y, const char * Default);
-
-
-
-
-
-
+int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const char* Default);
+//输入框（输入内容，长度限制，）
 

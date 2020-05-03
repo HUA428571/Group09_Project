@@ -490,7 +490,6 @@ int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int 
 	//InputBox(search, 12, "请输入你想查询的航班号");
 	C_InputBox(search, 11, 135, 300, "CA101");
 	SearchFlightID(ID, search, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
-	PrintProcess();
 	switch (SearchCount)
 	{
 	case 0:
@@ -499,8 +498,10 @@ int AdminMENU_SearchMENU_SearchByID(FlightID* ID, FlightTicket DATA[][999], int 
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		return PrintSingleFlight(ID, DATA, IDcount,SearchReasult[0]);
+		PrintProcess();
+		return PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
 	default:
+		PrintProcess();
 		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
@@ -512,7 +513,6 @@ int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DAT
 	//InputBox(search, 12, "请输入你想查询航班的起飞地");
 	C_InputBox(search, 11, 135, 350, "PEK");
 	SearchFlightDepartureAirport(ID, search, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
-	PrintProcess();
 	switch (SearchCount)
 	{
 	case 0:
@@ -521,8 +521,10 @@ int AdminMENU_SearchMENU_SearchByDepartureAirport(FlightID* ID, FlightTicket DAT
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		return PrintSingleFlight(ID, DATA,IDcount, SearchReasult[0]);
+		PrintProcess();
+		return PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
 	default:
+		PrintProcess();
 		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
@@ -534,7 +536,6 @@ int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[
 	//InputBox(search, 12, "请输入你想查询航班的降落地");
 	C_InputBox(search, 11, 135, 400, "PEK");
 	SearchFlightArrivalAirport(ID, search, IDcount, SearchReasult, SearchCount);//查找航班号，返回查找到航班个数
-	PrintProcess();
 	switch (SearchCount)
 	{
 	case 0:
@@ -543,8 +544,10 @@ int AdminMENU_SearchMENU_SearchByArrivalAirport(FlightID* ID, FlightTicket DATA[
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
+		PrintProcess();
 		return PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
 	default:
+		PrintProcess();
 		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
@@ -564,7 +567,6 @@ int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, Flight
 	//InputBox(Arrival, 12, "请输入你想查询航班的降落地");
 	C_InputBox(Arrival, 11, 135, 500, "PVG");
 	SearchFlightDepartureAndArrivalAirport(ID, Departure, Arrival, IDcount, SearchReasult, SearchCount);//查找航起飞地，返回查找到航班个数
-	PrintProcess();
 	switch (SearchCount)
 	{
 	case 0:
@@ -573,15 +575,17 @@ int AdminMENU_SearchMENU_SearchByDepartureAndArrivalAirport(FlightID* ID, Flight
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
+		PrintProcess();
 		return PrintSingleFlight(ID, DATA, IDcount, SearchReasult[0]);
 	default:
+		PrintProcess();
 		return PrintMultiFlight(ID, DATA, IDcount, SearchReasult, SearchCount);
 	}
 	return AdminMENU_SearchMENU_MENUChoose();
 }
 
 
-int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
+int AdminMENU_AddMENU_OLD(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -643,7 +647,7 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	loadimage(&BG, _T(".\\IMAGES\\Add.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	PrintFlightDetail(ID, DATA, IDcount, IDcount);
-	int MENUchoice = AdminMENU_AddMENU_MENUChoose();
+	int MENUchoice = AdminMENU_AddMENU_Confirm_MENUChoose();
 	switch (MENUchoice)
 	{
 	case 22:
@@ -673,6 +677,250 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 		outtextxy(110, 230, count);
 		outtextxy(162, 230, "个航线数据");
 		return AdminMENU_MENUChoose();
+	}
+}
+int AdminMENU_AddMENU_Full(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
+{
+	PrintBG(IDcount);
+	IMAGE Right;
+	IMAGE Wrong;
+	IMAGE Plane;
+	MOUSEMSG m;
+	FlightID NEW;
+	loadimage(&Right, _T(".\\IMAGES\\Right.png"), 25, 25);
+	loadimage(&Wrong, _T(".\\IMAGES\\Wrong.png"), 25, 25);
+	settextstyle(25, 0, FONT);
+	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
+	setlinecolor(RGB(220, 220, 220));
+	outtextxy(380, 200, "航班号：");
+	line(500, 227,650,227);
+	outtextxy(380, 230, "执飞航司：");
+	outtextxy(380, 260, "开航日期：");
+	line(500, 287, 650, 287);
+	outtextxy(380, 290, "执飞机型：");
+	line(500, 317, 650, 317);
+	outtextxy(380, 320, "起飞机场：");
+	line(500, 347, 650, 347);
+	outtextxy(380, 350, "起飞时间：");
+	line(500, 377, 650, 377);
+	outtextxy(380, 380, "降落机场：");
+	line(500, 407, 650, 407);
+	outtextxy(380, 410, "降落时间：");
+	line(500, 437, 650, 437);
+	outtextxy(380, 440, "飞行时间：");
+	line(500, 467, 650, 467);
+	outtextxy(380, 470, "基准票价：");
+	outtextxy(380, 500, "基本舱位：");
+	line(500, 527, 650, 527);
+	int SearchReasult[999];
+	int SearchCount;
+	char carrier[20];
+	char DepartureAirport[50];
+	char ArrivalAirport[50];
+	char Flyday[50];
+	int MENUchoice = AdminMENU_AddMENU_MENUChoose();
+	while (true)
+	{
+		switch (MENUchoice)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			return MENUchoice;
+		case 201:
+			clearrectangle(650, 200, 680, 230);
+			C_InputBox(Input, 11, 500, 200, 150, 25, "CA101");
+			if (SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount))
+			{
+				putimage(655, 200, &Wrong);						//正确
+				NEW.Carrier[0] = Input[0];
+				NEW.Carrier[1] = Input[1];
+				NEW.Carrier[2] = '\0';
+				NEW.ID[0] = Input[2];
+				NEW.ID[1] = Input[3];
+				NEW.ID[2] = Input[4];
+				NEW.ID[3] = Input[5];
+				NEW.ID[4] = Input[6];
+				NEW.ID[5] = Input[7];
+				NEW.ID[6] = Input[8];
+				NEW.ID[7] = Input[9];
+				MatchCarrier(NEW.Carrier, carrier);
+				outtextxy(500, 230, carrier);
+			}
+			else
+			{
+				putimage(655, 200, &Right);						//错误
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 203:
+			//开航日期，点击方式读入，不急写
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 204:
+			C_InputBox(NEW.AircraftType, 3, 500, 290, 150, 25, "747");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 205:
+			C_InputBox(NEW.DepartureAirport, 7, 500, 320, 150, 25, "PEK");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 206:
+			C_InputBox(Input, 4, 500, 350, 150, 25, "1000");
+			sscanf(Input, "%d", &NEW.DepartureTime);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 207:
+			C_InputBox(NEW.ArrivalAirport, 7, 500, 380, 150, 25, "PVG");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 208:
+			C_InputBox(Input, 4, 500, 410, 150, 25, "1200");
+			sscanf(Input, "%d", &NEW.ArrivalTime);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 209:
+			//这个要分小时写，也先不急
+			C_InputBox(Input, 11, 500, 200, 150, 25, "2");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 211:
+			C_InputBox(NEW.Class, 3, 500, 500, 150, 25, "CY");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 21:
+			PrintBG(IDcount);
+			return AdminMENU_MENUChoose();
+		case 22:
+			DeleteFlight(ID, IDcount, IDcount);
+			outtextxy(380, 170, "已取消添加");
+			MENUchoice = AdminMENU_MENUChoose();
+		}
+	}
+}
+
+int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
+{
+	Resize(NULL, 500, 480);
+	IMAGE Right;
+	IMAGE Wrong;
+	IMAGE Plane;
+	MOUSEMSG m;
+	FlightID NEW;
+	loadimage(&Right, _T(".\\IMAGES\\Right.png"), 25, 25);
+	loadimage(&Wrong, _T(".\\IMAGES\\Wrong.png"), 25, 25);
+	settextstyle(24, 0, FONT);
+	outtextxy(80, 50, "添加航线");
+	settextstyle(20, 0, FONT);
+	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
+	setlinecolor(RGB(220, 220, 220));
+	outtextxy(80, 100, "航班号：");
+	line(180, 122, 220, 122);
+	outtextxy(80, 125, "开航日期：");
+	line(180, 147, 220, 147);
+	outtextxy(80, 150, "执飞机型：");
+	line(180, 172, 220, 172);
+	outtextxy(80, 175, "起飞机场：");
+	line(180, 197, 220, 197);
+	outtextxy(80, 200, "起飞时间：");
+	line(180, 222, 220, 222);
+	outtextxy(80, 225, "降落机场：");
+	line(180, 247, 220, 247);
+	outtextxy(80, 250, "降落时间：");
+	line(180, 272, 220, 272);
+	outtextxy(80, 275, "飞行时间：");
+	line(180, 297, 220, 297);
+	outtextxy(80, 300, "基准票价：");
+	outtextxy(80, 325, "基本舱位：");
+	line(180, 347, 220, 347);
+	int SearchReasult[999];
+	int SearchCount;
+	char carrier[20];
+	char DepartureAirport[50];
+	char ArrivalAirport[50];
+	char Flyday[50];
+	int MENUchoice = AdminMENU_AddMENU_MENUChoose();
+	while (true)
+	{
+		switch (MENUchoice)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			return MENUchoice;
+		case 201:
+			clearrectangle(650, 200, 680, 230);
+			C_InputBox(Input, 11, 500, 200, 150, 25, "CA101");
+			if (SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount))
+			{
+				putimage(655, 200, &Wrong);						//正确
+				NEW.Carrier[0] = Input[0];
+				NEW.Carrier[1] = Input[1];
+				NEW.Carrier[2] = '\0';
+				NEW.ID[0] = Input[2];
+				NEW.ID[1] = Input[3];
+				NEW.ID[2] = Input[4];
+				NEW.ID[3] = Input[5];
+				NEW.ID[4] = Input[6];
+				NEW.ID[5] = Input[7];
+				NEW.ID[6] = Input[8];
+				NEW.ID[7] = Input[9];
+				MatchCarrier(NEW.Carrier, carrier);
+				outtextxy(500, 230, carrier);
+			}
+			else
+			{
+				putimage(655, 200, &Right);						//错误
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 203:
+			//开航日期，点击方式读入，不急写
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 204:
+			C_InputBox(NEW.AircraftType, 3, 500, 290, 150, 25, "747");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 205:
+			C_InputBox(NEW.DepartureAirport, 7, 500, 320, 150, 25, "PEK");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 206:
+			C_InputBox(Input, 4, 500, 350, 150, 25, "1000");
+			sscanf(Input, "%d", &NEW.DepartureTime);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 207:
+			C_InputBox(NEW.ArrivalAirport, 7, 500, 380, 150, 25, "PVG");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 208:
+			C_InputBox(Input, 4, 500, 410, 150, 25, "1200");
+			sscanf(Input, "%d", &NEW.ArrivalTime);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 209:
+			//这个要分小时写，也先不急
+			C_InputBox(Input, 11, 500, 200, 150, 25, "2");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 211:
+			C_InputBox(NEW.Class, 3, 500, 500, 150, 25, "CY");
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 21:
+			PrintBG(IDcount);
+			return AdminMENU_MENUChoose();
+		case 22:
+			DeleteFlight(ID, IDcount, IDcount);
+			outtextxy(380, 170, "已取消添加");
+			MENUchoice = AdminMENU_MENUChoose();
+		}
 	}
 }
 

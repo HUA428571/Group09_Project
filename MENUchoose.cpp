@@ -270,6 +270,36 @@ int AdminMENU_AddMENU_MENUChoose()
 		m = GetMouseMsg();
 		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
 		{
+			if (m.x > 180 && m.y > 100 && m.x < 220 && m.y < 125*)//鼠标按在更改航班号区域
+				return 201;
+			if (m.x > 180 && m.y > 125 && m.x < 220 && m.y < 150)//鼠标按在更改开航日期区域
+				return 203;
+			if (m.x > 180 && m.y > 150 && m.x < 220 && m.y < 175)//鼠标按在更改执飞机型区域
+				return 204;
+			if (m.x > 180 && m.y > 175 && m.x < 220 && m.y < 200)//鼠标按在更改起飞机场区域
+				return 205;
+			if (m.x > 180 && m.y > 200 && m.x < 220 && m.y < 225)//鼠标按在更改起飞时间区域
+				return 206;
+			if (m.x > 180 && m.y > 225 && m.x < 220 && m.y < 250)//鼠标按在更改降落机场区域
+				return 207;
+			if (m.x > 180 && m.y > 250 && m.x < 220 && m.y < 275)//鼠标按在更改降落时间区域
+				return 208;
+			if (m.x > 180 && m.y > 275 && m.x < 220 && m.y < 300)//鼠标按在更改飞行时间区域
+				return 209;
+			if (m.x > 180 && m.y > 325 && m.x < 220 && m.y < 350)//鼠标按在更改基本舱位区域
+				return 211;
+		}
+	}
+}
+int AdminMENU_AddMENU_Confirm_MENUChoose()
+{
+	while (true)
+	{
+		MOUSEMSG m;
+		// 获取一条鼠标消息
+		m = GetMouseMsg();
+		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
+		{
 			if (m.y > 90 && m.y < 135 && m.x>190 && m.x < 290)//鼠标按在主页区域
 				return 0;
 			if (m.y > 90 && m.y < 135 && m.x>390 && m.x < 490)//鼠标按在查找区域
@@ -287,7 +317,6 @@ int AdminMENU_AddMENU_MENUChoose()
 		}
 	}
 }
-
 
 
 

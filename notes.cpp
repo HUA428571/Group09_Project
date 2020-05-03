@@ -398,3 +398,72 @@ int C_InputBox(char* Input, int Limit, int x, int y, const char * Default)
 		}
 	}
 }
+
+int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const char* Default)
+{
+	clearrectangle(x, y, x + Lsize, y + Hsize);
+	fflush(stdin);//先清空输入缓存
+	char c;
+	int Length = 0;
+	char InputBuf[100] = { '\0' };
+	settextstyle(Hsize, 0, FONT);
+	setlinecolor(BLACK);
+	for (int i = x; i < x + Lsize; i++)
+	{
+		line(i, y + Hsize +2, i + 1, y + Hsize +2);
+		Sleep(1);
+	}
+	settextcolor(RGB(220, 220, 220));
+	outtextxy(x, y, Default);
+	settextcolor(BLACK);
+	while (true)
+	{
+		c = _getch();
+		if (c != 13)//如果输入的不是回车
+		{
+			if (Length == 0)
+			{
+				clearrectangle(x, y, x + Lsize, y + Hsize);
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(x, y, Default);
+				settextcolor(BLACK);
+			}
+			if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
+			{
+				if (Length == Limit - 1)
+				{
+					;
+				}
+				else
+				{
+					if (Length == 0)//第一个字符
+					{
+						clearrectangle(x, y, x + Lsize, y + Hsize);
+					}
+					InputBuf[Length] = c;
+					InputBuf[Length + 1] = '\0';
+					outtextxy(x + (Hsize / 2) * Length, y, c);
+					setlinecolor(RGB(0, 191, 255));
+					line(x + Length * (Hsize / 2), y + Hsize + 2, x + (Length + 1) * (Hsize / 2), y + Hsize + 2);
+					Length++;
+				}
+			}
+			if (c == 8)
+			{
+				if (Length != 0)
+				{
+					InputBuf[Length] = '\0';
+					Length--;
+					clearrectangle(x + Length * (Hsize / 2), y, x + (Length + 1) * (Hsize / 2), y + Hsize);
+					setlinecolor(BLACK);
+					line(x + Length * (Hsize / 2), y + Hsize + 2, x + (Length + 1) * (Hsize / 2), y + Hsize + 2);
+				}
+			}
+		}
+		else
+		{
+			strcpy(Input, InputBuf);
+			return Length;
+		}
+	}
+}

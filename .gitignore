@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 *.dat
+/IMAGES/Process/2020.04.25-20.09.mp4

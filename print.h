@@ -45,6 +45,8 @@ void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n, int
 void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][999], int n);
 //´òÓ¡ËÑË÷Ò³±³¾°
 void PrintSearchBG(int IDcount);
-
+//´òÓ¡Ö÷Ò³±³¾°
 void PrintHomeBG(int IDcount);
+//´òÓ¡±³¾°
+void PrintBG(int IDcount);
 

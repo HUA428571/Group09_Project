@@ -181,20 +181,8 @@ void PrintProcess()
 		putimage(540, 260, &Process);
 		Sleep(12);
 	}
-	for (int i = 0; i < 53; i++)
-	{
-		strcpy(Location, ".\\IMAGES\\Process\\Process");
-		_stprintf(IntChange, _T("%02d"), i);
-		strcat(Location, IntChange);
-		strcat(Location, ".png");
-		loadimage(&Process, Location, 200, 200);
-		putimage(540, 260, &Process);
-		Sleep(12);
-	}
 	return;
 }
-
-
 
 
 //打印单个航线的详细信息:整页（航线数据数组，需要打印航班的数组下标）
@@ -967,6 +955,37 @@ void PrintHomeBG(int IDcount)
 	settextcolor(BLACK);
 	IMAGE BG;
 	loadimage(&BG, _T(".\\IMAGES\\Home.png"), 1280, 720);
+	putimage(0, 0, &BG);						// 更新背景
+	settextstyle(25, 0, FONT);
+	char count[8];
+	_stprintf(count, _T("%d"), IDcount);
+	outtextxy(110, 200, "当前数据库中有");
+	outtextxy(110, 230, count);
+	outtextxy(162, 230, "个航线数据");
+	//显示日期
+	settextstyle(20, 0, FONT);
+	time_t NOW;
+	tm* Local;
+	NOW = time(NULL);
+	Local = localtime(&NOW);
+	_stprintf(count, _T("%d"), Local->tm_year + 1900);
+	outtextxy(1073, 55, count);
+	outtextxy(1113, 55, "年");
+	_stprintf(count, _T("%2d"), Local->tm_mon + 1);
+	outtextxy(1133, 55, count);
+	outtextxy(1153, 55, "月");
+	_stprintf(count, _T("%2d"), Local->tm_mday);
+	outtextxy(1173, 55, count);
+	outtextxy(1193, 55, "日");
+}
+//打印背景
+void PrintBG(int IDcount)
+{
+	cleardevice();
+	setbkcolor(RGB(255, 255, 253));
+	settextcolor(BLACK);
+	IMAGE BG;
+	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
 	putimage(0, 0, &BG);						// 更新背景
 	settextstyle(25, 0, FONT);
 	char count[8];

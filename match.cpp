@@ -583,6 +583,12 @@ void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, c
 	NOW = time(NULL);
 	Local = localtime(&NOW);
 	NowTime = Local->tm_hour * 100 + Local->tm_min;
+	if (DATA[day][n].ActuralDepartureTime == 2600)
+	{
+		strcpy(ACCURACY, " 无数据");
+		TextColor = BLACK;//设置颜色为黑色
+		return;
+	}
 	if (day > Local->tm_yday)//未来的日期
 	{
 		strcpy(ACCURACY, "  计划");
