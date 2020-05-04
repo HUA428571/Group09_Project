@@ -337,6 +337,30 @@ int AdminMENU_AddMENU_Confirm_MENUChoose()
 	}
 }
 
+int AdminMENU_ChangeMENU_MENUChoose()
+{
+	while (true)
+	{
+		MOUSEMSG m;
+		// 获取一条鼠标消息
+		m = GetMouseMsg();
+		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
+		{
+			if (m.y > 90 && m.y < 135 && m.x>190 && m.x < 290)//鼠标按在主页区域
+				return 0;
+			if (m.y > 90 && m.y < 135 && m.x>390 && m.x < 490)//鼠标按在查找区域
+				return 1;
+			if (m.y > 90 && m.y < 135 && m.x>590 && m.x < 690)//鼠标按在添加区域
+				return 2;
+			if (m.y > 90 && m.y < 135 && m.x>790 && m.x < 890)//鼠标按在删除区域
+				return 3;
+			if (m.y > 90 && m.y < 135 && m.x>990 && m.x < 1090)//鼠标按在更改区域
+				return 4;
+		}
+	}
+}
+
+
 
 
 int AdminMENU_Ticket_MENUChoose()

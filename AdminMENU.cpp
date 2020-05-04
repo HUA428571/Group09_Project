@@ -822,6 +822,14 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	outtextxy(A_LEFT_MARGIN, 50, "添加航线");
 	settextstyle(20, 0, FONT);
 	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
+	int SearchReasult[999];
+	int SearchCount;
+	char carrier[50];
+	char AircraftType[50];
+	char DepartureAirport[50];
+	char ArrivalAirport[50];
+	char IntChange[12];
+	char Check[10] = { 0 };
 	setlinecolor(RGB(220, 220, 220));
 	outtextxy(A_LEFT_MARGIN, 100, "航班号：");
 	line(A_LEFT_LINE_START, 122, A_LEFT_LINE_END, 122);
@@ -849,15 +857,6 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	outtextxy(A_LEFT_MARGIN, 300, "基准票价：");
 	outtextxy(A_LEFT_MARGIN, 325, "基本舱位：");
 	line(A_LEFT_LINE_START, 347, A_LEFT_LINE_END, 347);
-	int SearchReasult[999];
-	int SearchCount;
-	char carrier[50];
-	char AircraftType[50];
-	char DepartureAirport[50];
-	char ArrivalAirport[50];
-	char Flyday[50];
-	char IntChange[12];
-	char Check[10] = { 0 };
 	int MENUchoice = AdminMENU_AddMENU_MENUChoose();
 	while (true)
 	{
@@ -1182,7 +1181,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 }
 
 
-int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
+int AdminMENU_ChangeMENU_OLD(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 {
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
@@ -1218,6 +1217,331 @@ int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
 				return 3;
 			if (m.y > 90 && m.y < 136 && m.x>980 && m.x < 1085)//鼠标按在更改区域
 				return 4;
+		}
+	}
+}
+int AdminMENU_ChangeMENU(FlightID* ID, FlightTicket DATA[][999], int IDcount)
+{
+	PrintBG(IDcount);
+	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
+	int SearchReasult[999];
+	int SearchCount;
+	InputBox(Input, 12, "请输入需要更改航班的航班号\n完整航班号，eg CA101");
+	if (SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount) != 1)
+	{
+		settextstyle(25, 0, FONT);
+		outtextxy(380, 200, "没有找到符合要求的航班！");
+		return AdminMENU_ChangeMENU_MENUChoose();
+	}
+	int Object = SearchReasult[0];
+	char carrier[50];
+	char AircraftType[50];
+	char DepartureAirport[50];
+	char ArrivalAirport[50];
+	char Flyday[50];
+	char IntChange[12];
+	char Check[10] = { 0 };
+	char id[12];
+	Resize(NULL, 480, 500);
+	cleardevice();
+	setbkcolor(RGB(255, 255, 253));
+	settextcolor(BLACK);
+	IMAGE Right;
+	IMAGE Wrong;
+	IMAGE Confirm;
+	IMAGE Plane;
+	MOUSEMSG m;
+	FlightID tmp=ID[Object];
+	loadimage(&Right, _T(".\\IMAGES\\Right.png"), 25, 25);
+	loadimage(&Wrong, _T(".\\IMAGES\\Wrong.png"), 25, 25);
+	loadimage(&Confirm, _T(".\\IMAGES\\ChangeConfirm.png"), 380, 60);
+	putimage(50, 390, &Confirm);
+	MatchCarrier(tmp.Carrier, carrier);
+	MatchPlaneType(tmp.AircraftType, AircraftType);
+	MatchAirport(tmp.DepartureAirport, DepartureAirport);
+	MatchAirport(tmp.ArrivalAirport, ArrivalAirport);
+	MatchFlyDay(tmp.FlyDay, Flyday);
+	strcpy(id, tmp.Carrier);
+	strcat(id, tmp.ID);
+	settextstyle(24, 0, FONT);
+	outtextxy(A_LEFT_MARGIN, 50, "更改航线");
+	settextstyle(20, 0, FONT);
+	setlinecolor(RGB(220, 220, 220));
+	outtextxy(A_LEFT_MARGIN, 100, "航班号：");
+	outtextxy(A_RIGHT_TEXT_START, 100, carrier);
+	outtextxy(A_LEFT_MARGIN, 125, "开航日期：");
+	//显示开航日期的底色（浅灰色）
+	settextcolor(RGB(220, 220, 220));
+	outtextxy(A_LEFT_LINE_START, 125, "  一  二  三  四  五  六  日");
+	//恢复原有颜色
+	settextcolor(BLACK);
+	outtextxy(A_LEFT_LINE_START+20, 125, Flyday);
+	outtextxy(A_LEFT_MARGIN, 150, "执飞机型：");
+	outtextxy(A_RIGHT_TEXT_START, 150, AircraftType);
+	outtextxy(A_LEFT_MARGIN, 175, "起飞机场：");
+	outtextxy(A_RIGHT_TEXT_START, 175, DepartureAirport);
+	outtextxy(A_LEFT_MARGIN, 200, "起飞时间：");
+	outtextxy(A_LEFT_MARGIN, 225, "降落机场：");
+	outtextxy(A_RIGHT_TEXT_START, 225, ArrivalAirport);
+	outtextxy(A_LEFT_MARGIN, 250, "降落时间：");
+	outtextxy(A_LEFT_MARGIN, 275, "飞行时间：");
+	outtextxy(A_LEFT_LINE_START + 60, 275, "小时");
+	outtextxy(A_RIGHT_TEXT_START + 60, 275, "分钟");
+	outtextxy(A_LEFT_MARGIN, 300, "基准票价：");
+	outtextxy(A_LEFT_MARGIN, 325, "基本舱位：");
+	line(A_LEFT_LINE_START, 122, A_LEFT_LINE_END, 122);
+	line(A_LEFT_LINE_START, 172, A_LEFT_LINE_END, 172);
+	line(A_LEFT_LINE_START, 197, A_LEFT_LINE_END, 197);
+	line(A_LEFT_LINE_START, 222, A_LEFT_LINE_END, 222);
+	line(A_LEFT_LINE_START, 247, A_LEFT_LINE_END, 247);
+	line(A_LEFT_LINE_START, 272, A_LEFT_LINE_END, 272);
+	line(A_LEFT_LINE_START, 297, A_LEFT_LINE_START + 50, 297);
+	line(A_RIGHT_TEXT_START, 297, A_RIGHT_TEXT_START + 50, 297);
+	line(A_LEFT_LINE_START, 347, A_LEFT_LINE_END, 347);
+	settextcolor(RGB(220, 220, 220));
+	outtextxy(A_LEFT_LINE_START, 100, id);
+	outtextxy(A_LEFT_LINE_START, 150, tmp.AircraftType);
+	outtextxy(A_LEFT_LINE_START, 175, tmp.DepartureAirport);
+	_stprintf(IntChange, _T("%04d"), tmp.DepartureTime);
+	outtextxy(A_LEFT_LINE_START, 200, IntChange);
+	outtextxy(A_LEFT_LINE_START, 225, tmp.ArrivalAirport);
+	_stprintf(IntChange, _T("%04d"), tmp.ArrivalTime);
+	outtextxy(A_LEFT_LINE_START, 250, IntChange);
+	outtextxy(A_LEFT_LINE_START, 275, _itoa(tmp.TravelTimeHour, IntChange, 10));
+	outtextxy(A_RIGHT_TEXT_START, 275, _itoa(tmp.TravelTimeMinute, IntChange, 10));
+	outtextxy(A_LEFT_LINE_START, 300, _itoa(tmp.Price, IntChange, 10));
+	outtextxy(A_LEFT_LINE_START, 325, tmp.Class);
+	settextcolor(BLACK);
+	int MENUchoice = AdminMENU_AddMENU_MENUChoose();
+	while (true)
+	{
+		switch (MENUchoice)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			return MENUchoice;
+		case 201:
+			clearrectangle(A_RIGHT_TEXT_START, 100, 480, 125);			
+			C_InputBox(Input, 9, A_LEFT_LINE_START, 100, 90, 20, id);
+			line(A_LEFT_LINE_START, 122, A_LEFT_LINE_END, 122);
+			if (!SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount))
+			{
+				tmp.Carrier[0] = Input[0];
+				tmp.Carrier[1] = Input[1];
+				tmp.Carrier[2] = '\0';
+				tmp.ID[0] = Input[2];
+				tmp.ID[1] = Input[3];
+				tmp.ID[2] = Input[4];
+				tmp.ID[3] = Input[5];
+				tmp.ID[4] = Input[6];
+				tmp.ID[5] = Input[7];
+				tmp.ID[6] = Input[8];
+				tmp.ID[7] = 0;
+				MatchCarrier(tmp.Carrier, carrier);
+				outtextxy(A_RIGHT_TEXT_START, 100, carrier);
+			}
+			else
+			{
+				if (strcmp(id, Input))
+				{
+					outtextxy(A_RIGHT_TEXT_START, 100, carrier);
+				}
+				else
+				{
+					clearrectangle(A_RIGHT_TEXT_START, 100, 480, 125);
+					putimage(A_RIGHT_TEXT_START, 100, &Wrong);						//错误
+				}
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 2031:
+			if (tmp.FlyDay[1] == '0')
+			{
+				tmp.FlyDay[1] = '1';
+				settextcolor(BLACK);
+				outtextxy(A_LEFT_LINE_START + 20, 125, "一");
+			}
+			else
+			{
+				tmp.FlyDay[1] = '0';
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(A_LEFT_LINE_START + 20, 125, "一");
+				settextcolor(BLACK);
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 2032:
+			if (tmp.FlyDay[2] == '0')
+			{
+				tmp.FlyDay[2] = '2';
+				settextcolor(BLACK);
+				outtextxy(A_LEFT_LINE_START + 60, 125, "二");
+			}
+			else
+			{
+				tmp.FlyDay[2] = '0';
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(A_LEFT_LINE_START + 60, 125, "二");
+				settextcolor(BLACK);
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 2033:
+			if (tmp.FlyDay[3] == '0')
+			{
+				tmp.FlyDay[3] = '3';
+				settextcolor(BLACK);
+				outtextxy(A_LEFT_LINE_START + 100, 125, "三");
+			}
+			else
+			{
+				tmp.FlyDay[3] = '0';
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(A_LEFT_LINE_START + 100, 125, "三");
+				settextcolor(BLACK);
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 2034:
+			if (tmp.FlyDay[4] == '0')
+			{
+				tmp.FlyDay[4] = '4';
+				settextcolor(BLACK);
+				outtextxy(A_LEFT_LINE_START + 140, 125, "四");
+			}
+			else
+			{
+				tmp.FlyDay[4] = '0';
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(A_LEFT_LINE_START + 140, 125, "四");
+				settextcolor(BLACK);
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 2035:
+			if (tmp.FlyDay[5] == '0')
+			{
+				tmp.FlyDay[5] = '5';
+				settextcolor(BLACK);
+				outtextxy(A_LEFT_LINE_START + 180, 125, "五");
+			}
+			else
+			{
+				tmp.FlyDay[5] = '0';
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(A_LEFT_LINE_START + 180, 125, "五");
+				settextcolor(BLACK);
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 2036:
+			if (tmp.FlyDay[6] == '0')
+			{
+				tmp.FlyDay[6] = '6';
+				settextcolor(BLACK);
+				outtextxy(A_LEFT_LINE_START + 220, 125, "六");
+			}
+			else
+			{
+				tmp.FlyDay[6] = '0';
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(A_LEFT_LINE_START + 220, 125, "六");
+				settextcolor(BLACK);
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 2037:
+			if (tmp.FlyDay[7] == '0')
+			{
+				tmp.FlyDay[7] = '7';
+				settextcolor(BLACK);
+				outtextxy(A_LEFT_LINE_START + 260, 125, "日");
+			}
+			else
+			{
+				tmp.FlyDay[7] = '0';
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(A_LEFT_LINE_START + 260, 125, "日");
+				settextcolor(BLACK);
+			}
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 204:
+			clearrectangle(A_RIGHT_TEXT_START, 150, 480, 175);
+			C_InputBox(tmp.AircraftType, 3, A_LEFT_LINE_START, 150, 90, 20, tmp.AircraftType);
+			line(A_LEFT_LINE_START, 172, A_LEFT_LINE_END, 172);
+			MatchPlaneType(tmp.AircraftType, AircraftType);
+			outtextxy(A_RIGHT_TEXT_START, 150, AircraftType);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 205:
+			clearrectangle(A_RIGHT_TEXT_START, 175, 480, 200);
+			C_InputBox(tmp.DepartureAirport, 3, A_LEFT_LINE_START, 175, 90, 20, tmp.DepartureAirport);
+			line(A_LEFT_LINE_START, 197, A_LEFT_LINE_END, 197);
+			MatchAirport(tmp.DepartureAirport, DepartureAirport);
+			outtextxy(A_RIGHT_TEXT_START, 175, DepartureAirport);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 206:
+			_stprintf(IntChange, _T("%04d"), tmp.DepartureTime);
+			C_InputBox(Input, 4, A_LEFT_LINE_START, 200, 90, 20, IntChange);
+			sscanf(Input, "%d", &tmp.DepartureTime);
+			line(A_LEFT_LINE_START, 222, A_LEFT_LINE_END, 222);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 207:
+			clearrectangle(A_RIGHT_TEXT_START, 225, 480, 250);
+			C_InputBox(tmp.ArrivalAirport, 3, A_LEFT_LINE_START, 225, 90, 20, tmp.ArrivalAirport);
+			line(A_LEFT_LINE_START, 247, A_LEFT_LINE_END, 247);
+			MatchAirport(tmp.ArrivalAirport, ArrivalAirport);
+			outtextxy(A_RIGHT_TEXT_START, 225, ArrivalAirport);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 208:
+			_stprintf(IntChange, _T("%04d"), tmp.ArrivalTime);
+			C_InputBox(Input, 4, A_LEFT_LINE_START, 250, 90, 20, IntChange);
+			sscanf(Input, "%d", &tmp.ArrivalTime);
+			line(A_LEFT_LINE_START, 272, A_LEFT_LINE_END, 272);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 2091:
+			C_InputBox(Input, 2, A_LEFT_LINE_START, 275, 50, 20, _itoa(tmp.TravelTimeHour, IntChange, 10));
+			line(A_LEFT_LINE_START, 297, A_LEFT_LINE_START + 50, 297);
+			sscanf(Input, "%d", &tmp.TravelTimeHour);
+			tmp.Price = tmp.TravelTimeHour * 675 + tmp.TravelTimeMinute * 11.25;
+			clearrectangle(A_LEFT_LINE_START, 300, A_LEFT_LINE_END, 325);
+			outtextxy(A_LEFT_LINE_START, 300, _itoa(tmp.Price, IntChange, 10));
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 2092:
+			C_InputBox(Input, 2, A_RIGHT_TEXT_START, 275, 50, 20, _itoa(tmp.TravelTimeMinute, IntChange, 10));
+			line(A_RIGHT_TEXT_START, 297, A_RIGHT_TEXT_START + 50, 297);
+			sscanf(Input, "%d", &tmp.TravelTimeMinute);
+			tmp.Price = tmp.TravelTimeHour * 675 + tmp.TravelTimeMinute * 11.25;
+			clearrectangle(A_LEFT_LINE_START, 300, A_LEFT_LINE_END, 325);
+			outtextxy(A_LEFT_LINE_START, 300, _itoa(tmp.Price, IntChange, 10));
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 211:
+			C_InputBox(tmp.Class, 3, A_LEFT_LINE_START, 325, 90, 20, tmp.Class);
+			line(A_LEFT_LINE_START, 347, A_LEFT_LINE_END, 347);
+			MENUchoice = AdminMENU_AddMENU_MENUChoose();
+			break;
+		case 21:
+			ID[Object] = tmp;
+			Resize(NULL, 1280, 720);
+			PrintBG(IDcount);
+			outtextxy(380, 170, "已成功更改");
+			PrintFlightDetail(ID, DATA, IDcount, Object);
+			return AdminMENU_MENUChoose();
+		case 22:
+			Resize(NULL, 1280, 720);
+			PrintBG(IDcount);
+			outtextxy(380, 170, "已取消更改");
+			MENUchoice = AdminMENU_MENUChoose();
 		}
 	}
 }

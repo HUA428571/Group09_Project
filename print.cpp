@@ -199,7 +199,7 @@ void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int 
 	//putimage(0, 0, &BG);						// 更新背景
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
+	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
 	//char count[8];
@@ -916,6 +916,7 @@ void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][999], int n)
 {
 	;
 }
+
 //打印搜索页背景
 void PrintSearchBG(int IDcount)
 {
