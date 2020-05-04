@@ -270,24 +270,43 @@ int AdminMENU_AddMENU_MENUChoose()
 		m = GetMouseMsg();
 		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
 		{
-			if (m.x > 180 && m.y > 100 && m.x < 220 && m.y < 125*)//鼠标按在更改航班号区域
+			if (m.x > A_LEFT_LINE_START && m.y > 100 && m.x < A_LEFT_LINE_END && m.y < 125)//鼠标按在更改航班号区域
 				return 201;
-			if (m.x > 180 && m.y > 125 && m.x < 220 && m.y < 150)//鼠标按在更改开航日期区域
-				return 203;
-			if (m.x > 180 && m.y > 150 && m.x < 220 && m.y < 175)//鼠标按在更改执飞机型区域
+			if (m.x > A_LEFT_LINE_START + 20 && m.y > 125 && m.x < A_LEFT_LINE_START + 40 && m.y < 150)//鼠标按在开航日期周一区域
+				return 2031;
+			if (m.x > A_LEFT_LINE_START + 60 && m.y > 125 && m.x < A_LEFT_LINE_START + 80 && m.y < 150)//鼠标按在开航日期周二区域
+				return 2032;
+			if (m.x > A_LEFT_LINE_START + 100 && m.y > 125 && m.x < A_LEFT_LINE_START + 120 && m.y < 150)//鼠标按在开航日期周三区域
+				return 2033;
+			if (m.x > A_LEFT_LINE_START + 140 && m.y > 125 && m.x < A_LEFT_LINE_START + 160 && m.y < 150)//鼠标按在开航日期周四区域
+				return 2034;
+			if (m.x > A_LEFT_LINE_START + 180 && m.y > 125 && m.x < A_LEFT_LINE_START + 200 && m.y < 150)//鼠标按在开航日期周五区域
+				return 2035;
+			if (m.x > A_LEFT_LINE_START + 220 && m.y > 125 && m.x < A_LEFT_LINE_START + 240 && m.y < 150)//鼠标按在开航日期周六区域
+				return 2036;
+			if (m.x > A_LEFT_LINE_START + 260 && m.y > 125 && m.x < A_LEFT_LINE_START + 280 && m.y < 150)//鼠标按在开航日期周日区域
+				return 2037;
+			if (m.x > A_LEFT_LINE_START && m.y > 150 && m.x < A_LEFT_LINE_END && m.y < 175)//鼠标按在更改执飞机型区域
 				return 204;
-			if (m.x > 180 && m.y > 175 && m.x < 220 && m.y < 200)//鼠标按在更改起飞机场区域
+			if (m.x > A_LEFT_LINE_START && m.y > 175 && m.x < A_LEFT_LINE_END && m.y < 200)//鼠标按在更改起飞机场区域
 				return 205;
-			if (m.x > 180 && m.y > 200 && m.x < 220 && m.y < 225)//鼠标按在更改起飞时间区域
+			if (m.x > A_LEFT_LINE_START && m.y > 200 && m.x < A_LEFT_LINE_END && m.y < 225)//鼠标按在更改起飞时间区域
 				return 206;
-			if (m.x > 180 && m.y > 225 && m.x < 220 && m.y < 250)//鼠标按在更改降落机场区域
+			if (m.x > A_LEFT_LINE_START && m.y > 225 && m.x < A_LEFT_LINE_END && m.y < 250)//鼠标按在更改降落机场区域
 				return 207;
-			if (m.x > 180 && m.y > 250 && m.x < 220 && m.y < 275)//鼠标按在更改降落时间区域
+			if (m.x > A_LEFT_LINE_START && m.y > 250 && m.x < A_LEFT_LINE_END && m.y < 275)//鼠标按在更改降落时间区域
 				return 208;
-			if (m.x > 180 && m.y > 275 && m.x < 220 && m.y < 300)//鼠标按在更改飞行时间区域
-				return 209;
-			if (m.x > 180 && m.y > 325 && m.x < 220 && m.y < 350)//鼠标按在更改基本舱位区域
+			if (m.x > A_LEFT_LINE_START && m.y > 275 && m.x < A_LEFT_LINE_START + 50 && m.y < 300)//鼠标按在更改飞行小时区域
+				return 2091;
+			if (m.x > A_RIGHT_TEXT_START && m.y > 275 && m.x < A_RIGHT_TEXT_START + 50 && m.y < 300)//鼠标按在更改飞行分钟区域
+				return 2092;
+			if (m.x > A_LEFT_LINE_START && m.y > 325 && m.x < A_LEFT_LINE_END && m.y < 350)//鼠标按在更改基本舱位区域
 				return 211;
+			if (m.x > 140 && m.y > 400 && m.x < 240 && m.y < 440)//鼠标按在确认添加区域
+				return 21;
+			if (m.x > 240 && m.y > 400 && m.x < 340 && m.y < 440)//鼠标按在取消添加区域
+				return 22;
+
 		}
 	}
 }

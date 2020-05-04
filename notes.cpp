@@ -430,7 +430,7 @@ int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const
 			}
 			if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
 			{
-				if (Length == Limit - 1)
+				if (Length == Limit)
 				{
 					;
 				}
