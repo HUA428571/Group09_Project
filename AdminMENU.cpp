@@ -17,7 +17,6 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
 	settextstyle(&format);						// 设置字体样式
 	PrintLoading();
-
 	IMAGE BG;
 	loadimage(&BG, _T(".\\IMAGES\\Home.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 显示背景
@@ -57,6 +56,77 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
 	PrintHomeBG(IDcount);
 	char Location[4][100] = { ".\\Default_FlightID_Database_NEW.txt",".\\Default_Ticket_Database.dat",".\\FlightID.txt",".\\Ticket.dat" };
+	settextstyle(20, 0, FONT);
+	outtextxy(380, 200, "今天是");
+	char count[12];
+	time_t NOW;
+	tm* Local;
+	NOW = time(NULL);
+	Local = localtime(&NOW);
+	_stprintf(count, _T("%04d"), Local->tm_year + 1900);
+	outtextxy(440, 200, count);
+	outtextxy(480, 200, "年");
+	_stprintf(count, _T("%02d"), Local->tm_mon + 1);
+	outtextxy(500, 200, count);
+	outtextxy(520, 200, "月");
+	_stprintf(count, _T("%02d"), Local->tm_mday);
+	outtextxy(540, 200, count);
+	outtextxy(560, 200, "日");
+	MatchWeekDay(Local->tm_wday, count);
+	outtextxy(600, 200, count);
+	//今日飞行数据
+	outtextxy(380, 240, "今日飞行");
+	outtextxy(380, 270, "其中准点");
+	outtextxy(380, 300, "其中延误");
+	outtextxy(380, 330, "其中取消");
+	outtextxy(500, 240, "架次");
+	outtextxy(500, 270, "架次");
+	outtextxy(500, 300, "架次");
+	outtextxy(500, 330, "架次");
+	int FlyingID[999];
+	int FlyCount;
+	int OnTimeCount;
+	int DelayCount;
+	int CancelCount;
+	CountTodayFlyingDetail(ID, DATA, IDcount, Local->tm_wday, Local->tm_yday, FlyingID, FlyCount, OnTimeCount, DelayCount, CancelCount);
+	_stprintf(count, _T("%4d"), FlyCount);
+	outtextxy(460, 240, count);
+	_stprintf(count, _T("%4d"), OnTimeCount);
+	outtextxy(460, 270, count);
+	_stprintf(count, _T("%4d"), DelayCount);
+	outtextxy(460, 300, count);
+	_stprintf(count, _T("%4d"), CancelCount);
+	outtextxy(460, 330, count);
+	setfillcolor(RGB(220,220,220));
+	solidrectangle(550, 240, 1220, 260);
+	solidrectangle(550, 270, 1220, 290);
+	solidrectangle(550, 300, 1220, 320);
+	solidrectangle(550, 330, 1220, 350);
+	setfillcolor(RGB(30, 144, 255));//设置颜色为道奇蓝
+	for (int i = 550; i < 550 + ((double)FlyCount / IDcount) * 670; i+=2)
+	{
+		solidrectangle(i, 240, i + 2, 260);
+		Sleep(1);
+	}
+	setfillcolor(RGB(0, 128, 0));//设置颜色为绿色
+	for (int i = 550; i < 550 + ((double)OnTimeCount / IDcount) * 670; i += 2)
+	{
+		solidrectangle(i, 270, i + 2, 290);
+		Sleep(1);
+	}
+	setfillcolor(RGB(255, 165, 0));//橙色
+	for (int i = 550; i < 550 + ((double)DelayCount / IDcount) * 670; i += 2)
+	{
+		solidrectangle(i, 300, i + 2, 320);
+		Sleep(1);
+	}
+	setfillcolor(RGB(220, 20, 60));//猩红
+	for (int i = 550; i < 550 + ((double)CancelCount / IDcount) * 670; i += 2)
+	{
+		solidrectangle(i, 330, i + 2, 350);
+		Sleep(1);
+	}
+
 	int MENUchoice = AdminMENU_MainMENU_MENUChoose();
 	while (true)
 	{
@@ -91,11 +161,11 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][99
 	cleardevice();
 	setbkcolor(RGB(255, 255, 253));
 	IMAGE BG;
+	MOUSEMSG m;
+	LOGFONT format;
 	loadimage(&BG, _T(".\\IMAGES\\Import.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
 	settextcolor(BLACK);
-	MOUSEMSG m;
-	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
 	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
@@ -848,24 +918,8 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 
 int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 {
-	cleardevice();
-	setbkcolor(RGB(255, 255, 253));
-	IMAGE BG;
-	MOUSEMSG m;
-	LOGFONT format;
-	loadimage(&BG, _T(".\\IMAGES\\BackGround.png"), 1280, 720);
-	putimage(0, 0, &BG);	// 在另一个位置再次显示背景
-	settextcolor(BLACK);
-	gettextstyle(&format);						// 获取当前字体设置
-	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
-	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	settextstyle(&format);							// 设置字体样式
-	char count[8];
-	_stprintf(count, _T("%d"), IDcount);
-	outtextxy(110, 200, "当前数据库中有");
-	outtextxy(110, 230, count);
-	outtextxy(162, 230, "个航线数据");
+	PrintBG(IDcount);
+	settextstyle(25, 0, FONT);
 	char Delete[12];
 	int SearchReasult[999];
 	int SearchCount;
@@ -877,8 +931,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 		outtextxy(380, 200, "没有找到符合要求的航班！");
 		break;
 	case 1:
-		loadimage(&BG, _T(".\\IMAGES\\Delete.png"), 1280, 720);
-		putimage(0, 0, &BG);	// 显示删除界面背景
+		PrintDeleteBG(IDcount);
 		PrintFlightDetail(ID, DATA, IDcount, SearchReasult[0]);
 		int MENUchoice = AdminMENU_DeleteMENU_MENUChoose();
 		switch (MENUchoice)
@@ -901,15 +954,7 @@ int AdminMENU_DeleteMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 		}
 		break;
 	}
-	gettextstyle(&format);						// 获取当前字体设置
-	format.lfHeight = 25;						// 设置字体高度为 25
-	_tcscpy_s(format.lfFaceName, _T(FONT));	// 设置字体为FONT
-	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
-	settextstyle(&format);						// 设置字体样式
-	_stprintf(count, _T("%d"), IDcount);
-	outtextxy(110, 200, "当前数据库中有");
-	outtextxy(110, 230, count);
-	outtextxy(162, 230, "个航线数据");
+	PrintBG(IDcount);
 	return AdminMENU_MENUChoose();
 }
 

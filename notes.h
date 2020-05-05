@@ -40,4 +40,6 @@ int DeleteFlight(FlightID* ID, int& IDcount, int Delete);
 int C_InputBox(char* Input, int Limit, int x, int y, const char* Default);
 //输入框（输入内容，长度限制，输入框横轴位置，输入框纵轴位置，输入框总长度，字体高度，默认显示的内容）
 int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const char* Default);
+//计算飞行数据
+int CountTodayFlyingDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int wday, int yday, int* FlyingID, int& FlyCount, int& OnTimeCount, int& DelayCount, int& CancelCount);
 

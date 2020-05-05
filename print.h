@@ -39,9 +39,11 @@ void PrintTicketTitle();
 int PrintTicket(FlightID* ID, FlightTicket DATA[][999], int n);
 //打印每日机票详细信息:整页
 void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n, int Page, int CurrentPage, int FlyDayCountAll);
-//打印搜索页背景
-void PrintSearchBG(int IDcount);
-//打印主页背景
-void PrintHomeBG(int IDcount);
 //打印背景
 void PrintBG(int IDcount);
+//打印主页背景
+void PrintHomeBG(int IDcount);
+//打印搜索页背景
+void PrintSearchBG(int IDcount);
+//打印删除页背景
+void PrintDeleteBG(int IDcount);

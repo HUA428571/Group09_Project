@@ -465,3 +465,39 @@ int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const
 		}
 	}
 }
+//计算飞行数据
+int CountTodayFlyingDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int wday, int yday,
+	int* FlyingID, int& FlyCount, int& OnTimeCount, int& DelayCount, int& CancelCount)
+{
+	int Arrival;
+	if (wday == 0)
+		wday = 7;
+	FlyCount = 0;
+	OnTimeCount = 0;
+	DelayCount = 0;
+	CancelCount = 0;
+	for (int i = 0; i < IDcount; i++)
+	{
+		if (ID[i].FlyDay[wday] != '0')
+		{
+			FlyingID[FlyCount] = i;
+			FlyCount++;
+			if (DATA[yday][i].ActuralDepartureTime == 2500)
+			{
+				CancelCount++;
+				continue;
+			}
+			if ((ID[i].ArrivalTime / 100) >= 45)
+				Arrival = ID[i].ArrivalTime + 65;
+			else
+				Arrival = ID[i].ArrivalTime + 25;
+			if (DATA[yday][i].ActuralArrivalTime > Arrival)
+			{
+				DelayCount++;
+				continue;
+			}
+			OnTimeCount ++;
+		}
+	}
+	return FlyCount;
+}

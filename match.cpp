@@ -633,3 +633,31 @@ void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, c
 	TextColor = RGB(0, 128, 0);//设置颜色为绿色
 	return;
 }
+//将星期输出为中文字符串（输入字符串，输出字符串）
+void MatchWeekDay(int wday, char* WEEKDAY)
+{
+	switch (wday)
+	{
+	case 1:
+		strcpy(WEEKDAY, "星期一");
+		return;
+	case 2:
+		strcpy(WEEKDAY, "星期二");
+		return;
+	case 3:
+		strcpy(WEEKDAY, "星期三");
+		return;
+	case 4:
+		strcpy(WEEKDAY, "星期四");
+		return;
+	case 5:
+		strcpy(WEEKDAY, "星期五");
+		return;
+	case 6:
+		strcpy(WEEKDAY, "星期六");
+		return;
+	case 0:
+		strcpy(WEEKDAY, "星期日");
+		return;
+	}
+}
