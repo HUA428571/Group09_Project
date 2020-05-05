@@ -19,8 +19,6 @@ void PrintExit();
 void PrintExit_AutoSAVE(FlightID* ID, FlightTicket DATA[][999], int IDcount);
 //加载中动画
 void PrintProcess();
-//退出动画和自动保存1280*720（）
-void PrintExit_AutoSAVE(FlightID* ID, FlightTicket DATA[][999], int IDcount);
 //打印单个航线的详细信息:整页（航线数据数组，需要打印航班的数组下标）
 void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i);
 //打印单个航线（航线数据数组，需要打印航班的数组下标）
@@ -41,12 +39,9 @@ void PrintTicketTitle();
 int PrintTicket(FlightID* ID, FlightTicket DATA[][999], int n);
 //打印每日机票详细信息:整页
 void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n, int Page, int CurrentPage, int FlyDayCountAll);
-//打印每日机票详细信息：座位表等
-void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][999], int n);
 //打印搜索页背景
 void PrintSearchBG(int IDcount);
 //打印主页背景
 void PrintHomeBG(int IDcount);
 //打印背景
 void PrintBG(int IDcount);
-

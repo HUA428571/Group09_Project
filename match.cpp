@@ -1,4 +1,5 @@
 #include"match.h"
+//ºÍÊý¾Ý¿âÆ¥Åä·É»úÍ¼Æ¬
 void MatchPlaneImage(IMAGE& plane, char* AircraftType)
 {
 	int type;
@@ -44,6 +45,7 @@ void MatchPlaneImage(IMAGE& plane, char* AircraftType)
 		return;
 	}
 }
+//ºÍÊý¾Ý¿âÆ¥Åä»úÐÍÖÐÎÄÈ«³Æ£¨ÊäÈë×Ö·û´®£¬Êä³ö×Ö·û´®£©
 void MatchPlaneType(char* AircraftType, char* AIRCRAFTTYPE)
 {
 	int type;
@@ -96,6 +98,7 @@ void MatchPlaneType(char* AircraftType, char* AIRCRAFTTYPE)
 	}
 
 }
+//ºÍÊý¾Ý¿âÆ¥Åäº½¿Õ¹«Ë¾ÖÐÎÄÈ«³Æ£¨ÊäÈë×Ö·û´®£¬Êä³ö×Ö·û´®£©
 void MatchCarrier(char* carrier, char* CARRIER)
 {
 
@@ -178,6 +181,7 @@ void MatchCarrier(char* carrier, char* CARRIER)
 	strcpy(CARRIER, "Ã»ÓÐÕÒµ½Æ¥ÅäµÄº½¿Õ¹«Ë¾");
 	return;
 }
+//ºÍÊý¾Ý¿âÆ¥Åä»ú³¡ÖÐÎÄÈ«³Æ£¨ÊäÈë×Ö·û´®£¬Êä³ö×Ö·û´®£©
 void MatchAirport(char* airport, char* AIRPORT)
 {
 	strncpy(airport, airport, 3);
@@ -370,7 +374,7 @@ void MatchAirport(char* airport, char* AIRPORT)
 	if (!strcmp(airport, "MEX")) { strcpy(AIRPORT, "Ä«Î÷¸ç¹ú¼Ê»ú³¡"); return; }
 	if (!strcmp(airport, "CUN")) { strcpy(AIRPORT, "¿²À¥¹ú¼Ê»ú³¡"); return; }
 	if (!strcmp(airport, "HLD")) { strcpy(AIRPORT, "ºôÂ×±´¶û¶«É½¹ú¼Ê»ú³¡"); return; }
-	//
+
 	if (!strcmp(airport, "ATH")) { strcpy(AIRPORT, "ÑÅµä»ú³¡"); return; }
 	if (!strcmp(airport, "BAV")) { strcpy(AIRPORT, "°üÍ·»ú³¡"); return; }
 	if (!strcmp(airport, "BHY")) { strcpy(AIRPORT, "±±º£»ú³¡"); return; }
@@ -525,6 +529,7 @@ void MatchAirport(char* airport, char* AIRPORT)
 	strcat(AIRPORT, airport);
 	return;
 }
+//½«¿ªº½ÈÕÊä³öÎªÖÐÎÄ×Ö·û´®£¨ÊäÈë×Ö·û´®£¬Êä³ö×Ö·û´®£©
 void MatchFlyDay(char* flyday, char* FLYDAY)
 {
 	strcpy(FLYDAY, "\0");
@@ -543,6 +548,7 @@ void MatchFlyDay(char* flyday, char* FLYDAY)
 	if (flyday[7] == '7')strcat(FLYDAY, "ÈÕ"); else strcat(FLYDAY, "  ");
 	return;
 }
+//½«ÈÕÆÚÊä³öÎªÖÐÎÄ×Ö·û´®£¨ÊäÈë×Ö·û´®£¬Êä³ö×Ö·û´®£©
 void MatchDate(int year, int  date, char* Date)//ÊäÈëÒ»Äê¿ªÊ¼µÄÌìÊý£¬·µ»Ø×Ö·û´®ÐÎÊ½µÄÈÕÆÚ
 {
 	int mday[12] = { 0,31,59,90,120,151,181,212,243,273,304,334 };
@@ -574,6 +580,7 @@ void MatchDate(int year, int  date, char* Date)//ÊäÈëÒ»Äê¿ªÊ¼µÄÌìÊý£¬·µ»Ø×Ö·û´®Ð
 	strcat(Date, IntChange);
 	return;
 }
+//¼ÆËãÕýÍíµãÇé¿ö²¢·µ»Ø×Ö·û´®£¨º½ÏßÊý¾Ý¿â£¬º½°àÊý¾Ý¿â£¬º½ÏßÊý¾ÝÏÂ±ê£¬²éÑ¯ÈÕÆÚ£¬·µ»Ø×Ö·û´®£©
 void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor)
 {
 	time_t NOW;
@@ -626,141 +633,3 @@ void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, c
 	TextColor = RGB(0, 128, 0);//ÉèÖÃÑÕÉ«ÎªÂÌÉ«
 	return;
 }
-
-void MatchCity_Airport(char* airport, char* AIRPORT)
-{
-	if (!strcmp(airport, "¾É½ðÉ½")) { strcpy(AIRPORT, "SFO"); return; }
-	if (!strcmp(airport, "ÂåÉ¼í¶")) { strcpy(AIRPORT, "LAX"); return; }
-	if (!strcmp(airport, "°ÄÃÅ")) { strcpy(AIRPORT, "MFM"); return; }
-	if (!strcmp(airport, "°ÍÑåÄ×¶û")) { strcpy(AIRPORT, "RLK"); return; }
-	if (!strcmp(airport, "°à¼ÓÂÞ¶û")) { strcpy(AIRPORT, "BLR"); return; }
-	if (!strcmp(airport, "°üÍ·")) { strcpy(AIRPORT, "BAV"); return; }
-	if (!strcmp(airport, "±±º£")) { strcpy(AIRPORT, "BHY"); return; }
-	if (!strcmp(airport, "²ý¶¼")) { strcpy(AIRPORT, "BPX"); return; }
-	if (!strcmp(airport, "³£ÖÝ")) { strcpy(AIRPORT, "CZX"); return; }
-	if (!strcmp(airport, "³¯Ñô")) { strcpy(AIRPORT, "CHG"); return; }
-	if (!strcmp(airport, "³É¶¼")) { strcpy(AIRPORT, "CTU"); return; }
-	if (!strcmp(airport, "³à·å")) { strcpy(AIRPORT, "CIF"); return; }
-	if (!strcmp(airport, "³àËþ")) { strcpy(AIRPORT, "HTA"); return; }
-	if (!strcmp(airport, "³åÉþ")) { strcpy(AIRPORT, "OKA"); return; }
-	if (!strcmp(airport, "´ïÖÝ")) { strcpy(AIRPORT, "DAX"); return; }
-	if (!strcmp(airport, "´óÁ¬")) { strcpy(AIRPORT, "DLC"); return; }
-	if (!strcmp(airport, "´óÇì")) { strcpy(AIRPORT, "DQA"); return; }
-	if (!strcmp(airport, "´óÇñ")) { strcpy(AIRPORT, "TAE"); return; }
-	if (!strcmp(airport, "´óÍ¬")) { strcpy(AIRPORT, "DAT"); return; }
-	if (!strcmp(airport, "µ¤¶«")) { strcpy(AIRPORT, "DDG"); return; }
-	if (!strcmp(airport, "µÂÀï")) { strcpy(AIRPORT, "DEL"); return; }
-	if (!strcmp(airport, "µÏ°Ý")) { strcpy(AIRPORT, "DXB"); return; }
-	if (!strcmp(airport, "¶ÅÈû¶û¶à·ò")) { strcpy(AIRPORT, "DUS"); return; }
-	if (!strcmp(airport, "¶Ø»Í")) { strcpy(AIRPORT, "DNH"); return; }
-	if (!strcmp(airport, "¶õ¶û¶àË¹")) { strcpy(AIRPORT, "DSN"); return; }
-	if (!strcmp(airport, "·¨À¼¿Ë¸£")) { strcpy(AIRPORT, "FRA"); return; }
-	if (!strcmp(airport, "¸£¸Ô")) { strcpy(AIRPORT, "FUK"); return; }
-	if (!strcmp(airport, "¸£ÖÝ")) { strcpy(AIRPORT, "FOC"); return; }
-	if (!strcmp(airport, "¸ªÉ½")) { strcpy(AIRPORT, "PUS"); return; }
-	if (!strcmp(airport, "¸·Ñô")) { strcpy(AIRPORT, "FUG"); return; }
-	if (!strcmp(airport, "¸ÓÖÝ")) { strcpy(AIRPORT, "KOW"); return; }
-	if (!strcmp(airport, "¹ãµº")) { strcpy(AIRPORT, "HIJ"); return; }
-	if (!strcmp(airport, "¹ãÔª")) { strcpy(AIRPORT, "GYS"); return; }
-	if (!strcmp(airport, "¹ãÖÝ")) { strcpy(AIRPORT, "CAN"); return; }
-	if (!strcmp(airport, "¹óÑô")) { strcpy(AIRPORT, "KWE"); return; }
-	if (!strcmp(airport, "¹ðÁÖ")) { strcpy(AIRPORT, "KWL"); return; }
-	if (!strcmp(airport, "¹þ¶û±õ")) { strcpy(AIRPORT, "HRB"); return; }
-	if (!strcmp(airport, "º£¿Ú")) { strcpy(AIRPORT, "HAK"); return; }
-	if (!strcmp(airport, "º£À­¶û")) { strcpy(AIRPORT, "HLD"); return; }
-	if (!strcmp(airport, "º¼ÖÝ")) { strcpy(AIRPORT, "HGH"); return; }
-	if (!strcmp(airport, "ºÏ·Ê")) { strcpy(AIRPORT, "HFE"); return; }
-	if (!strcmp(airport, "ºÍÌï")) { strcpy(AIRPORT, "HTN"); return; }
-	if (!strcmp(airport, "ºôºÍºÆÌØ")) { strcpy(AIRPORT, "HET"); return; }
-	if (!strcmp(airport, "ºúÖ¾Ã÷ÊÐ")) { strcpy(AIRPORT, "SGN"); return; }
-	if (!strcmp(airport, "»ÆÉ½")) { strcpy(AIRPORT, "TXN"); return; }
-	if (!strcmp(airport, "»ÆÑÒ")) { strcpy(AIRPORT, "HYN"); return; }
-	if (!strcmp(airport, "¼ªÂ¡ÆÂ")) { strcpy(AIRPORT, "KUL"); return; }
-	if (!strcmp(airport, "¼ÃÄÏ")) { strcpy(AIRPORT, "TNA"); return; }
-	if (!strcmp(airport, "¼ÓµÂÂú¶¼")) { strcpy(AIRPORT, "KTM"); return; }
-	if (!strcmp(airport, "¼ÑÄ¾Ë¹")) { strcpy(AIRPORT, "JMU"); return; }
-	if (!strcmp(airport, "½ú½­")) { strcpy(AIRPORT, "JJN"); return; }
-	if (!strcmp(airport, "¾®¸ÔÉ½")) { strcpy(AIRPORT, "JGS"); return; }
-	if (!strcmp(airport, "¾°µÂÕò")) { strcpy(AIRPORT, "JDZ"); return; }
-	if (!strcmp(airport, "¾ÅÕ¯¹µ")) { strcpy(AIRPORT, "JZH"); return; }
-	if (!strcmp(airport, "¿¦Ê²")) { strcpy(AIRPORT, "KHG"); return; }
-	if (!strcmp(airport, "¿¨À­Ææ")) { strcpy(AIRPORT, "KHI"); return; }
-	if (!strcmp(airport, "¿â¶ûÀÕ")) { strcpy(AIRPORT, "KRL"); return; }
-	if (!strcmp(airport, "À¥Ã÷")) { strcpy(AIRPORT, "KMG"); return; }
-	if (!strcmp(airport, "À­Èø")) { strcpy(AIRPORT, "LXA"); return; }
-	if (!strcmp(airport, "À¼ÖÝ")) { strcpy(AIRPORT, "LHW"); return; }
-	if (!strcmp(airport, "Àö½­")) { strcpy(AIRPORT, "LJG"); return; }
-	if (!strcmp(airport, "Á¬ÔÆ¸Û")) { strcpy(AIRPORT, "LYG"); return; }
-	if (!strcmp(airport, "ÁÖÖ¥")) { strcpy(AIRPORT, "LZY"); return; }
-	if (!strcmp(airport, "ÁøÖÝ")) { strcpy(AIRPORT, "LZH"); return; }
-	if (!strcmp(airport, "ãòÖÝ")) { strcpy(AIRPORT, "LZO"); return; }
-	if (!strcmp(airport, "ÂíµÂÀï")) { strcpy(AIRPORT, "MAD"); return; }
-	if (!strcmp(airport, "ÂíÄáÀ­")) { strcpy(AIRPORT, "MNL"); return; }
-	if (!strcmp(airport, "ÂúÖÞÀï")) { strcpy(AIRPORT, "NZH"); return; }
-	if (!strcmp(airport, "Âü¹È")) { strcpy(AIRPORT, "BKK"); return; }
-	if (!strcmp(airport, "ÃÏÂò")) { strcpy(AIRPORT, "BOM"); return; }
-	if (!strcmp(airport, "ÃàÑô")) { strcpy(AIRPORT, "MIG"); return; }
-	if (!strcmp(airport, "Ãû¹ÅÎÝ")) { strcpy(AIRPORT, "NGO"); return; }
-	if (!strcmp(airport, "Ä«¶û±¾")) { strcpy(AIRPORT, "MEL"); return; }
-	if (!strcmp(airport, "Ä»ÄáºÚ")) { strcpy(AIRPORT, "MUC"); return; }
-	if (!strcmp(airport, "ÄÏ²ý")) { strcpy(AIRPORT, "KHN"); return; }
-	if (!strcmp(airport, "ÄÏ¾©")) { strcpy(AIRPORT, "NKG"); return; }
-	if (!strcmp(airport, "ÄÏÄþ")) { strcpy(AIRPORT, "NNG"); return; }
-	if (!strcmp(airport, "ÄÏÍ¨")) { strcpy(AIRPORT, "NTG"); return; }
-	if (!strcmp(airport, "Äþ²¨")) { strcpy(AIRPORT, "NGB"); return; }
-	if (!strcmp(airport, "Æ½ÈÀ")) { strcpy(AIRPORT, "FNJ"); return; }
-	if (!strcmp(airport, "ÆÕ¼ª")) { strcpy(AIRPORT, "HKT"); return; }
-	if (!strcmp(airport, "ÆëÆë¹þ¶û")) { strcpy(AIRPORT, "NDG"); return; }
-	if (!strcmp(airport, "Çàµº")) { strcpy(AIRPORT, "TAO"); return; }
-	if (!strcmp(airport, "ÈÕ¿¦Ôò")) { strcpy(AIRPORT, "RKZ"); return; }
-	if (!strcmp(airport, "ÈýÑÇ")) { strcpy(AIRPORT, "SYX"); return; }
-	if (!strcmp(airport, "ÏÃÃÅ")) { strcpy(AIRPORT, "XMN"); return; }
-	if (!strcmp(airport, "ÉÇÍ·")) { strcpy(AIRPORT, "SWA"); return; }
-	if (!strcmp(airport, "ÉîÛÚ")) { strcpy(AIRPORT, "SZX"); return; }
-	if (!strcmp(airport, "ÉòÑô")) { strcpy(AIRPORT, "SHE"); return; }
-	if (!strcmp(airport, "Ì¨ÖÐ")) { strcpy(AIRPORT, "RMQ"); return; }
-	if (!strcmp(airport, "Ì«Ô­")) { strcpy(AIRPORT, "TYN"); return; }
-	if (!strcmp(airport, "Ìì½ò")) { strcpy(AIRPORT, "TSN"); return; }
-	if (!strcmp(airport, "Í¨ÁÉ")) { strcpy(AIRPORT, "TGO"); return; }
-	if (!strcmp(airport, "ÍòÖÝ")) { strcpy(AIRPORT, "WXN"); return; }
-	if (!strcmp(airport, "Íþº£")) { strcpy(AIRPORT, "WEH"); return; }
-	if (!strcmp(airport, "ÎÂ¸ç»ª")) { strcpy(AIRPORT, "YVR"); return; }
-	if (!strcmp(airport, "ÎÂÖÝ")) { strcpy(AIRPORT, "WNZ"); return; }
-	if (!strcmp(airport, "ÎÚÀ¼°ÍÍÐ")) { strcpy(AIRPORT, "ULN"); return; }
-	if (!strcmp(airport, "ÎÚÀ¼ºÆÌØ")) { strcpy(AIRPORT, "HLH"); return; }
-	if (!strcmp(airport, "ÎÚÂ³Ä¾Æë")) { strcpy(AIRPORT, "URC"); return; }
-	if (!strcmp(airport, "ÎÞÎý")) { strcpy(AIRPORT, "WUX"); return; }
-	if (!strcmp(airport, "Îäºº")) { strcpy(AIRPORT, "WUH"); return; }
-	if (!strcmp(airport, "Î÷²ý")) { strcpy(AIRPORT, "XIC"); return; }
-	if (!strcmp(airport, "Î÷Äþ")) { strcpy(AIRPORT, "XNN"); return; }
-	if (!strcmp(airport, "Ï¤Äá")) { strcpy(AIRPORT, "SYD"); return; }
-	if (!strcmp(airport, "ÎýÁÖºÆÌØ")) { strcpy(AIRPORT, "XIL"); return; }
-	if (!strcmp(airport, "ÏÉÌ¨")) { strcpy(AIRPORT, "SDJ"); return; }
-	if (!strcmp(airport, "Ïã¸Û")) { strcpy(AIRPORT, "HKG"); return; }
-	if (!strcmp(airport, "Ïå·®")) { strcpy(AIRPORT, "XFN"); return; }
-	if (!strcmp(airport, "ÐÂ¼ÓÆÂ")) { strcpy(AIRPORT, "SIN"); return; }
-	if (!strcmp(airport, "ÐìÖÝ")) { strcpy(AIRPORT, "XUZ"); return; }
-	if (!strcmp(airport, "ÑÅµä")) { strcpy(AIRPORT, "ATH"); return; }
-	if (!strcmp(airport, "ÑÌÌ¨")) { strcpy(AIRPORT, "YNT"); return; }
-	if (!strcmp(airport, "ÑÓ¼ª")) { strcpy(AIRPORT, "YNJ"); return; }
-	if (!strcmp(airport, "ÑÎ³Ç")) { strcpy(AIRPORT, "YNZ"); return; }
-	if (!strcmp(airport, "ÑïÖÝ")) { strcpy(AIRPORT, "YTY"); return; }
-	if (!strcmp(airport, "Ñö¹â")) { strcpy(AIRPORT, "RGN"); return; }
-	if (!strcmp(airport, "ÒË±ö")) { strcpy(AIRPORT, "YBP"); return; }
-	if (!strcmp(airport, "ÒË²ý")) { strcpy(AIRPORT, "YIH"); return; }
-	if (!strcmp(airport, "ÒåÎÚ")) { strcpy(AIRPORT, "YIW"); return; }
-	if (!strcmp(airport, "Òø´¨")) { strcpy(AIRPORT, "INC"); return; }
-	if (!strcmp(airport, "ÔË³Ç")) { strcpy(AIRPORT, "YCU"); return; }
-	if (!strcmp(airport, "Õ¿½­")) { strcpy(AIRPORT, "ZHA"); return; }
-	if (!strcmp(airport, "ÕÅ¼Ò½ç")) { strcpy(AIRPORT, "DYG"); return; }
-	if (!strcmp(airport, "³¤´º")) { strcpy(AIRPORT, "CGQ"); return; }
-	if (!strcmp(airport, "³¤É³")) { strcpy(AIRPORT, "CSX"); return; }
-	if (!strcmp(airport, "³¤ÖÎ")) { strcpy(AIRPORT, "CIH"); return; }
-	if (!strcmp(airport, "Ö£ÖÝ")) { strcpy(AIRPORT, "CGO"); return; }
-	if (!strcmp(airport, "ÖØÇì")) { strcpy(AIRPORT, "CKG"); return; }
-	if (!strcmp(airport, "Öéº£")) { strcpy(AIRPORT, "ZUH"); return; }
-	strcpy(AIRPORT, "Ã»ÓÐÆ¥Åäµ½»ú³¡ÐÅÏ¢");
-	strcat(AIRPORT, airport);
-	return;
-}
-

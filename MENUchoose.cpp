@@ -1,7 +1,7 @@
 #include"MENUchoose.h"
-
 int AdminMENU_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -24,6 +24,7 @@ int AdminMENU_MENUChoose()
 }
 int AdminMENU_MainMENU_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -58,6 +59,7 @@ int AdminMENU_MainMENU_MENUChoose()
 }
 int AdminMENU_MainMENU_Import_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -89,13 +91,13 @@ int AdminMENU_MainMENU_Import_MENUChoose()
 				return 58;
 			if (m.x > 700 && m.y > 300 && m.x < 850 && m.y < 390)//鼠标按在修改路径区域
 				return 59;
-
 		}
 	}
 }
 
 int AdminMENU_SearchMENU_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -126,6 +128,7 @@ int AdminMENU_SearchMENU_MENUChoose()
 }
 int AdminMENU_SearchMENU_SingleFlight_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -158,6 +161,7 @@ int AdminMENU_SearchMENU_SingleFlight_MENUChoose()
 }
 int AdminMENU_SearchMENU_MultiFlight_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -196,10 +200,10 @@ int AdminMENU_SearchMENU_MultiFlight_MENUChoose()
 			}
 		}
 	}
-
 }
 int AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -229,13 +233,13 @@ int AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose()
 				return 18;
 			if (m.x > 100 && m.y > 550 && m.x < 300 && m.y < 590)//鼠标按在正晚点查询区域
 				return 17;
-
 		}
 	}
 }
 
 int AdminMENU_DeleteMENU_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -263,6 +267,7 @@ int AdminMENU_DeleteMENU_MENUChoose()
 
 int AdminMENU_AddMENU_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -310,35 +315,10 @@ int AdminMENU_AddMENU_MENUChoose()
 		}
 	}
 }
-int AdminMENU_AddMENU_Confirm_MENUChoose()
-{
-	while (true)
-	{
-		MOUSEMSG m;
-		// 获取一条鼠标消息
-		m = GetMouseMsg();
-		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
-		{
-			if (m.y > 90 && m.y < 135 && m.x>190 && m.x < 290)//鼠标按在主页区域
-				return 0;
-			if (m.y > 90 && m.y < 135 && m.x>390 && m.x < 490)//鼠标按在查找区域
-				return 1;
-			if (m.y > 90 && m.y < 135 && m.x>590 && m.x < 690)//鼠标按在添加区域
-				return 2;
-			if (m.y > 90 && m.y < 135 && m.x>790 && m.x < 890)//鼠标按在删除区域
-				return 3;
-			if (m.y > 90 && m.y < 135 && m.x>990 && m.x < 1090)//鼠标按在更改区域
-				return 4;
-			if (m.x > 100 && m.y > 350 && m.x < 300 && m.y < 390)//鼠标按在添加区域
-				return 21;
-			if (m.x > 100 && m.y > 450 && m.x < 300 && m.y < 490)//鼠标按在取消区域
-				return 22;
-		}
-	}
-}
 
 int AdminMENU_ChangeMENU_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -360,11 +340,9 @@ int AdminMENU_ChangeMENU_MENUChoose()
 	}
 }
 
-
-
-
 int AdminMENU_Ticket_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;
@@ -388,7 +366,6 @@ int AdminMENU_Ticket_MENUChoose()
 				return 16;
 			if (m.x > 1020 && m.y > 165 && m.x < 1050 && m.y < 195)//鼠标按在返回区域
 				return 18;
-
 			/*
 			for (int i = 0; i < 18; i++)//i用来计算行数
 			{
@@ -403,10 +380,10 @@ int AdminMENU_Ticket_MENUChoose()
 			*/
 		}
 	}
-
 }
 int AdminMENU_Ticket_Detail_MENUChoose()
 {
+	FlushMouseMsgBuffer();
 	while (true)
 	{
 		MOUSEMSG m;

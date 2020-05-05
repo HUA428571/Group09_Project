@@ -6,12 +6,6 @@
 using namespace std;
 //管理员菜单界面
 
-
-
-
-
-
-
 int main()
 {
 
@@ -49,38 +43,8 @@ int main()
 		exit(1);
 	}
 	cout << "成功导入" << FlightID_Count << "个航线数据！" << endl;
-	//int SearchReasult[999];//用于存储搜索结果
-	//int SearchCount = 0;//存储搜索结果数
-	//int SortReasult[999];//用于存储排序后的顺序，这样就不会更改原有的结构体数组顺序，不影响下标访问。
-
-	//cout << sizeof(DATA) << endl;
 
 	AdminMENU(ID, DATA, FlightID_Count);
-
-	//for (int i1 = 0; i1 < FlightID_Count; i1++)
-	//{
-	//	for (int i2 = 0; i2 < 366; i2++)
-	//	{
-	//		DATA[i2][i1].ActuralArrivalTime = ID[i1].ArrivalTime;
-	//		DATA[i2][i1].ActuralDepartureTime = ID[i1].DepartureTime;
-	//		if (JudgeAircraftSize(ID, i1) == 2)
-	//		{
-	//			DATA[i2][i1].BusinessClassTicketRemain = 36;
-	//			DATA[i2][i1].EconomyClassTicketRemain = 400;
-	//			DATA[i2][i1].FirstClassTicketRemain = 8;
-	//		}
-	//		else
-	//		{
-	//			DATA[i2][i1].BusinessClassTicketRemain = 8;
-	//			DATA[i2][i1].EconomyClassTicketRemain = 180;
-	//			DATA[i2][i1].FirstClassTicketRemain = 0;
-	//		}
-	//	}
-	//}
-	//char Location[50];
-	//strcpy(Location, ".\\Default_Ticket_Database.dat");
-	//SaveTicketDatabase(DATA, FlightID_Count, Location);
-
 
 	return 0;
 }

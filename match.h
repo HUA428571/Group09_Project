@@ -6,7 +6,6 @@
 #include<time.h>
 #include <easyx.h>			// 引用图形库头文件
 using namespace std;
-
 //和数据库匹配飞机图片
 void MatchPlaneImage(IMAGE& plane, char* AircraftType);
 //和数据库匹配机型中文全称（输入字符串，输出字符串）
@@ -21,7 +20,3 @@ void MatchFlyDay(char* flyday, char* FLYDAY);
 void MatchDate(int year, int date, char* Date);
 //计算正晚点情况并返回字符串（航线数据库，航班数据库，航线数据下标，查询日期，返回字符串）
 void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor);
-
-//void MatchDepartureTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor);
-
-//void MatchArrivalTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, char* ACCURACY, COLORREF& TextColor);

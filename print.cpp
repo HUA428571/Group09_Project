@@ -183,20 +183,14 @@ void PrintProcess()
 	}
 	return;
 }
-
-
 //打印单个航线的详细信息:整页（航线数据数组，需要打印航班的数组下标）
 void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i)
 {
 	clearrectangle(380, 200, 1220, 720);
-	//cleardevice();
-	//IMAGE BG;
 	IMAGE plane;
 	IMAGE FlightDetail;
 	LOGFONT format;
-	//loadimage(&BG, _T(".\\IMAGES\\Search2.png"), 1280, 720);
 	loadimage(&FlightDetail, _T(".\\IMAGES\\FlightDetail.png"), 680, 40);
-	//putimage(0, 0, &BG);						// 更新背景
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 25;						// 设置字体高度为 25
 	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
@@ -268,7 +262,6 @@ void PrintFlightDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int 
 	_stprintf(IntChange, _T("%04d"), ID[i].ArrivalTime);
 	outtextxy(1020, 450, IntChange);
 	outtextxy(1080, 450, "预计");
-	//Sleep(50);
 	//飞行时间
 	outtextxy(790, 420, "飞行时长");
 	_stprintf(IntChange, _T("%2d"), ID[i].TravelTimeHour);
@@ -330,7 +323,6 @@ int PrintSingleFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int i
 //按页打印多个航线（航线数据数组，航线数据计数，搜索结果数组，搜索结果计数）
 int PrintMultiFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, int* SearchReasult, int SearchCount)//返回菜单选择
 {
-	//clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
 	cleardevice();
 	IMAGE BG;
 	IMAGE PageChoiceImage;	
@@ -539,8 +531,6 @@ void PrintSingleLineFlight(FlightID* ID, FlightTicket DATA[][999], int IDcount, 
 	outtextxy(1200, roll, "m");
 	return;
 }
-
-
 //在详情页下方打印近期正晚点情况
 void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 {
@@ -554,17 +544,6 @@ void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 	char IntChange[8];
 	time_t NOW;
 	tm* Local;
-	/*
-	int tm_sec;   // seconds after the minute - [0, 60] including leap second
-	int tm_min;   // minutes after the hour - [0, 59]
-	int tm_hour;  // hours since midnight - [0, 23]
-	int tm_mday;  // day of the month - [1, 31]
-	int tm_mon;   // months since January - [0, 11]
-	int tm_year;  // years since 1900
-	int tm_wday;  // days since Sunday - [0, 6]
-	int tm_yday;  // days since January 1 - [0, 365]
-	int tm_isdst; // daylight savings time flag
-	*/
 	NOW = time(NULL);
 	Local = localtime(&NOW);
 	int yday = Local->tm_yday;
@@ -632,7 +611,6 @@ void PrintTimeAccuracyBar(FlightID* ID, FlightTicket DATA[][999], int n)
 		settextcolor(BLACK);
 	}
 }
-
 //打印机票页标题栏
 void PrintTicketTitle()
 {
@@ -754,42 +732,6 @@ int PrintTicket(FlightID* ID, FlightTicket DATA[][999],int n)
 			}
 			MENUchoice = AdminMENU_Ticket_MENUChoose();
 			break;
-		/*
-		case 19:					//按起飞时间排序
-			int SortReasult[999];//用于存储排序后的顺序，这样就不会更改原有的结构体数组顺序，不影响下标访问。
-			SortByDepartureTime(ID, SearchReasult, SearchCount, SortReasult);//冒泡排序法按照时间排序搜索航班结果；注意此函数有重载
-			return PrintMultiFlight(ID, DATA, IDcount, SortReasult, SearchCount);
-		case 101:
-		case 102:
-		case 103:
-		case 104:
-		case 105:
-		case 106:
-		case 107:
-		case 108:
-		case 109:
-		case 110:
-		case 111:
-		case 112:
-		case 113:
-		case 114:
-		case 115:									//跳转到详情页面
-			//首先判断该页的航班数量
-			int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
-			if ((MENUchoice % 100 + Count) <= SearchCount)
-			{
-				clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
-				IMAGE PageChoiceImage;
-				loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
-				putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
-				PrintFlightDetail(ID, DATA, IDcount, SearchReasult[MENUchoice % 100 + Count - 1]);
-				PrintTimeAccuracyBar(ID, DATA, SearchReasult[MENUchoice % 100 + Count - 1]);
-				MENUchoice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
-			}
-			else
-				MENUchoice = AdminMENU_SearchMENU_MultiFlight_MENUChoose();
-			break;
-			*/
 		}
 	}
 }
@@ -815,7 +757,6 @@ void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n,int 
 	NOW = time(NULL);
 	Local = localtime(&NOW);
 	int year = Local->tm_year+1900;
-	//int Count =(35-FlyDayCountCurrent%36)+(CurrentPage-1)*36;//count表示此页要从第几天开始显示（由上至下，由左至右日期向前，默认从下一次飞行开始显示）
 	int Count = (CurrentPage-1) * 36;
 	for (int i = 0; i < 18; i++)
 	{
@@ -911,12 +852,6 @@ void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n,int 
 	}
 	return;	
 }
-//打印每日机票详细信息：座位表等
-void PrintTiekstdetail(FlightID* ID, FlightTicket DATA[][999], int n)
-{
-	;
-}
-
 //打印搜索页背景
 void PrintSearchBG(int IDcount)
 {

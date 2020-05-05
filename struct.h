@@ -4,20 +4,12 @@
 #define FONT "黑体"
 #define FONT2_ZH "宋体"
 #define FONT2_EN "Consolas"
-//#define FONT "OPPOSans M"
-//#define FONT "华文细黑"
-//#define FONT "宋体"
-//#define FONT "Source Han Sans"
-//#define FONT "Microsoft YaHei UI Light"
-//#define FONT "Microsoft YaHei UI"
 
 //添加界面格式
 #define A_LEFT_MARGIN 60
 #define A_LEFT_LINE_START 150
 #define A_LEFT_LINE_END 240
 #define A_RIGHT_TEXT_START 260
-
-
 
 using namespace std;
 

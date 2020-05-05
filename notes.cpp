@@ -1,12 +1,12 @@
 #include"notes.h"
 using namespace std;
-
+//使用蔡勒公式转换日期与星期
 int WeekDayTransfer(int year, int month, int day)//使用蔡勒公式转换日期与星期
 {
 	int week = 0;
-	int century = year / 100;//注意这边实际上是年份的前两位，不是世纪数
-	year = year % 100;//年份的后两位
-	if (month == 1 || month == 2)//月份的范围为3-14，所以1月2月变成了13月14月
+	int century = year / 100;				//注意这边实际上是年份的前两位，不是世纪数
+	year = year % 100;						//年份的后两位
+	if (month == 1 || month == 2)			//月份的范围为3-14，所以1月2月变成了13月14月
 	{
 		month += 12;
 		year--;
@@ -15,7 +15,7 @@ int WeekDayTransfer(int year, int month, int day)//使用蔡勒公式转换日期与星期
 	week = week % 7;
 	return (week >= 0) ? week : (7 + week);
 }
-
+//返回日期对应天数
 int DateTransfer(int year, int month, int day)//返回日期对应天数
 {
 	int daycount = 0;
@@ -50,7 +50,7 @@ int DateTransfer(int year, int month, int day)//返回日期对应天数
 	}
 	return daycount;
 }
-
+//判断飞机是小飞机还是大飞机，小飞机返回1，大飞机返回2
 int JudgeAircraftSize(FlightID* ID, int n)//判断飞机是小飞机还是大飞机，小飞机返回1，大飞机返回2
 {
 	if (strcmp(ID[n].AircraftType, "319") && strcmp(ID[n].AircraftType, "320") && strcmp(ID[n].AircraftType, "321") && strcmp(ID[n].AircraftType, "737") && strcmp(ID[n].AircraftType, "738"))
@@ -58,7 +58,7 @@ int JudgeAircraftSize(FlightID* ID, int n)//判断飞机是小飞机还是大飞机，小飞机返
 	else
 		return 1;
 }
-
+//导入导出数据库
 int ImportFlightDatabase(FlightID* ID, char* Location)//用于在开头询问是否要引入现有航线数据库,函数返回读取航班个数
 {
 	FILE* fp;
@@ -169,12 +169,7 @@ int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
 	fclose(fp);
 	return IDcount;
 }
-
-void PrintFlightTicket()
-{
-	;
-}
-
+//查找航班号，返回查找到航班个数
 int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//查找航班号，返回查找到航班个数
 {
 	//查询航班号分两种情况，第一种纯数字，即没有航空公司代码，这种情况下可能重名；第二种字母加数字，即有航空公司代码，这种情况下航班号唯一。
@@ -209,6 +204,7 @@ int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, 
 	}
 	return SearchCount;
 }
+//查找航起飞地，返回查找到航班个数
 int SearchFlightDepartureAirport(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//查找航起飞地，返回查找到航班个数
 {
 	SearchCount = 0; //记录搜索到的航班个数,先置零
@@ -222,6 +218,7 @@ int SearchFlightDepartureAirport(FlightID* ID, char* search, int IDcount, int* S
 	}
 	return SearchCount;
 }
+//查找航降落地，返回查找到航班个数
 int SearchFlightArrivalAirport(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//查找航起飞地，返回查找到航班个数
 {
 	SearchCount = 0; //记录搜索到的航班个数,先置零
@@ -235,6 +232,7 @@ int SearchFlightArrivalAirport(FlightID* ID, char* search, int IDcount, int* Sea
 	}
 	return SearchCount;
 }
+//查找航起飞降落地，返回查找到航班个数
 int SearchFlightDepartureAndArrivalAirport(FlightID* ID, char* Departure, char* Arrival, int IDcount, int* SearchReasult, int& SearchCount)//查找航起飞地，返回查找到航班个数
 {
 	SearchCount = 0; //记录搜索到的航班个数,先置零
@@ -258,7 +256,7 @@ int SearchFlightDepartureAndArrivalAirport(FlightID* ID, char* Departure, char* 
 	}
 	return SearchCount;
 }
-
+//按照起飞时间排序
 //重载，全数据库排序/搜索结果数据库排序
 int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//冒泡排序法按照时间排序所有航班；注意此函数有重载
 {
@@ -312,7 +310,7 @@ int SortByDepartureTime(FlightID* ID, int* SearchReasult, int SearchCount, int* 
 	}
 	return 0;
 }
-
+//删除
 //重载，当添加航班取消时使用第二个
 int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete)
 {
@@ -336,8 +334,8 @@ int DeleteFlight(FlightID* ID, int& IDcount, int Delete)
 	IDcount--;
 	return IDcount;
 }
-
-int C_InputBox(char* Input, int Limit, int x, int y, const char * Default)
+//输入框（输入内容，长度限制，输入框横轴位置，输入框纵轴位置，默认显示的内容）
+int C_InputBox(char* Input, int Limit, int x, int y, const char* Default)
 {
 	clearrectangle(x, y, x + 160, y + 40);
 	fflush(stdin);//先清空输入缓存
@@ -352,7 +350,7 @@ int C_InputBox(char* Input, int Limit, int x, int y, const char * Default)
 		Sleep(1);
 	}
 	settextcolor(RGB(220, 220, 220));
-	outtextxy(x + 10, y + 4,Default);
+	outtextxy(x + 10, y + 4, Default);
 	settextcolor(BLACK);
 	while (true)
 	{
@@ -398,7 +396,7 @@ int C_InputBox(char* Input, int Limit, int x, int y, const char * Default)
 		}
 	}
 }
-
+//输入框（输入内容，长度限制，输入框横轴位置，输入框纵轴位置，输入框总长度，字体高度，默认显示的内容）
 int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const char* Default)
 {
 	clearrectangle(x, y, x + Lsize, y + Hsize);
@@ -410,7 +408,7 @@ int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const
 	setlinecolor(BLACK);
 	for (int i = x; i < x + Lsize; i++)
 	{
-		line(i, y + Hsize +2, i + 1, y + Hsize +2);
+		line(i, y + Hsize + 2, i + 1, y + Hsize + 2);
 		Sleep(1);
 	}
 	settextcolor(RGB(220, 220, 220));
