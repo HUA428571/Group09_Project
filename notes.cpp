@@ -466,7 +466,7 @@ int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const
 	}
 }
 //计算飞行数据
-int CountTodayFlyingDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int wday, int yday,
+int CountFlyingDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int wday, int yday,
 	int* FlyingID, int& FlyCount, int& OnTimeCount, int& DelayCount, int& CancelCount)
 {
 	int Arrival;
@@ -487,10 +487,10 @@ int CountTodayFlyingDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, 
 				CancelCount++;
 				continue;
 			}
-			if ((ID[i].ArrivalTime / 100) >= 45)
+			if ((ID[i].ArrivalTime % 100) >= 45)
 				Arrival = ID[i].ArrivalTime + 65;
 			else
-				Arrival = ID[i].ArrivalTime + 25;
+				Arrival = ID[i].ArrivalTime + 15;
 			if (DATA[yday][i].ActuralArrivalTime > Arrival)
 			{
 				DelayCount++;

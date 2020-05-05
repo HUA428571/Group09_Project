@@ -74,8 +74,8 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	outtextxy(560, 200, "日");
 	MatchWeekDay(Local->tm_wday, count);
 	outtextxy(600, 200, count);
-	//今日飞行数据
-	outtextxy(380, 240, "今日飞行");
+	//昨日飞行数据
+	outtextxy(380, 240, "昨日飞行");
 	outtextxy(380, 270, "其中准点");
 	outtextxy(380, 300, "其中延误");
 	outtextxy(380, 330, "其中取消");
@@ -88,7 +88,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	int OnTimeCount;
 	int DelayCount;
 	int CancelCount;
-	CountTodayFlyingDetail(ID, DATA, IDcount, Local->tm_wday, Local->tm_yday, FlyingID, FlyCount, OnTimeCount, DelayCount, CancelCount);
+	CountFlyingDetail(ID, DATA, IDcount, Local->tm_wday-1, Local->tm_yday-1, FlyingID, FlyCount, OnTimeCount, DelayCount, CancelCount);
 	_stprintf(count, _T("%4d"), FlyCount);
 	outtextxy(460, 240, count);
 	_stprintf(count, _T("%4d"), OnTimeCount);

@@ -47,77 +47,87 @@ int main()
 
 	//cout << sizeof(DATA) << endl;
 
-	//AdminMENU(ID, DATA, FlightID_Count);
+	AdminMENU(ID, DATA, FlightID_Count);
 
-	for (int i1 = 0; i1 < FlightID_Count; i1++)
-	{
-		for (int i2 = 0; i2 < 366; i2++)
-		{
-			srand(time(NULL));
-			int rnd1=rand() % 21;
-			int rnd2 = rand() % 21;
-			if (rnd1 == rnd2)//中奖了！取消你
-			{
-				DATA[i2][i1].ActuralArrivalTime = 2500;
-				DATA[i2][i1].ActuralDepartureTime = 2500;
-			}
-			else
-			{
-				if (ID[i1].TravelTimeHour < 3)
-				{
-					rnd1 = rand() % 61 - 30;
-					rnd2 = rand() % 21 - 10;
-					DATA[i2][i1].ActuralArrivalTime = ID[i1].ArrivalTime + rnd1;
-					if (DATA[i2][i1].ActuralArrivalTime % 100 >= 60)
-						DATA[i2][i1].ActuralArrivalTime += 40;
-					DATA[i2][i1].ActuralDepartureTime = ID[i1].DepartureTime + rnd1 + rnd2;
-					if (DATA[i2][i1].ActuralDepartureTime % 100 >= 60)
-						DATA[i2][i1].ActuralDepartureTime += 40;
-				}
-				else
-				{
-					if (ID[i1].TravelTimeHour < 6)
-					{
-						rnd1 = rand() % 121 - 60;
-						rnd2 = rand() % 41 - 20;
-						DATA[i2][i1].ActuralArrivalTime = ID[i1].ArrivalTime + rnd1;
-						if (DATA[i2][i1].ActuralArrivalTime % 100 >= 60)
-							DATA[i2][i1].ActuralArrivalTime += 40;
-						DATA[i2][i1].ActuralDepartureTime = ID[i1].DepartureTime + rnd1 + rnd2;
-						if (DATA[i2][i1].ActuralDepartureTime % 100 >= 60)
-							DATA[i2][i1].ActuralDepartureTime += 40;
-					}
-					else
-					{
-						rnd1 = rand() % 241 - 120;
-						rnd2 = rand() % 81 - 40;
-						DATA[i2][i1].ActuralArrivalTime = ID[i1].ArrivalTime + rnd1;
-						if (DATA[i2][i1].ActuralArrivalTime % 100 >= 60)
-							DATA[i2][i1].ActuralArrivalTime += 40;
-						DATA[i2][i1].ActuralDepartureTime = ID[i1].DepartureTime + rnd1 + rnd2;
-						if (DATA[i2][i1].ActuralDepartureTime % 100 >= 60)
-							DATA[i2][i1].ActuralDepartureTime += 40;
-					}
-				}
-			}
-			if (JudgeAircraftSize(ID, i1) == 2)
-			{
-				DATA[i2][i1].BusinessClassTicketRemain = 36;
-				DATA[i2][i1].EconomyClassTicketRemain = 400;
-				DATA[i2][i1].FirstClassTicketRemain = 8;
-			}
-			else
-			{
-				DATA[i2][i1].BusinessClassTicketRemain = 8;
-				DATA[i2][i1].EconomyClassTicketRemain = 180;
-				DATA[i2][i1].FirstClassTicketRemain = 0;
-			}
-		}
-	}
-	char Location[50];
-	strcpy(Location, ".\\Default_Ticket_Database.dat");
-	SaveTicketDatabase(DATA, FlightID_Count, Location);
-
-
-	return 0;
+	//srand(time(NULL));
+	//for (int i1 = 0; i1 < FlightID_Count; i1++)
+	//{
+	//	for (int i2 = 0; i2 < 366; i2++)
+	//	{
+	//		int rnd1 = rand() % 30;
+	//		int rnd2 = rand() % 30;
+	//		if (rnd1 == rnd2)//中奖了！取消你
+	//		{
+	//			DATA[i2][i1].ActuralArrivalTime = 2500;
+	//			DATA[i2][i1].ActuralDepartureTime = 2500;
+	//		}
+	//		else
+	//		{
+	//			if (ID[i1].TravelTimeHour < 3)
+	//			{
+	//				rnd1 = rand() % 61 - 30;
+	//				rnd2 = rand() % 21 - 10;
+	//				DATA[i2][i1].ActuralDepartureTime = ID[i1].DepartureTime + rnd1;
+	//				if (DATA[i2][i1].ActuralDepartureTime % 100 >= 60)
+	//					DATA[i2][i1].ActuralDepartureTime += 40;
+	//				if (DATA[i2][i1].ActuralDepartureTime < 0)
+	//					DATA[i2][i1].ActuralDepartureTime += 2400;
+	//				DATA[i2][i1].ActuralArrivalTime = ID[i1].ArrivalTime + rnd1 + rnd2;
+	//				if (DATA[i2][i1].ActuralArrivalTime % 100 >= 60)
+	//					DATA[i2][i1].ActuralArrivalTime += 40;
+	//				if (DATA[i2][i1].ActuralArrivalTime < 0)
+	//					DATA[i2][i1].ActuralArrivalTime += 2400;
+	//			}
+	//			else
+	//			{
+	//				if (ID[i1].TravelTimeHour < 6)
+	//				{
+	//					rnd1 = rand() % 121 - 60;
+	//					rnd2 = rand() % 41 - 20;
+	//					DATA[i2][i1].ActuralDepartureTime = ID[i1].DepartureTime + rnd1 ;
+	//					if (DATA[i2][i1].ActuralDepartureTime % 100 >= 60)
+	//						DATA[i2][i1].ActuralDepartureTime += 40;
+	//					if (DATA[i2][i1].ActuralDepartureTime < 0)
+	//						DATA[i2][i1].ActuralDepartureTime += 2400;
+	//					DATA[i2][i1].ActuralArrivalTime = ID[i1].ArrivalTime + rnd1 + rnd2;
+	//					if (DATA[i2][i1].ActuralArrivalTime % 100 >= 60)
+	//						DATA[i2][i1].ActuralArrivalTime += 40;
+	//					if (DATA[i2][i1].ActuralArrivalTime < 0)
+	//						DATA[i2][i1].ActuralArrivalTime += 2400;
+	//				}
+	//				else
+	//				{
+	//					rnd1 = rand() % 241 - 120;
+	//					rnd2 = rand() % 81 - 40;
+	//					DATA[i2][i1].ActuralDepartureTime = ID[i1].DepartureTime + rnd1;
+	//					if (DATA[i2][i1].ActuralDepartureTime % 100 >= 60)
+	//						DATA[i2][i1].ActuralDepartureTime += 40;
+	//					if (DATA[i2][i1].ActuralDepartureTime < 0)
+	//						DATA[i2][i1].ActuralDepartureTime += 2400;
+	//					DATA[i2][i1].ActuralArrivalTime = ID[i1].ArrivalTime + rnd1 + rnd2;
+	//					if (DATA[i2][i1].ActuralArrivalTime % 100 >= 60)
+	//						DATA[i2][i1].ActuralArrivalTime += 40;
+	//					if (DATA[i2][i1].ActuralArrivalTime < 0)
+	//						DATA[i2][i1].ActuralArrivalTime += 2400;
+	//				}
+	//			}
+	//		}
+	//		if (JudgeAircraftSize(ID, i1) == 2)
+	//		{
+	//			DATA[i2][i1].BusinessClassTicketRemain = 36;
+	//			DATA[i2][i1].EconomyClassTicketRemain = 400;
+	//			DATA[i2][i1].FirstClassTicketRemain = 8;
+	//		}
+	//		else
+	//		{
+	//			DATA[i2][i1].BusinessClassTicketRemain = 8;
+	//			DATA[i2][i1].EconomyClassTicketRemain = 180;
+	//			DATA[i2][i1].FirstClassTicketRemain = 0;
+	//		}
+	//	}
+	//}
+	//char Location[50];
+	//strcpy(Location, ".\\Default_Ticket_Database.dat");
+	//SaveTicketDatabase(DATA, FlightID_Count, Location);
+	//return 0;
 }
