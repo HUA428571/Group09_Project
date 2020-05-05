@@ -619,10 +619,10 @@ void MatchTimeAccuracy(FlightID* ID, FlightTicket DATA[][999], int n, int day, c
 		TextColor = RGB(220, 20, 60);//…Ë÷√—’…´Œ™–…∫Ï
 		return;
 	}
-	if ((ID[n].ArrivalTime / 100) >= 45)
+	if ((ID[n].ArrivalTime % 100) >= 45)
 		Arrival = ID[n].ArrivalTime + 65;
 	else
-		Arrival = ID[n].ArrivalTime + 25;
+		Arrival = ID[n].ArrivalTime + 15;
 	if (DATA[day][n].ActuralArrivalTime > Arrival)
 	{
 		strcpy(ACCURACY, "∫Ω∞‡—”ŒÛ");
