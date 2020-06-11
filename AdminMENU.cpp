@@ -83,50 +83,68 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	outtextxy(500, 270, "架次");
 	outtextxy(500, 300, "架次");
 	outtextxy(500, 330, "架次");
-	int FlyingID[999];
-	int FlyCount;
-	int OnTimeCount;
-	int DelayCount;
-	int CancelCount;
-	CountFlyingDetail(ID, DATA, IDcount, Local->tm_wday-1, Local->tm_yday-1, FlyingID, FlyCount, OnTimeCount, DelayCount, CancelCount);
-	_stprintf(count, _T("%4d"), FlyCount);
+	outtextxy(380, 380, "今日飞行");
+	outtextxy(500, 380, "架次");
+	int TodayFlyingID[999];
+	int YestFlyingID[999];
+	int TodayFlyCount;
+	int YestFlyCount;
+	int TodayOnTimeCount;
+	int YestOnTimeCount;
+	int TodayDelayCount;
+	int YestDelayCount;
+	int TodayCancelCount;
+	int YestCancelCount;
+	CountFlyingDetail(ID, DATA, IDcount, Local->tm_wday - 1, Local->tm_yday - 1, YestFlyingID, YestFlyCount, YestOnTimeCount, YestDelayCount, YestCancelCount);
+	CountFlyingDetail(ID, DATA, IDcount, Local->tm_wday, Local->tm_yday, TodayFlyingID, TodayFlyCount, TodayOnTimeCount, TodayDelayCount, TodayCancelCount);
+	_stprintf(count, _T("%4d"), YestFlyCount);
 	outtextxy(460, 240, count);
-	_stprintf(count, _T("%4d"), OnTimeCount);
+	_stprintf(count, _T("%4d"), YestOnTimeCount);
 	outtextxy(460, 270, count);
-	_stprintf(count, _T("%4d"), DelayCount);
+	_stprintf(count, _T("%4d"), YestDelayCount);
 	outtextxy(460, 300, count);
-	_stprintf(count, _T("%4d"), CancelCount);
+	_stprintf(count, _T("%4d"), YestCancelCount);
 	outtextxy(460, 330, count);
+	_stprintf(count, _T("%4d"), TodayFlyCount);
+	outtextxy(460, 380, count);
 	setfillcolor(RGB(220,220,220));
 	solidrectangle(550, 240, 1220, 260);
 	solidrectangle(550, 270, 1220, 290);
 	solidrectangle(550, 300, 1220, 320);
 	solidrectangle(550, 330, 1220, 350);
+	solidrectangle(550, 380, 1220, 400);
+	//昨日航班
 	setfillcolor(RGB(30, 144, 255));//设置颜色为道奇蓝
-	for (int i = 550; i < 550 + ((double)FlyCount / IDcount) * 670; i+=2)
+	for (int i = 550; i < 550 + ((double)YestFlyCount / IDcount) * 670; i+=2)
 	{
 		solidrectangle(i, 240, i + 2, 260);
 		Sleep(1);
 	}
 	setfillcolor(RGB(0, 128, 0));//设置颜色为绿色
-	for (int i = 550; i < 550 + ((double)OnTimeCount / IDcount) * 670; i += 2)
+	for (int i = 550; i < 550 + ((double)YestOnTimeCount / IDcount) * 670; i += 2)
 	{
 		solidrectangle(i, 270, i + 2, 290);
 		Sleep(1);
 	}
 	setfillcolor(RGB(255, 165, 0));//橙色
-	for (int i = 550; i < 550 + ((double)DelayCount / IDcount) * 670; i += 2)
+	for (int i = 550; i < 550 + ((double)YestDelayCount / IDcount) * 670; i += 2)
 	{
 		solidrectangle(i, 300, i + 2, 320);
 		Sleep(1);
 	}
 	setfillcolor(RGB(220, 20, 60));//猩红
-	for (int i = 550; i < 550 + ((double)CancelCount / IDcount) * 670; i += 2)
+	for (int i = 550; i < 550 + ((double)YestCancelCount / IDcount) * 670; i += 2)
 	{
 		solidrectangle(i, 330, i + 2, 350);
 		Sleep(1);
 	}
-
+	//今日航班
+	setfillcolor(RGB(30, 144, 255));//设置颜色为道奇蓝
+	for (int i = 550; i < 550 + ((double)TodayFlyCount / IDcount) * 670; i += 2)
+	{
+		solidrectangle(i, 380, i + 2, 400);
+		Sleep(1);
+	}
 	int MENUchoice = AdminMENU_MainMENU_MENUChoose();
 	while (true)
 	{
@@ -910,8 +928,10 @@ int AdminMENU_AddMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 		case 22:
 			Resize(NULL, 1280, 720);
 			PrintBG(IDcount);
-			outtextxy(380, 170, "已取消添加");
-			MENUchoice = AdminMENU_MENUChoose();
+			settextstyle(25, 0, FONT);
+			outtextxy(380, 200, "已取消添加");
+			Sleep(50);
+			MENUchoice = 0;
 		}
 	}
 }

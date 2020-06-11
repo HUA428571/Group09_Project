@@ -1,5 +1,4 @@
 ﻿#pragma once
-//#define BUFF_LEN 11 // 12 may fix the Run-Time Check Failure #2 
 #include"notes.h"
 #include"print.h"
 #include <stdlib.h>

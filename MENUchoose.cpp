@@ -195,7 +195,7 @@ int AdminMENU_SearchMENU_MultiFlight_MENUChoose()
 				return 19;
 			for (int i = 0; i < 15; i++)//i用来计算行数
 			{
-				if (m.x > 380 && m.y > 230 + 30 * i && m.x < 1220 && m.y < 260 + 30 * i)//鼠标按在具体哦航班区域
+				if (m.x > 380 && m.y > 230 + 30 * i && m.x < 1220 && m.y < 260 + 30 * i)//鼠标按在具体航班区域
 					return i + 101;
 			}
 		}

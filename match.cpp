@@ -459,10 +459,9 @@ void MatchAirport(char* airport, char* AIRPORT)
 	if (!strcmp(airport, "NDG")) { strcpy(AIRPORT, "齐齐哈尔机场"); return; }
 	if (!strcmp(airport, "NGB")) { strcpy(AIRPORT, "宁波机场"); return; }
 	if (!strcmp(airport, "NGO")) { strcpy(AIRPORT, "名古屋机场"); return; }
-	if (!strcmp(airport, "NKG")) { strcpy(AIRPORT, "南京机场"); return; }
 	if (!strcmp(airport, "NNG")) { strcpy(AIRPORT, "南宁机场"); return; }
 	if (!strcmp(airport, "NTG")) { strcpy(AIRPORT, "南通机场"); return; }
-	if (!strcmp(airport, "NYC")) { strcpy(AIRPORT, "USA纽约机场"); return; }
+	if (!strcmp(airport, "NYC")) { strcpy(AIRPORT, "纽约机场"); return; }
 	if (!strcmp(airport, "NZH")) { strcpy(AIRPORT, "满洲里机场"); return; }
 	if (!strcmp(airport, "OKA")) { strcpy(AIRPORT, "冲绳机场"); return; }
 	if (!strcmp(airport, "OSA")) { strcpy(AIRPORT, "大阪机场"); return; }
@@ -477,9 +476,7 @@ void MatchAirport(char* airport, char* AIRPORT)
 	if (!strcmp(airport, "SAO")) { strcpy(AIRPORT, "圣保罗机场"); return; }
 	if (!strcmp(airport, "SDJ")) { strcpy(AIRPORT, "仙台机场"); return; }
 	if (!strcmp(airport, "SEL")) { strcpy(AIRPORT, "首尔机场"); return; }
-	if (!strcmp(airport, "SFO")) { strcpy(AIRPORT, "USA旧金山机场"); return; }
 	if (!strcmp(airport, "SGN")) { strcpy(AIRPORT, "胡志明市机场"); return; }
-	if (!strcmp(airport, "SHA")) { strcpy(AIRPORT, "上海机场"); return; }
 	if (!strcmp(airport, "SHE")) { strcpy(AIRPORT, "沈阳机场"); return; }
 	if (!strcmp(airport, "SIA")) { strcpy(AIRPORT, "西安机场"); return; }
 	if (!strcmp(airport, "SIN")) { strcpy(AIRPORT, "新加坡机场"); return; }
@@ -525,6 +522,7 @@ void MatchAirport(char* airport, char* AIRPORT)
 	if (!strcmp(airport, "ZHA")) { strcpy(AIRPORT, "湛江机场"); return; }
 	if (!strcmp(airport, "ZUH")) { strcpy(AIRPORT, "珠海机场"); return; }
 	if (!strcmp(airport, "YIN")) { strcpy(AIRPORT, "伊宁机场"); return; }
+	if (!strcmp(airport, "HMI")) { strcpy(AIRPORT, "哈密机场"); return; }
 	strcpy(AIRPORT, "没有匹配到机场信息");
 	strcat(AIRPORT, airport);
 	return;
