@@ -1,116 +1,44 @@
-#include <iostream>
+#pragma once
+#include<iostream>
 #include<stdio.h>
 #include<string.h>
+#include<graphics.h>
+#include<easyx.h>
+#include<stdlib.h>
+#include<conio.h>
+#include"struct.h"
+
 using namespace std;
-//Ô­½á¹¹Ìå£¬³ö·¢ºÍµ½´ïÊ±¼ä¾ùÎª×Ö·ûÊı×é
-//typedef struct FlightID //ÓÃÓÚ±íÊ¾º½°àºÅ£¬º½°àºÅÖ»´ú±íº½°à»ù±¾ĞÅÏ¢¡£
-//{
-//    char Carrier[4] = {'X','X','X','X' };						//º½¿Õ¹«Ë¾£¬ÓÃÁ½¸ö´óĞ´×ÖÄ¸±íÊ¾
-//    char ID[8] = { 'X','X' ,'X' ,'X','X','X' ,'X' ,'X' };								//º½°àºÅ
-//    char FlyDay[8] = { 'X','X' ,'X' ,'X' ,'X' ,'X' ,'X' ,'X' };							//¿ªº½ÈÕÆÚ£¬ÒÔĞÇÆÚÎªÖÜÆÚ£¬ĞÇÆÚ¼¸ÓëÊı×éÏÂ±ê¶ÔÓ¦£¬¿ªº½Îª1£¬²»¿ªº½Îª0
-//    char DepartureAirport[8] = { 'X','X','X' ,'X' ,'X' ,'X' ,'X' ,'X' };				//³ö·¢»ú³¡£¬Èı×ÖÂë£¬Îª±êÃ÷º½Õ¾Â¥µÈ£¬ÒÔ×Ö·û´®ĞÎÊ½´æ´¢£¬×¢Òâ½áÎ²µÄ\0
-//    char ArrivalAirport[8] = { 'X','X' ,'X' ,'X' ,'X' ,'X' ,'X' ,'X' };					//µÖ´ï»ú³¡£¬Èı×ÖÂë£¬Îª±êÃ÷º½Õ¾Â¥µÈ£¬ÒÔ×Ö·û´®ĞÎÊ½´æ´¢£¬×¢Òâ½áÎ²µÄ\0
-//    char DepartureTime[4] = { 'X' ,'X' ,'X' ,'X' };					//³ö·¢Ê±¿Ì£¬ËÄ×ÖÂë
-//    char ArrivalTime[4] = { 'X' ,'X' ,'X' ,'X' };					//µ½´ïÊ±¿Ì£¬ËÄ×ÖÂë¡£eg 1230£¨12Ê±30·Ö£©
-//    char AircraftType[4] = { 'X','X' ,'X' };					//·É»úĞÍºÅ£¬Èı×ÖÂë¡£eg 787£¬350
-//    char Class[4] = { 'X','X' ,'X' ,'X' };							//²ÕÎ»£¬Á½²Õ»òÈı²Õ£¬×¢Òâ½áÎ²µÄ\0¡£
-//}FlightID;
-//ÏµÍ³Äê·İÄ¬ÈÏÎª2020Äê
-//
-#ifdef NOTE
-#define NOTE
-typedef struct FlightID //ÓÃÓÚ±íÊ¾º½°àºÅ£¬º½°àºÅÖ»´ú±íº½°à»ù±¾ĞÅÏ¢¡£
-{
-    char Carrier[4] = { 'X','X','X','X' };						//º½¿Õ¹«Ë¾£¬ÓÃÁ½¸ö´óĞ´×ÖÄ¸±íÊ¾
-    char ID[8] = { 'X','X' ,'X' ,'X','X','X' ,'X' ,'X' };								//º½°àºÅ
-    char FlyDay[8] = { 'X','X' ,'X' ,'X' ,'X' ,'X' ,'X' ,'X' };							//¿ªº½ÈÕÆÚ£¬ÒÔĞÇÆÚÎªÖÜÆÚ£¬ĞÇÆÚ¼¸ÓëÊı×éÏÂ±ê¶ÔÓ¦£¬¿ªº½Îª1£¬²»¿ªº½Îª0
-    char DepartureAirport[8] = { 'X','X','X' ,'X' ,'X' ,'X' ,'X' ,'X' };				//³ö·¢»ú³¡£¬Èı×ÖÂë£¬Îª±êÃ÷º½Õ¾Â¥µÈ£¬ÒÔ×Ö·û´®ĞÎÊ½´æ´¢£¬×¢Òâ½áÎ²µÄ\0
-    char ArrivalAirport[8] = { 'X','X' ,'X' ,'X' ,'X' ,'X' ,'X' ,'X' };					//µÖ´ï»ú³¡£¬Èı×ÖÂë£¬Îª±êÃ÷º½Õ¾Â¥µÈ£¬ÒÔ×Ö·û´®ĞÎÊ½´æ´¢£¬×¢Òâ½áÎ²µÄ\0
-    int DepartureTime = 2500;					//³ö·¢Ê±¿Ì£¬ËÄ×ÖÂë
-    int ArrivalTime = 2500;					//µ½´ïÊ±¿Ì£¬ËÄ×ÖÂë¡£eg 1230£¨12Ê±30·Ö£©
-    int TravelTimeHour = 0;//·ÉĞĞÊ±¼ä(Ê±)
-    int TravelTimeMinute = 0;//·ÉĞĞÊ±¼ä(·Ö)
-    char AircraftType[4] = { 'X','X' ,'X' };					//·É»úĞÍºÅ£¬Èı×ÖÂë¡£eg 787£¬350
-    char Class[4] = { 'X','X' ,'X' ,'X' };							//²ÕÎ»£¬Á½²Õ»òÈı²Õ£¬×¢Òâ½áÎ²µÄ\0¡£
-}FlightID;
-
-typedef struct Date
-{
-    int year;
-    int month;
-    int day;
-}Date;
-
-typedef struct FlightTicket //Ã¿ÈÕ»úÆ±Çé¿ö
-{
-    int ID;//ÌîÊı×éÏÂ±ê(º½°àºÅ²»Î¨Ò»£©
-    Date day;
-    int FirstClassTicketRemain = 0;
-    int BusinessClassTicketRemain = 0;
-    int EconomyClassTicketRemain = 0;
-    int FirstClassTicketPrice = -100;
-    int BusinessClassTicketPrice = -100;
-    int EconomyClassTicketPrice = -100;
-    int ActuralDepartureTime = 2500;
-    int ActuralArrivalTime = 2500;
-}FlightTicket;
-
-extern FlightID ID[999];
-
-extern FlightTicket DATA[366][999];
-
-#endif // NOTE
-
-#ifndef StructDefine
-#define StructDefine
-typedef struct FlightID //ÓÃÓÚ±íÊ¾º½°àºÅ£¬º½°àºÅÖ»´ú±íº½°à»ù±¾ĞÅÏ¢¡£
-{
-    char Carrier[4] = { 'X','X','X','X' };						//º½¿Õ¹«Ë¾£¬ÓÃÁ½¸ö´óĞ´×ÖÄ¸±íÊ¾
-    char ID[8] = { 'X','X' ,'X' ,'X','X','X' ,'X' ,'X' };								//º½°àºÅ
-    char FlyDay[8] = { 'X','X' ,'X' ,'X' ,'X' ,'X' ,'X' ,'X' };							//¿ªº½ÈÕÆÚ£¬ÒÔĞÇÆÚÎªÖÜÆÚ£¬ĞÇÆÚ¼¸ÓëÊı×éÏÂ±ê¶ÔÓ¦£¬¿ªº½Îª1£¬²»¿ªº½Îª0
-    char DepartureAirport[8] = { 'X','X','X' ,'X' ,'X' ,'X' ,'X' ,'X' };				//³ö·¢»ú³¡£¬Èı×ÖÂë£¬Îª±êÃ÷º½Õ¾Â¥µÈ£¬ÒÔ×Ö·û´®ĞÎÊ½´æ´¢£¬×¢Òâ½áÎ²µÄ\0
-    char ArrivalAirport[8] = { 'X','X' ,'X' ,'X' ,'X' ,'X' ,'X' ,'X' };					//µÖ´ï»ú³¡£¬Èı×ÖÂë£¬Îª±êÃ÷º½Õ¾Â¥µÈ£¬ÒÔ×Ö·û´®ĞÎÊ½´æ´¢£¬×¢Òâ½áÎ²µÄ\0
-    int DepartureTime = 2500;					//³ö·¢Ê±¿Ì£¬ËÄ×ÖÂë
-    int ArrivalTime = 2500;					//µ½´ïÊ±¿Ì£¬ËÄ×ÖÂë¡£eg 1230£¨12Ê±30·Ö£©
-    int TravelTimeHour = 0;//·ÉĞĞÊ±¼ä(Ê±)
-    int TravelTimeMinute = 0;//·ÉĞĞÊ±¼ä(·Ö)
-    int Price = 0;
-    char AircraftType[4] = { 'X','X' ,'X' };					//·É»úĞÍºÅ£¬Èı×ÖÂë¡£eg 787£¬350
-    char Class[4] = { 'X','X' ,'X' ,'X' };							//²ÕÎ»£¬Á½²Õ»òÈı²Õ£¬×¢Òâ½áÎ²µÄ\0¡£
-}FlightID;
-
-typedef struct FlightTicket //Ã¿ÈÕ»úÆ±Çé¿ö
-{
-    int Seat[50][10] = { 0 };
-    int FirstClassTicketRemain = 0;
-    int BusinessClassTicketRemain = 0;
-    int EconomyClassTicketRemain = 0;
-    int ActuralDepartureTime = 2500;
-    int ActuralArrivalTime = 2500;
-}FlightTicket; 
-#endif // !struct
-
-
-int WeekDayTransfer(int, int, int);//Ê¹ÓÃ²ÌÀÕ¹«Ê½×ª»»ÈÕÆÚÓëĞÇÆÚ
-int DateTransfer(int, int, int);//·µ»ØÈÕÆÚ¶ÔÓ¦ÌìÊı
-int JudgeAircraftSize(FlightID*, int);//ÅĞ¶Ï·É»úÊÇĞ¡·É»ú»¹ÊÇ´ó·É»ú£¬Ğ¡·É»ú·µ»Ø1£¬´ó·É»ú·µ»Ø2
-int ImportFlightDatabase(FlightID*);
-void PrintFlightTitle();//´òÓ¡±êÌâÀ¸
-void PrintFlight(FlightID*, int, int);
-int SearchFlightID(FlightID*, char*, int, int*, int&);//²éÕÒº½°àºÅ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
-int SearchFlightDepartureAirport(FlightID*, char*, int, int*, int&);//²éÕÒº½Æğ·ÉµØ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
-int SearchFlightArrivalAirport(FlightID*, char*, int, int*, int&);//²éÕÒº½Æğ·ÉµØ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
-int PrintSearch(FlightID*, int, int*, int&);//Õ¹Ê¾²éÑ¯µÄ½á¹û
-int NewFlight(FlightID*, int&);//´´½¨ĞÂº½Ïß
-int SortByDepartureTime(FlightID*, int, int*);//°´ÕÕÆğ·ÉÊ±¼äÅÅĞò
-int SaveFlightDatabase(FlightID*, int);
-void ChangeFlightInformation(FlightID* , int , int );
-void PrintInformation(FlightID* , int );
-int DeleteFlight(FlightID* , FlightTicket[][999], int& , int );
-
-
-
-
-
-
-
+//ä½¿ç”¨è”¡å‹’å…¬å¼è½¬æ¢æ—¥æœŸä¸æ˜ŸæœŸ
+int WeekDayTransfer(int, int, int);
+//è¿”å›æ—¥æœŸå¯¹åº”å¤©æ•°
+int DateTransfer(int, int, int);
+//åˆ¤æ–­é£æœºæ˜¯å°é£æœºè¿˜æ˜¯å¤§é£æœºï¼Œå°é£æœºè¿”å›1ï¼Œå¤§é£æœºè¿”å›2
+int JudgeAircraftSize(FlightID*, int);
+//å¯¼å…¥å¯¼å‡ºæ•°æ®åº“
+int ImportFlightDatabase(FlightID* ID, char* Location);
+int SaveFlightDatabase(FlightID* ID, int IDcount, char* Location);
+int ImportTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
+int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
+//æŸ¥æ‰¾èˆªç­å·ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+int SearchFlightID(FlightID*, char*, int, int*, int&);
+//æŸ¥æ‰¾èˆªèµ·é£åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+int SearchFlightDepartureAirport(FlightID*, char*, int, int*, int&);
+//æŸ¥æ‰¾èˆªé™è½åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+int SearchFlightArrivalAirport(FlightID*, char*, int, int*, int&);
+//æŸ¥æ‰¾èˆªèµ·é£é™è½åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+int SearchFlightDepartureAndArrivalAirport(FlightID* ID, char* Departure, char* Arrival, int IDcount, int* SearchReasult, int& SearchCount);
+//æŒ‰ç…§èµ·é£æ—¶é—´æ’åº
+//é‡è½½ï¼Œå…¨æ•°æ®åº“æ’åº/æœç´¢ç»“æœæ•°æ®åº“æ’åº
+int SortByDepartureTime(FlightID*, int, int*);
+int SortByDepartureTime(FlightID* ID, int* SearchReasult, int SearchCount, int* SortReasult);
+//åˆ é™¤
+//é‡è½½ï¼Œå½“æ·»åŠ èˆªç­å–æ¶ˆæ—¶ä½¿ç”¨ç¬¬äºŒä¸ª
+int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete);
+int DeleteFlight(FlightID* ID, int& IDcount, int Delete);
+//è¾“å…¥æ¡†ï¼ˆè¾“å…¥å†…å®¹ï¼Œé•¿åº¦é™åˆ¶ï¼Œè¾“å…¥æ¡†æ¨ªè½´ä½ç½®ï¼Œè¾“å…¥æ¡†çºµè½´ä½ç½®ï¼Œé»˜è®¤æ˜¾ç¤ºçš„å†…å®¹ï¼‰
+int C_InputBox(char* Input, int Limit, int x, int y, const char* Default);
+//è¾“å…¥æ¡†ï¼ˆè¾“å…¥å†…å®¹ï¼Œé•¿åº¦é™åˆ¶ï¼Œè¾“å…¥æ¡†æ¨ªè½´ä½ç½®ï¼Œè¾“å…¥æ¡†çºµè½´ä½ç½®ï¼Œè¾“å…¥æ¡†æ€»é•¿åº¦ï¼Œå­—ä½“é«˜åº¦ï¼Œé»˜è®¤æ˜¾ç¤ºçš„å†…å®¹ï¼‰
+int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const char* Default);
+//è®¡ç®—é£è¡Œæ•°æ®
+int CountFlyingDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int wday, int yday, int* FlyingID, int& FlyCount, int& OnTimeCount, int& DelayCount, int& CancelCount);

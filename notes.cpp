@@ -1,14 +1,12 @@
-#include<iostream>
-#include<stdio.h>
 #include"notes.h"
 using namespace std;
-
-int WeekDayTransfer(int year, int month, int day)//Ê¹ÓÃ²ÌÀÕ¹«Ê½×ª»»ÈÕÆÚÓëĞÇÆÚ
+//ä½¿ç”¨è”¡å‹’å…¬å¼è½¬æ¢æ—¥æœŸä¸æ˜ŸæœŸ
+int WeekDayTransfer(int year, int month, int day)//ä½¿ç”¨è”¡å‹’å…¬å¼è½¬æ¢æ—¥æœŸä¸æ˜ŸæœŸ
 {
 	int week = 0;
-	int century = year / 100;//×¢ÒâÕâ±ßÊµ¼ÊÉÏÊÇÄê·İµÄÇ°Á½Î»£¬²»ÊÇÊÀ¼ÍÊı
-	year = year % 100;//Äê·İµÄºóÁ½Î»
-	if (month == 1 || month == 2)//ÔÂ·İµÄ·¶Î§Îª3-14£¬ËùÒÔ1ÔÂ2ÔÂ±ä³ÉÁË13ÔÂ14ÔÂ
+	int century = year / 100;				//æ³¨æ„è¿™è¾¹å®é™…ä¸Šæ˜¯å¹´ä»½çš„å‰ä¸¤ä½ï¼Œä¸æ˜¯ä¸–çºªæ•°
+	year = year % 100;						//å¹´ä»½çš„åä¸¤ä½
+	if (month == 1 || month == 2)			//æœˆä»½çš„èŒƒå›´ä¸º3-14ï¼Œæ‰€ä»¥1æœˆ2æœˆå˜æˆäº†13æœˆ14æœˆ
 	{
 		month += 12;
 		year--;
@@ -17,8 +15,8 @@ int WeekDayTransfer(int year, int month, int day)//Ê¹ÓÃ²ÌÀÕ¹«Ê½×ª»»ÈÕÆÚÓëĞÇÆÚ
 	week = week % 7;
 	return (week >= 0) ? week : (7 + week);
 }
-
-int DateTransfer(int year, int month, int day)//·µ»ØÈÕÆÚ¶ÔÓ¦ÌìÊı
+//è¿”å›æ—¥æœŸå¯¹åº”å¤©æ•°
+int DateTransfer(int year, int month, int day)//è¿”å›æ—¥æœŸå¯¹åº”å¤©æ•°
 {
 	int daycount = 0;
 	if (year % 4 == 0 && year % 100 != 0)
@@ -52,137 +50,131 @@ int DateTransfer(int year, int month, int day)//·µ»ØÈÕÆÚ¶ÔÓ¦ÌìÊı
 	}
 	return daycount;
 }
-
-int JudgeAircraftSize(FlightID* ID, int n)//ÅĞ¶Ï·É»úÊÇĞ¡·É»ú»¹ÊÇ´ó·É»ú£¬Ğ¡·É»ú·µ»Ø1£¬´ó·É»ú·µ»Ø2
+//åˆ¤æ–­é£æœºæ˜¯å°é£æœºè¿˜æ˜¯å¤§é£æœºï¼Œå°é£æœºè¿”å›1ï¼Œå¤§é£æœºè¿”å›2
+int JudgeAircraftSize(FlightID* ID, int n)//åˆ¤æ–­é£æœºæ˜¯å°é£æœºè¿˜æ˜¯å¤§é£æœºï¼Œå°é£æœºè¿”å›1ï¼Œå¤§é£æœºè¿”å›2
 {
 	if (strcmp(ID[n].AircraftType, "319") && strcmp(ID[n].AircraftType, "320") && strcmp(ID[n].AircraftType, "321") && strcmp(ID[n].AircraftType, "737") && strcmp(ID[n].AircraftType, "738"))
 		return 2;
 	else
 		return 1;
 }
-
-int ImportFlightDatabase(FlightID* ID)//ÓÃÓÚÔÚ¿ªÍ·Ñ¯ÎÊÊÇ·ñÒªÒıÈëÏÖÓĞº½ÏßÊı¾İ¿â,º¯Êı·µ»Ø¶ÁÈ¡º½°à¸öÊı
+//å¯¼å…¥å¯¼å‡ºæ•°æ®åº“
+int ImportFlightDatabase(FlightID* ID, char* Location)//ç”¨äºåœ¨å¼€å¤´è¯¢é—®æ˜¯å¦è¦å¼•å…¥ç°æœ‰èˆªçº¿æ•°æ®åº“,å‡½æ•°è¿”å›è¯»å–èˆªç­ä¸ªæ•°
 {
-	char choice;
-	do {
-		cout << "µ¼ÈëÄ¬ÈÏº½ÏßÊı¾İ(1)/ÉÏ´Î±£´æµÄº½ÏßÊı¾İ(2)/²»µ¼Èë(N)£¿" << endl;
-		cin >> choice;
-	} while (choice != '1' && choice != '2' && choice != 'n' && choice != 'N');
-	if (choice == '1' || choice == '2')
+	FILE* fp;
+	if ((fp = fopen(Location, "r")) == NULL)
 	{
-		FILE* fp;
-		if (choice == '1')
-		{
-			if ((fp = fopen(".\\Default_FlightID_Database_2.txt", "r")) == NULL)
-			{
-				printf("Fail to open file!\n");
-				return 0;
-			}
-		}
-		else
-		{
-			if ((fp = fopen(".\\FlightID_Database.txt", "r")) == NULL)
-			{
-				printf("Fail to open file!\n");
-				return 0;
-			}
-		}
-		int FlightIDcount = 0;
-		char c;
-		while (!feof(fp))
-		{
-			int i = 1;
-			while ((c = fgetc(fp)) != ',')//¶ÁÈ¡°àÆÚ
-			{
-				ID[FlightIDcount].FlyDay[i] = c;
-				i++;
-			}
-			i = 0;
-			while ((c = fgetc(fp)) != ',')//¶ÁÈ¡³ö·¢»ú³¡
-			{
-				ID[FlightIDcount].DepartureAirport[i] = c;
-				i++;
-			}
-			ID[FlightIDcount].DepartureAirport[i] = '\0';//×Ö·û´®½áÎ²
-			fscanf_s(fp, "%d", &ID[FlightIDcount].DepartureTime);//¶ÁÈ¡³ö·¢Ê±¼ä
-			fgetc(fp);
-			fscanf_s(fp, "%d", &ID[FlightIDcount].ArrivalTime);//¶ÁÈ¡µ½´ïÊ±¼ä
-			i = 0;
-			fgetc(fp);
-			while ((c = fgetc(fp)) != ',')//¶ÁÈ¡µ½´ï»ú³¡
-			{
-				ID[FlightIDcount].ArrivalAirport[i] = c;
-				i++;
-			}
-			ID[FlightIDcount].ArrivalAirport[i] = '\0';//×Ö·û´®½áÎ²
-			i = 0;
-			while (i < 2)//¶ÁÈ¡º½¿Õ¹«Ë¾
-			{
-				c = fgetc(fp);
-				ID[FlightIDcount].Carrier[i] = c;
-				i++;
-			}
-			ID[FlightIDcount].Carrier[i] = '\0';//×Ö·û´®½áÎ²
-			i = 0;
-			while ((c = fgetc(fp)) != ',')//¶ÁÈ¡º½°àºÅ
-			{
-				ID[FlightIDcount].ID[i] = c;
-				i++;
-			}
-			ID[FlightIDcount].ID[i] = '\0';//×Ö·û´®½áÎ²
-			i = 0;
-			while ((c = fgetc(fp)) != ',')//¶ÁÈ¡»úĞÍ
-			{
-				ID[FlightIDcount].AircraftType[i] = c;
-				i++;
-			}
-			ID[FlightIDcount].AircraftType[i] = '\0';//×Ö·û´®½áÎ²
-			i = 0;
-			while (((c = fgetc(fp)) != ','))//¶ÁÈ¡²ÕÎ»
-			{
-				ID[FlightIDcount].Class[i] = c;
-				i++;
-			}
-			ID[FlightIDcount].Class[i] = '\0';//×Ö·û´®½áÎ²
-			fscanf_s(fp, "%d", &ID[FlightIDcount].TravelTimeHour);//¶ÁÈ¡·ÉĞĞÊ±¼ä
-			c = fgetc(fp);//¶ÁÈ¡Ã°ºÅ
-			fscanf_s(fp, "%2d", &ID[FlightIDcount].TravelTimeMinute);
-			ID[FlightIDcount].Price = ID[FlightIDcount].TravelTimeHour * 675 + ID[FlightIDcount].TravelTimeMinute * 11.25;
-			FlightIDcount++;
-			if ((c = fgetc(fp)) == EOF)break;
-		}
-		fclose(fp);
-		cout << "³É¹¦µ¼Èë" << FlightIDcount << "¸öº½ÏßÊı¾İ£¡" << endl;
-		return FlightIDcount;
+		return -1;
 	}
-	if (choice == 'n' || choice == 'N')
+	int FlightIDcount = 0;
+	char c;
+	while (!feof(fp))
 	{
-		return 0;
+		int i = 1;
+		while ((c = fgetc(fp)) != ',')//è¯»å–ç­æœŸ
+		{
+			ID[FlightIDcount].FlyDay[i] = c;
+			i++;
+		}
+		i = 0;
+		while ((c = fgetc(fp)) != ',')//è¯»å–å‡ºå‘æœºåœº
+		{
+			ID[FlightIDcount].DepartureAirport[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].DepartureAirport[i] = '\0';//å­—ç¬¦ä¸²ç»“å°¾
+		fscanf_s(fp, "%d", &ID[FlightIDcount].DepartureTime);//è¯»å–å‡ºå‘æ—¶é—´
+		fgetc(fp);
+		fscanf_s(fp, "%d", &ID[FlightIDcount].ArrivalTime);//è¯»å–åˆ°è¾¾æ—¶é—´
+		i = 0;
+		fgetc(fp);
+		while ((c = fgetc(fp)) != ',')//è¯»å–åˆ°è¾¾æœºåœº
+		{
+			ID[FlightIDcount].ArrivalAirport[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].ArrivalAirport[i] = '\0';//å­—ç¬¦ä¸²ç»“å°¾
+		i = 0;
+		while (i < 2)//è¯»å–èˆªç©ºå…¬å¸
+		{
+			c = fgetc(fp);
+			ID[FlightIDcount].Carrier[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].Carrier[i] = '\0';//å­—ç¬¦ä¸²ç»“å°¾
+		i = 0;
+		while ((c = fgetc(fp)) != ',')//è¯»å–èˆªç­å·
+		{
+			ID[FlightIDcount].ID[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].ID[i] = '\0';//å­—ç¬¦ä¸²ç»“å°¾
+		i = 0;
+		while ((c = fgetc(fp)) != ',')//è¯»å–æœºå‹
+		{
+			ID[FlightIDcount].AircraftType[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].AircraftType[i] = '\0';//å­—ç¬¦ä¸²ç»“å°¾
+		i = 0;
+		while (((c = fgetc(fp)) != ','))//è¯»å–èˆ±ä½
+		{
+			ID[FlightIDcount].Class[i] = c;
+			i++;
+		}
+		ID[FlightIDcount].Class[i] = '\0';//å­—ç¬¦ä¸²ç»“å°¾
+		fscanf_s(fp, "%d", &ID[FlightIDcount].TravelTimeHour);//è¯»å–é£è¡Œæ—¶é—´
+		c = fgetc(fp);//è¯»å–å†’å·
+		fscanf_s(fp, "%2d", &ID[FlightIDcount].TravelTimeMinute);
+		ID[FlightIDcount].Price = ID[FlightIDcount].TravelTimeHour * 675 + ID[FlightIDcount].TravelTimeMinute * 11.25;
+		FlightIDcount++;
+		if ((c = fgetc(fp)) == EOF)break;
 	}
+	fclose(fp);
+	return FlightIDcount;
 }
-
-void PrintFlightTitle()//´òÓ¡±êÌâÀ¸
+int SaveFlightDatabase(FlightID* ID, int IDcount, char* Location)
 {
-	printf("±àºÅ\tº½°àºÅ\t\tÆğ·ÉÊ±¼ä\tÆğ·É»ú³¡\tµ½´ï»ú³¡\tµ½´ïÊ±¼ä\t·ÉĞĞÊ±¼ä\tÖ´·É»úĞÍ\n");
-	return;
+	FILE* fp;
+	if ((fp = fopen(Location, "w")) == NULL)
+	{
+		return -1;
+	}
+	for (int i = 0; i < IDcount; i++)
+	{
+		fprintf(fp, "%c%c%c%c%c%c%c,%s,%04d,%04d,%s,%s%s,%s,%s,%d:%02d\n", ID[i].FlyDay[1], ID[i].FlyDay[2], ID[i].FlyDay[3], ID[i].FlyDay[4], ID[i].FlyDay[5], ID[i].FlyDay[6], ID[i].FlyDay[7], ID[i].DepartureAirport, ID[i].DepartureTime, ID[i].ArrivalTime, ID[i].ArrivalAirport, ID[i].Carrier, ID[i].ID, ID[i].AircraftType, ID[i].Class, ID[i].TravelTimeHour, ID[i].TravelTimeMinute);
+	}
+	fclose(fp);
+	return IDcount;
 }
-
-void PrintFlight(FlightID* ID, int n, int i)//´«ÈëÊı×é£¬Êı×éÏÂ±ê£¬ĞòºÅ
+int ImportTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
 {
-	printf("%d\t%s%s\t\t%04d\t\t%s\t\t%s\t\t%04d\t\t%dĞ¡Ê±%02d·ÖÖÓ\t%s\n", i, ID[n].Carrier, ID[n].ID, ID[n].DepartureTime, ID[n].DepartureAirport, ID[n].ArrivalAirport, ID[n].ArrivalTime, ID[n].TravelTimeHour, ID[n].TravelTimeMinute, ID[n].AircraftType);
-	return;
+	FILE* fp;
+	if ((fp = fopen(Location, "rb")) == NULL)
+	{
+		return -1;
+	}
+	fread(DATA, sizeof(FlightTicket), 366 * 999, fp);
+	fclose(fp);
+	return IDcount;
 }
-
-void PrintFlightTicket()
+int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
 {
-	;
+	FILE* fp;
+	if ((fp = fopen(Location, "wb")) == NULL)
+	{
+		return -1;
+	}
+	fwrite(DATA, sizeof(FlightTicket), 366 * 999, fp);
+	fclose(fp);
+	return IDcount;
 }
-
-int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//²éÕÒº½°àºÅ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
+//æŸ¥æ‰¾èˆªç­å·ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//æŸ¥æ‰¾èˆªç­å·ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
 {
-	//²éÑ¯º½°àºÅ·ÖÁ½ÖÖÇé¿ö£¬µÚÒ»ÖÖ´¿Êı×Ö£¬¼´Ã»ÓĞº½¿Õ¹«Ë¾´úÂë£¬ÕâÖÖÇé¿öÏÂ¿ÉÄÜÖØÃû£»µÚ¶şÖÖ×ÖÄ¸¼ÓÊı×Ö£¬¼´ÓĞº½¿Õ¹«Ë¾´úÂë£¬ÕâÖÖÇé¿öÏÂº½°àºÅÎ¨Ò»¡£
-	SearchCount = 0; //¼ÇÂ¼ËÑË÷µ½µÄº½°à¸öÊı,ÏÈÖÃÁã
-	if (strcmp(search, "AAAA") < 0)//´¿Êı×Ö
+	//æŸ¥è¯¢èˆªç­å·åˆ†ä¸¤ç§æƒ…å†µï¼Œç¬¬ä¸€ç§çº¯æ•°å­—ï¼Œå³æ²¡æœ‰èˆªç©ºå…¬å¸ä»£ç ï¼Œè¿™ç§æƒ…å†µä¸‹å¯èƒ½é‡åï¼›ç¬¬äºŒç§å­—æ¯åŠ æ•°å­—ï¼Œå³æœ‰èˆªç©ºå…¬å¸ä»£ç ï¼Œè¿™ç§æƒ…å†µä¸‹èˆªç­å·å”¯ä¸€ã€‚
+	SearchCount = 0; //è®°å½•æœç´¢åˆ°çš„èˆªç­ä¸ªæ•°,å…ˆç½®é›¶
+	if (strcmp(search, "AAAA") < 0)//çº¯æ•°å­—
 	{
 		for (int i = 0; i < IDcount; i++)
 		{
@@ -197,12 +189,12 @@ int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, 
 	{
 		for (int i = 0; i < IDcount; i++)
 		{
-			char a[12];//´æ´¢º½¿Õ¹«Ë¾+º½°àºÅµÄºÏÌå
+			char a[12];//å­˜å‚¨èˆªç©ºå…¬å¸+èˆªç­å·çš„åˆä½“
 			a[0] = ID[i].Carrier[0];
 			a[1] = ID[i].Carrier[1];
 			a[2] = '\0';
 			strcat(a, ID[i].ID);
-			if (!strcmp(search, a))
+			if (!_stricmp(search, a))
 			{
 				SearchReasult[SearchCount] = i;
 				SearchCount++;
@@ -212,155 +204,73 @@ int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, 
 	}
 	return SearchCount;
 }
-
-int SearchFlightDepartureAirport(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//²éÕÒº½Æğ·ÉµØ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
+//æŸ¥æ‰¾èˆªèµ·é£åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+int SearchFlightDepartureAirport(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//æŸ¥æ‰¾èˆªèµ·é£åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
 {
-	SearchCount = 0; //¼ÇÂ¼ËÑË÷µ½µÄº½°à¸öÊı,ÏÈÖÃÁã
+	SearchCount = 0; //è®°å½•æœç´¢åˆ°çš„èˆªç­ä¸ªæ•°,å…ˆç½®é›¶
 	for (int i = 0; i < IDcount; i++)
 	{
-		if (!strcmp(search, ID[i].DepartureAirport))
+		if (!_strnicmp(search, ID[i].DepartureAirport, 3))
 		{
 			SearchReasult[SearchCount] = i;
 			SearchCount++;
-			return SearchCount;
 		}
 	}
+	return SearchCount;
 }
-
-int SearchFlightArrivalAirport(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//²éÕÒº½Æğ·ÉµØ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
+//æŸ¥æ‰¾èˆªé™è½åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+int SearchFlightArrivalAirport(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//æŸ¥æ‰¾èˆªèµ·é£åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
 {
-	SearchCount = 0; //¼ÇÂ¼ËÑË÷µ½µÄº½°à¸öÊı,ÏÈÖÃÁã
+	SearchCount = 0; //è®°å½•æœç´¢åˆ°çš„èˆªç­ä¸ªæ•°,å…ˆç½®é›¶
 	for (int i = 0; i < IDcount; i++)
 	{
-		if (!strcmp(search, ID[i].ArrivalAirport))
+		if (!_strnicmp(search, ID[i].ArrivalAirport, 3))
 		{
 			SearchReasult[SearchCount] = i;
 			SearchCount++;
-			return SearchCount;
 		}
 	}
+	return SearchCount;
 }
-
-int PrintSearch(FlightID* ID, int IDcount, int* SearchReasult, int& SearchCount)//Õ¹Ê¾²éÑ¯µÄ½á¹û
+//æŸ¥æ‰¾èˆªèµ·é£é™è½åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+int SearchFlightDepartureAndArrivalAirport(FlightID* ID, char* Departure, char* Arrival, int IDcount, int* SearchReasult, int& SearchCount)//æŸ¥æ‰¾èˆªèµ·é£åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
 {
-	int SearchReasultChoice;
-	if (SearchCount)
-	{
-		if (SearchCount == 1)
-		{
-			cout << "³É¹¦ÕÒµ½Ò»¸öº½°à£¡" << endl;
-			return SearchReasult[0];
-		}
-		else
-		{
-			cout << "¹²ÎªÄúÕÒµ½" << SearchCount << "¸öº½°à\n" << "ÇëÑ¡ÔñÄúĞèÒª²éÑ¯µÄº½°àĞòºÅ£º" << endl;
-			for (int i = 0; i <= SearchCount; i++)
-			{
-				PrintFlight(ID, i, i + 1);
-			}
-			cin >> SearchReasultChoice;
-			return SearchReasult[SearchReasultChoice - 1];
-		}
-	}
-	else
-	{
-		cout << "Ã»ÓĞÕÒµ½·ûºÏÌõ¼şµÄº½°à£¡" << endl;
-		return 999;
-	}
-}
-
-int NewFlight(FlightID* ID, int& IDcount)
-{
-	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
-	int SearchReasult[2];
-	int SearchCount = 0;
-	cout << "ÇëÊäÈëÍêÕûº½°àºÅ£º";
-	cin >> Input;
-	if (SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount))
-	{
-		cout << "ÖØ¸´µÄº½°àºÅ£¡ÇëÖØĞÂÊäÈë\n";
-		return IDcount;
-	}
-	ID[IDcount].Carrier[0] = Input[0];
-	ID[IDcount].Carrier[1] = Input[1];
-	ID[IDcount].Carrier[2] = '\0';
-	ID[IDcount].ID[0] = Input[2];
-	ID[IDcount].ID[1] = Input[3];
-	ID[IDcount].ID[2] = Input[4];
-	ID[IDcount].ID[3] = Input[5];
-	ID[IDcount].ID[4] = Input[6];
-	ID[IDcount].ID[5] = Input[7];
-	ID[IDcount].ID[6] = Input[8];
-	ID[IDcount].ID[7] = Input[9];
-	cout << "ÇëÊäÈë¿ªº½ÈÕÆÚ£º";
-	cin >> ID[IDcount].FlyDay;
-	cout << "ÇëÊäÈëÆğ·É»ú³¡£º";
-	cin >> ID[IDcount].DepartureAirport;
-	cout << "ÇëÊäÈë½µÂä»ú³¡£º";
-	cin >> ID[IDcount].ArrivalAirport;
-	cout << "ÇëÊäÈëÆğ·ÉÊ±¼ä£º";
-	cin >> ID[IDcount].DepartureTime;
-	cout << "ÇëÊäÈë½µÂäÊ±¼ä£º";
-	cin >> ID[IDcount].ArrivalTime;
-	cout << "ÇëÊäÈë·ÉĞĞÊ±¼ä£¨Ğ¡Ê±£©£º";
-	cin >> ID[IDcount].TravelTimeHour;
-	cout << "ÇëÊäÈë·ÉĞĞÊ±¼ä£¨·ÖÖÓ£©£º";
-	cin >> ID[IDcount].TravelTimeMinute;
-	cout << "ÇëÊäÈëÖ´·É»úĞÍ£º";
-	cin >> ID[IDcount].AircraftType;
-	cout << "ÇëÊäÈë²ÕÎ»£º";
-	cin >> ID[IDcount].Class;
-	ID[IDcount].Price = ID[IDcount].TravelTimeHour * 675 + ID[IDcount].TravelTimeMinute * 11.25;
-	IDcount++;
-	cout << "ÒÑ³É¹¦Ìí¼ÓµÚ" << IDcount << "¸öº½ÏßÊı¾İ" << endl;//Õâ¾ä»°¿ÉÄÜºóÆÚÒª¼Óµ½ÉÏ¼¶²Ëµ¥º¯ÊıÀïÍ·
-	return IDcount;
-}//¿ÉÑ¡¹¦ÄÜ£º¼ìÑéÊäÈëÊı¾İµÄÕıÈ·ĞÔ£¬²»¹ıÕâ¸öÌ«·±ÔÓÁË£¬ÏÈ²»×ö¡£
-
-int SaveFlightDatabase(FlightID* ID, int IDcount)
-{
-	char choice;
-	FILE* fp;
-	do {
-		cout << "½¨Á¢ĞÂÊı¾İ¿â(A)/ÔÚÒÑÓĞÊı¾İ¿âÉÏÔö¼Ó(B)" << endl;
-		cin >> choice;
-	} while (choice != 'A' && choice != 'a' && choice != 'B' && choice != 'b');
-	if (choice == 'A' || choice == 'a')
-	{
-		if ((fp = fopen(".\\FlightID_Database.txt", "w")) == NULL)
-		{
-			printf("Fail to establish new file!\n");
-			return 0;
-		}
-	}
-	else
-	{
-		if ((fp = fopen(".\\FlightID_Database.txt", "a")) == NULL)
-		{
-			printf("Fail to open file!\n");
-			return 0;
-		}
-	}
+	SearchCount = 0; //è®°å½•æœç´¢åˆ°çš„èˆªç­ä¸ªæ•°,å…ˆç½®é›¶
+	int TempSearchCount = 0;			//ä¸´æ—¶æœç´¢ç»“æœä¸ªæ•°ç»Ÿè®¡ï¼Œç”¨äºå­˜å‚¨ç¬¦åˆèµ·é£æœºåœºè¦æ±‚çš„èˆªç­
+	int TempSearchReasult[999];
 	for (int i = 0; i < IDcount; i++)
 	{
-		//printf("%c%c%c%c%c%c%c,%s,%04d,%04d,%s,%s%s,%s,%s,%d:%02d\n", ID[i].FlyDay[1], ID[i].FlyDay[2], ID[i].FlyDay[3], ID[i].FlyDay[4], ID[i].FlyDay[5], ID[i].FlyDay[6], ID[i].FlyDay[7], ID[i].DepartureAirport, ID[i].DepartureTime, ID[i].ArrivalTime, ID[i].ArrivalAirport, ID[i].Carrier, ID[i].ID, ID[i].AircraftType, ID[i].Class, ID[i].TravelTimeHour, ID[i].TravelTimeMinute);
-		fprintf(fp, "%c%c%c%c%c%c%c,%s,%04d,%04d,%s,%s%s,%s,%s,%d:%02d\n", ID[i].FlyDay[1], ID[i].FlyDay[2], ID[i].FlyDay[3], ID[i].FlyDay[4], ID[i].FlyDay[5], ID[i].FlyDay[6], ID[i].FlyDay[7], ID[i].DepartureAirport, ID[i].DepartureTime, ID[i].ArrivalTime, ID[i].ArrivalAirport, ID[i].Carrier, ID[i].ID, ID[i].AircraftType, ID[i].Class, ID[i].TravelTimeHour, ID[i].TravelTimeMinute);
+		if (!_strnicmp(Departure, ID[i].DepartureAirport, 3))
+		{
+			TempSearchReasult[TempSearchCount] = i;
+			TempSearchCount++;
+		}
 	}
-	cout << "ÒÑ³É¹¦µ¼³ö" << IDcount << "¸öº½ÏßÊı¾İ" << endl;
-	fclose(fp);
-	return IDcount;
+	for (int i = 0; i < TempSearchCount; i++)
+	{
+		if (!_strnicmp(Arrival, ID[TempSearchReasult[i]].ArrivalAirport, 3))
+		{
+			SearchReasult[SearchCount] = TempSearchReasult[i];
+			SearchCount++;
+		}
+	}
+	return SearchCount;
 }
-
-int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//Ã°ÅİÅÅĞò·¨°´ÕÕÊ±¼äÅÅĞòº½°à£»
+//æŒ‰ç…§èµ·é£æ—¶é—´æ’åº
+//é‡è½½ï¼Œå…¨æ•°æ®åº“æ’åº/æœç´¢ç»“æœæ•°æ®åº“æ’åº
+int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//å†’æ³¡æ’åºæ³•æŒ‰ç…§æ—¶é—´æ’åºæ‰€æœ‰èˆªç­ï¼›æ³¨æ„æ­¤å‡½æ•°æœ‰é‡è½½
 {
+
 	int i;
-	//Ê×ÏÈÒª³õÊ¼»¯Ò»ÏÂ´æ´¢ÅÅĞò½á¹ûµÄÊı×é
+	//é¦–å…ˆè¦åˆå§‹åŒ–ä¸€ä¸‹å­˜å‚¨æ’åºç»“æœçš„æ•°ç»„
 	for (i = 0; i < IDcount; i++)
+
 	{
 		SortReasult[i] = i;
 	}
 	int i1, i2;
-	//ÏÈĞ´Ò»¸öÊ±¼äÓÉÔçµ½ÍíµÄ
-	//Ë­»áÊ±¼äÓÉÍíµ½Ôç²éÄØ£¬¾Í²»Ğ´ÁË¡£
+	//å…ˆå†™ä¸€ä¸ªæ—¶é—´ç”±æ—©åˆ°æ™šçš„
+	//è°ä¼šæ—¶é—´ç”±æ™šåˆ°æ—©æŸ¥å‘¢ï¼Œå°±ä¸å†™äº†ã€‚
 	for (i1 = 0; i1 < (IDcount - 1); i1++)
 	{
 		for (i2 = 0; i2 < (IDcount - i1 - 1); i2++)
@@ -376,6 +286,35 @@ int SortByDepartureTime(FlightID* ID, int IDcount, int* SortReasult)//Ã°ÅİÅÅĞò·¨
 	}
 	return 0;
 }
+int SortByDepartureTime(FlightID* ID, int* SearchReasult, int SearchCount, int* SortReasult)//å†’æ³¡æ’åºæ³•æŒ‰ç…§æ—¶é—´æ’åºæœç´¢èˆªç­ç»“æœï¼›æ³¨æ„æ­¤å‡½æ•°æœ‰é‡è½½
+{
+	int i;
+	//é¦–å…ˆè¦åˆå§‹åŒ–ä¸€ä¸‹å­˜å‚¨æ’åºç»“æœçš„æ•°ç»„
+	for (i = 0; i < SearchCount; i++)
+	{
+		SortReasult[i] = SearchReasult[i];
+	}
+	int i1, i2;
+	//å…ˆå†™ä¸€ä¸ªæ—¶é—´ç”±æ—©åˆ°æ™šçš„
+	//è°ä¼šæ—¶é—´ç”±æ™šåˆ°æ—©æŸ¥å‘¢ï¼Œå°±ä¸å†™äº†ã€‚
+	for (i1 = 0; i1 < (SearchCount - 1); i1++)
+	{
+		for (i2 = 0; i2 < (SearchCount - i1 - 1); i2++)
+		{
+			if (ID[SortReasult[i2]].DepartureTime > ID[SortReasult[i2 + 1]].DepartureTime)
+			{
+				int Switch;
+				Switch = SortReasult[i2];
+				SortReasult[i2] = SortReasult[i2 + 1];
+				SortReasult[i2 + 1] = Switch;
+			}
+		}
+	}
+	return 0;
+}
+
+//åˆ é™¤
+//é‡è½½ï¼Œå½“æ·»åŠ èˆªç­å–æ¶ˆæ—¶ä½¿ç”¨ç¬¬äºŒä¸ª
 
 int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete)
 {
@@ -387,62 +326,183 @@ int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delet
 			DATA[i2][i] = DATA[i2][i + 1];
 		}
 	}
-	return IDcount=IDcount - 1;
-}
 
-void ChangeFlightInformation(FlightID* ID, int IDcount, int change)
+	IDcount--;
+	return IDcount;
+}
+int DeleteFlight(FlightID* ID, int& IDcount, int Delete)
 {
-	PrintFlight(ID, change, 1);
-	char Input[12] = { 'X','X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' };
-	int SearchReasult[2];
-	int SearchCount = 0;
-	cout << "ÇëÊäÈëÍêÕûº½°àºÅ£º";
-	cin >> Input;
-	if (SearchFlightID(ID, Input, IDcount, SearchReasult, SearchCount))
+	for (int i = Delete; i < IDcount; i++)
 	{
-		cout << "ÖØ¸´µÄº½°àºÅ£¡ÇëÖØĞÂÊäÈë\n";
-		return;
+		ID[i] = ID[i + 1];
 	}
-	ID[change].Carrier[0] = Input[0];
-	ID[change].Carrier[1] = Input[1];
-	ID[change].Carrier[2] = '\0';
-	ID[change].ID[0] = Input[2];
-	ID[change].ID[1] = Input[3];
-	ID[change].ID[2] = Input[4];
-	ID[change].ID[3] = Input[5];
-	ID[change].ID[4] = Input[6];
-	ID[change].ID[5] = Input[7];
-	ID[change].ID[6] = Input[8];
-	ID[change].ID[7] = Input[9];
-	cout << "ÇëÊäÈë¿ªº½ÈÕÆÚ£º";
-	cin >> ID[change].FlyDay;
-	cout << "ÇëÊäÈëÆğ·É»ú³¡£º";
-	cin >> ID[change].DepartureAirport;
-	cout << "ÇëÊäÈë½µÂä»ú³¡£º";
-	cin >> ID[change].ArrivalAirport;
-	cout << "ÇëÊäÈëÆğ·ÉÊ±¼ä£º";
-	cin >> ID[change].DepartureTime;
-	cout << "ÇëÊäÈë½µÂäÊ±¼ä£º";
-	cin >> ID[change].ArrivalTime;
-	cout << "ÇëÊäÈë·ÉĞĞÊ±¼ä£¨Ğ¡Ê±£©£º";
-	cin >> ID[change].TravelTimeHour;
-	cout << "ÇëÊäÈë·ÉĞĞÊ±¼ä£¨·ÖÖÓ£©£º";
-	cin >> ID[change].TravelTimeMinute;
-	cout << "ÇëÊäÈëÖ´·É»úĞÍ£º";
-	cin >> ID[change].AircraftType;
-	cout << "ÇëÊäÈë²ÕÎ»£º";
-	cin >> ID[change].Class;
-	ID[change].Price = ID[change].TravelTimeHour * 675 + ID[change].TravelTimeMinute * 11.25;
-	cout << "ÒÑ³É¹¦Ìí¼ÓµÚ" << change << "¸öº½ÏßÊı¾İ" << endl;//Õâ¾ä»°¿ÉÄÜºóÆÚÒª¼Óµ½ÉÏ¼¶²Ëµ¥º¯ÊıÀïÍ·
-	return ;
+	IDcount--;
+	return IDcount;
 }
-
-void PrintInformation(FlightID* ID, int IDcount)
+//è¾“å…¥æ¡†ï¼ˆè¾“å…¥å†…å®¹ï¼Œé•¿åº¦é™åˆ¶ï¼Œè¾“å…¥æ¡†æ¨ªè½´ä½ç½®ï¼Œè¾“å…¥æ¡†çºµè½´ä½ç½®ï¼Œé»˜è®¤æ˜¾ç¤ºçš„å†…å®¹ï¼‰
+int C_InputBox(char* Input, int Limit, int x, int y, const char* Default)
 {
-	cout << "ÏÖÓĞ" << IDcount << "¸öº½°àÊı¾İ" << endl;
-	PrintFlightTitle();
+	clearrectangle(x, y, x + 160, y + 40);
+	fflush(stdin);//å…ˆæ¸…ç©ºè¾“å…¥ç¼“å­˜
+	char c;
+	int Length = 0;
+	char InputBuf[100] = { '\0' };
+	settextstyle(28, 0, FONT2_EN);
+	setlinecolor(BLACK);
+	for (int i = x + 5; i < x + 155; i++)
+	{
+		line(i, y + 35, i + 1, y + 35);
+		Sleep(1);
+	}
+	settextcolor(RGB(220, 220, 220));
+	outtextxy(x + 10, y + 4, Default);
+	settextcolor(BLACK);
+	while (true)
+	{
+		c = _getch();
+		if (c != 13)//å¦‚æœè¾“å…¥çš„ä¸æ˜¯å›è½¦
+		{
+			if (Length == 0)
+			{
+				clearrectangle(x, y, x + 160, y + 34);
+			}
+			if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
+			{
+				if (Length == Limit - 1)
+				{
+					;
+				}
+				else
+				{
+					InputBuf[Length] = c;
+					InputBuf[Length + 1] = '\0';
+					outtextxy(x + 10 + 14 * Length, y + 6, c);
+					setlinecolor(RGB(0, 191, 255));
+					line(x + 8 + Length * 14, y + 35, x + 22 + Length * 14, y + 35);
+					Length++;
+				}
+			}
+			if (c == 8)
+			{
+				if (Length != 0)
+				{
+					InputBuf[Length] = '\0';
+					Length--;
+					clearrectangle(x + 10 + 14 * Length, y, x + 24 + 14 * Length, y + 34);
+					setlinecolor(BLACK);
+					line(x + 8 + Length * 14, y + 35, x + 22 + Length * 14, y + 35);
+				}
+			}
+		}
+		else
+		{
+			strcpy(Input, InputBuf);
+			return Length;
+		}
+	}
+}
+//è¾“å…¥æ¡†ï¼ˆè¾“å…¥å†…å®¹ï¼Œé•¿åº¦é™åˆ¶ï¼Œè¾“å…¥æ¡†æ¨ªè½´ä½ç½®ï¼Œè¾“å…¥æ¡†çºµè½´ä½ç½®ï¼Œè¾“å…¥æ¡†æ€»é•¿åº¦ï¼Œå­—ä½“é«˜åº¦ï¼Œé»˜è®¤æ˜¾ç¤ºçš„å†…å®¹ï¼‰
+int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const char* Default)
+{
+	clearrectangle(x, y, x + Lsize, y + Hsize);
+	fflush(stdin);//å…ˆæ¸…ç©ºè¾“å…¥ç¼“å­˜
+	char c;
+	int Length = 0;
+	char InputBuf[100] = { '\0' };
+	settextstyle(Hsize, 0, FONT);
+	setlinecolor(BLACK);
+	for (int i = x; i < x + Lsize; i++)
+	{
+		line(i, y + Hsize + 2, i + 1, y + Hsize + 2);
+		Sleep(1);
+	}
+	settextcolor(RGB(220, 220, 220));
+	outtextxy(x, y, Default);
+	settextcolor(BLACK);
+	while (true)
+	{
+		c = _getch();
+		if (c != 13)//å¦‚æœè¾“å…¥çš„ä¸æ˜¯å›è½¦
+		{
+			if (Length == 0)
+			{
+				clearrectangle(x, y, x + Lsize, y + Hsize);
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(x, y, Default);
+				settextcolor(BLACK);
+			}
+			if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
+			{
+				if (Length == Limit)
+				{
+					;
+				}
+				else
+				{
+					if (Length == 0)//ç¬¬ä¸€ä¸ªå­—ç¬¦
+					{
+						clearrectangle(x, y, x + Lsize, y + Hsize);
+					}
+					InputBuf[Length] = c;
+					InputBuf[Length + 1] = '\0';
+					outtextxy(x + (Hsize / 2) * Length, y, c);
+					setlinecolor(RGB(0, 191, 255));
+					line(x + Length * (Hsize / 2), y + Hsize + 2, x + (Length + 1) * (Hsize / 2), y + Hsize + 2);
+					Length++;
+				}
+			}
+			if (c == 8)
+			{
+				if (Length != 0)
+				{
+					InputBuf[Length] = '\0';
+					Length--;
+					clearrectangle(x + Length * (Hsize / 2), y, x + (Length + 1) * (Hsize / 2), y + Hsize);
+					setlinecolor(BLACK);
+					line(x + Length * (Hsize / 2), y + Hsize + 2, x + (Length + 1) * (Hsize / 2), y + Hsize + 2);
+				}
+			}
+		}
+		else
+		{
+			strcpy(Input, InputBuf);
+			return Length;
+		}
+	}
+}
+//è®¡ç®—é£è¡Œæ•°æ®
+int CountFlyingDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int wday, int yday,
+	int* FlyingID, int& FlyCount, int& OnTimeCount, int& DelayCount, int& CancelCount)
+{
+	int Arrival;
+	if (wday == 0)
+		wday = 7;
+	FlyCount = 0;
+	OnTimeCount = 0;
+	DelayCount = 0;
+	CancelCount = 0;
 	for (int i = 0; i < IDcount; i++)
 	{
-		PrintFlight(ID, i, i + 1);
+		if (ID[i].FlyDay[wday] != '0')
+		{
+			FlyingID[FlyCount] = i;
+			FlyCount++;
+			if (DATA[yday][i].ActuralDepartureTime == 2500)
+			{
+				CancelCount++;
+				continue;
+			}
+			if ((ID[i].ArrivalTime % 100) >= 45)
+				Arrival = ID[i].ArrivalTime + 65;
+			else
+				Arrival = ID[i].ArrivalTime + 15;
+			if (DATA[yday][i].ActuralArrivalTime > Arrival)
+			{
+				DelayCount++;
+				continue;
+			}
+			OnTimeCount ++;
+		}
 	}
+	return FlyCount;
 }
