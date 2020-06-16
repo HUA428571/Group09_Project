@@ -39,3 +39,21 @@ typedef struct FlightTicket //每日机票情况
 	short ActuralDepartureTime = 2600;		//2400及以下的是正常时间，2500代表航班取消，2600代表没有相关信息
 	short ActuralArrivalTime = 2600;		//2400及以下的是正常时间，2500代表航班取消，2600代表没有相关信息
 }FlightTicket;
+
+typedef struct Passenger
+{
+	char id[21];				//账号
+	char name[11];				//姓名
+	char IdCard[19];			//身份证号码
+	char TelNum[12];			//电话号码
+
+}Passenger;
+
+typedef struct The_users  
+{
+	char id[21];				//账号 
+	char pwd[21];				//密码 
+	char Identity;				//身份为单个字符（0为用户，1为管理员）
+	char phone[12];				//电话号码
+	int Credit = 0;				//用户信用
+}users;

@@ -312,10 +312,8 @@ int SortByDepartureTime(FlightID* ID, int* SearchReasult, int SearchCount, int* 
 	}
 	return 0;
 }
-
 //删除
 //重载，当添加航班取消时使用第二个
-
 int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete)
 {
 	for (int i = Delete; i < IDcount; i++)
@@ -446,6 +444,75 @@ int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const
 					InputBuf[Length] = c;
 					InputBuf[Length + 1] = '\0';
 					outtextxy(x + (Hsize / 2) * Length, y, c);
+					setlinecolor(RGB(0, 191, 255));
+					line(x + Length * (Hsize / 2), y + Hsize + 2, x + (Length + 1) * (Hsize / 2), y + Hsize + 2);
+					Length++;
+				}
+			}
+			if (c == 8)
+			{
+				if (Length != 0)
+				{
+					InputBuf[Length] = '\0';
+					Length--;
+					clearrectangle(x + Length * (Hsize / 2), y, x + (Length + 1) * (Hsize / 2), y + Hsize);
+					setlinecolor(BLACK);
+					line(x + Length * (Hsize / 2), y + Hsize + 2, x + (Length + 1) * (Hsize / 2), y + Hsize + 2);
+				}
+			}
+		}
+		else
+		{
+			strcpy(Input, InputBuf);
+			return Length;
+		}
+	}
+}
+//输入框_不显示字符（输入内容，长度限制，输入框横轴位置，输入框纵轴位置，输入框总长度，字体高度，默认显示的内容）
+int CH_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const char* Default)
+{
+	clearrectangle(x, y, x + Lsize, y + Hsize);
+	fflush(stdin);//先清空输入缓存
+	char c;
+	int Length = 0;
+	char InputBuf[100] = { '\0' };
+	settextstyle(Hsize, 0, FONT);
+	setlinecolor(BLACK);
+	for (int i = x; i < x + Lsize; i++)
+	{
+		line(i, y + Hsize + 2, i + 1, y + Hsize + 2);
+		//Sleep(1);
+	}
+	settextcolor(RGB(220, 220, 220));
+	outtextxy(x, y, Default);
+	settextcolor(BLACK);
+	while (true)
+	{
+		c = _getch();
+		if (c != 13)//如果输入的不是回车
+		{
+			if (Length == 0)
+			{
+				clearrectangle(x, y, x + Lsize, y + Hsize);
+				settextcolor(RGB(220, 220, 220));
+				outtextxy(x, y, Default);
+				settextcolor(BLACK);
+			}
+			if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '.' || c == '\\' || c == '/' || c == '_' || c == ':' || c == '-')
+			{
+				if (Length == Limit)
+				{
+					;
+				}
+				else
+				{
+					if (Length == 0)//第一个字符
+					{
+						clearrectangle(x, y, x + Lsize, y + Hsize);
+					}
+					InputBuf[Length] = c;
+					InputBuf[Length + 1] = '\0';
+					outtextxy(x + (Hsize / 2) * Length, y, '*');
 					setlinecolor(RGB(0, 191, 255));
 					line(x + Length * (Hsize / 2), y + Hsize + 2, x + (Length + 1) * (Hsize / 2), y + Hsize + 2);
 					Length++;

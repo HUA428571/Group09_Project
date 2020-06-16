@@ -21,3 +21,5 @@ int AdminMENU_AddMENU_MENUChoose();
 int AdminMENU_ChangeMENU_MENUChoose();
 
 int AdminMENU_Ticket_MENUChoose();
+
+int Log_MENUChoose();

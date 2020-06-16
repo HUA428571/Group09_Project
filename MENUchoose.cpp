@@ -389,3 +389,25 @@ int AdminMENU_Ticket_MENUChoose()
 		}
 	}
 }
+
+int Log_MENUChoose()
+{
+	FlushMouseMsgBuffer();
+	while (true)
+	{
+		MOUSEMSG m;
+		// 获取一条鼠标消息
+		m = GetMouseMsg();
+		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
+		{
+			if (m.y > 360 - 30 - 50 && m.y < 360 - 30 && m.x>640 - 150 && m.x < 640 + 150)//鼠标按在输入张海区域
+				return 1;
+			if (m.y > 360 + 20 && m.y < 360 + 70 && m.x>640 - 150 && m.x < 640 + 150)//鼠标按在输入密码区域
+				return 2;
+			if (m.y > 90 && m.y < 135 && m.x>590 && m.x < 690)//鼠标按在普通用户注册区域
+				return 3;
+			if (m.y > 90 && m.y < 135 && m.x>590 && m.x < 690)//鼠标按在管理员用户注册区域
+				return 4;
+		}
+	}
+}

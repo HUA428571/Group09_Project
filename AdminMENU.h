@@ -3,7 +3,7 @@
 #include"print.h"
 #include<iostream>
 #include<graphics.h>
-#include<easyx.h>			// 引用图形库头文件
+#include<easyx.h>
 #include<conio.h>
 #include<string>
 #include<stdlib.h>

@@ -1,14 +1,16 @@
 ﻿#pragma once
 #include"notes.h"
 #include"print.h"
-#include <stdlib.h>
 #include"AdminMENU.h"
+#include"LogIN.h"
+#include <stdlib.h>
 using namespace std;
 //管理员菜单界面
 
 int main()
 {
-
+	static users u[999];
+	static Passenger p[999];
 	//所有的XXcount都是个数，不是对应下标！下标要减一
 	static FlightID ID[999];//默认最多存储999个航线
 	static FlightTicket DATA[366][999];//存储一年的航班数
@@ -45,8 +47,9 @@ int main()
 	cout << "成功导入" << FlightID_Count << "个航线数据！" << endl;
 
 	//cout << sizeof(DATA) << endl;
-
-	AdminMENU(ID, DATA, FlightID_Count);
+	int Choice = Log(u, p);
+	if(Choice==1)
+		AdminMENU(ID, DATA, FlightID_Count);
 
 	//srand(time(NULL));
 	//for (int i1 = 0; i1 < FlightID_Count; i1++)

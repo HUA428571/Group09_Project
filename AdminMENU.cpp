@@ -21,7 +21,7 @@ int AdminMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	loadimage(&BG, _T(".\\IMAGES\\Home.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 显示背景
 	int MENUchoice;
-	MENUchoice = AdminMENU_MainMENU(ID, DATA, IDcount);			//先进入主页
+	MENUchoice = AdminMENU_MainMENU(ID, DATA, IDcount);		//先进入主页
 	while (true)											//循环
 	{
 		switch (MENUchoice)
