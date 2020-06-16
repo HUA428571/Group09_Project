@@ -754,9 +754,12 @@ int PrintTicket(FlightID* ID, FlightTicket DATA[][999],int n)
 			char Input[8];
 			int i = MENUchoice % 100 - 1;
 			int Count = (CurrentPage - 1) * 36 + i;
-			C_InputBox(Input, 4, 180, 230 + 25 * i, 40, 20, "0000");
-			sscanf(Input, "%d", &DATA[Fly[Count]][n].ActuralDepartureTime);
-			PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			if (Count < FlyDayCountAll)
+			{
+				C_InputBox(Input, 4, 180, 230 + 25 * i, 40, 20, "0000");
+				sscanf(Input, "%4d", &DATA[Fly[Count]][n].ActuralDepartureTime);
+				PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			}
 			MENUchoice = AdminMENU_Ticket_MENUChoose();
 			break;
 		}
@@ -782,9 +785,12 @@ int PrintTicket(FlightID* ID, FlightTicket DATA[][999],int n)
 			char Input[8];
 			int i = MENUchoice % 100 - 1;
 			int Count = (CurrentPage - 1) * 36 + i;
-			C_InputBox(Input, 4, 240, 230 + 25 * i, 40, 20, "0000");
-			sscanf(Input, "%d", &DATA[Fly[Count]][n].ActuralArrivalTime);
-			PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			if (Count < FlyDayCountAll)
+			{
+				C_InputBox(Input, 4, 240, 230 + 25 * i, 40, 20, "0000");
+				sscanf(Input, "%4d", &DATA[Fly[Count]][n].ActuralArrivalTime);
+				PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			}
 			MENUchoice = AdminMENU_Ticket_MENUChoose();
 			break;
 		}
@@ -810,9 +816,12 @@ int PrintTicket(FlightID* ID, FlightTicket DATA[][999],int n)
 			char Input[8];
 			int i = MENUchoice % 100 - 1;
 			int Count = (CurrentPage - 1) * 36 +18+ i;
-			C_InputBox(Input, 4, 180 + 610, 230 + 25 * i, 40, 20, "0000");
-			sscanf(Input, "%d", &DATA[Fly[Count]][n].ActuralDepartureTime);
-			PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			if (Count < FlyDayCountAll)
+			{
+				C_InputBox(Input, 4, 180 + 610, 230 + 25 * i, 40, 20, "0000");
+				sscanf(Input, "%4d", &DATA[Fly[Count]][n].ActuralDepartureTime);
+				PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			}
 			MENUchoice = AdminMENU_Ticket_MENUChoose();
 			break;
 		}
@@ -838,9 +847,12 @@ int PrintTicket(FlightID* ID, FlightTicket DATA[][999],int n)
 			char Input[8];
 			int i = MENUchoice % 100 - 1;
 			int Count = (CurrentPage - 1) * 36 +18+ i;
-			C_InputBox(Input, 4, 240 + 610, 230 + 25 * i, 40, 20, "0000");
-			sscanf(Input, "%d", &DATA[Fly[Count]][n].ActuralArrivalTime);
-			PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			if (Count < FlyDayCountAll)
+			{
+				C_InputBox(Input, 4, 240 + 610, 230 + 25 * i, 40, 20, "0000");
+				sscanf(Input, "%4d", &DATA[Fly[Count]][n].ActuralArrivalTime);
+				PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			}
 			MENUchoice = AdminMENU_Ticket_MENUChoose();
 			break;
 		}
