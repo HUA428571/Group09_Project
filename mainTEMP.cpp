@@ -1,22 +1,22 @@
-锘�#pragma once
+﻿#pragma once
 #include"notes.h"
 #include"print.h"
 #include <stdlib.h>
 #include"AdminMENU.h"
 using namespace std;
-//绠＄悊鍛樿彍鍗曠晫闈�
+//管理员菜单界面
 
 int main()
 {
 
-	//鎵�鏈夌殑XXcount閮芥槸涓暟锛屼笉鏄搴斾笅鏍囷紒涓嬫爣瑕佸噺涓�
-	static FlightID ID[999];//榛樿鏈�澶氬瓨鍌�999涓埅绾�
-	static FlightTicket DATA[366][999];//瀛樺偍涓�骞寸殑鑸彮鏁�
-	int FlightID_Count = 0;//瀛樺偍褰撳墠鑸彮鍙蜂釜鏁�
+	//所有的XXcount都是个数，不是对应下标！下标要减一
+	static FlightID ID[999];//默认最多存储999个航线
+	static FlightTicket DATA[366][999];//存储一年的航班数
+	int FlightID_Count = 0;//存储当前航班号个数
 	int fail = 0;
 	char choice;
 	do {
-		cout << "瀵煎叆榛樿鏁版嵁(1)/涓婃淇濆瓨鏁版嵁(2)/涓嶅鍏�(N)锛�" << endl;
+		cout << "导入默认数据(1)/上次保存数据(2)/不导入(N)？" << endl;
 		cin >> choice;
 	} while (choice != '1' && choice != '2' && choice != 'n' && choice != 'N');
 	if (choice == '1' || choice == '2')
@@ -38,15 +38,13 @@ int main()
 	}
 	if (FlightID_Count == -1 || fail == -1)
 	{
-		cout << "鏃犳硶鎵撳紑榛樿鏁版嵁搴撴枃浠讹紒绋嬪簭姝ｅ湪閫�鍑�" << endl;
+		cout << "无法打开默认数据库文件！程序正在退出" << endl;
 		Sleep(1000);
 		exit(1);
 	}
-	cout << "鎴愬姛瀵煎叆" << FlightID_Count << "涓埅绾挎暟鎹紒" << endl;
-
+	cout << "成功导入" << FlightID_Count << "个航线数据！" << endl;
 
 	//cout << sizeof(DATA) << endl;
-
 
 	AdminMENU(ID, DATA, FlightID_Count);
 
@@ -57,7 +55,7 @@ int main()
 	//	{
 	//		int rnd1 = rand() % 30;
 	//		int rnd2 = rand() % 30;
-	//		if (rnd1 == rnd2)//涓浜嗭紒鍙栨秷浣�
+	//		if (rnd1 == rnd2)//中奖了！取消你
 	//		{
 	//			DATA[i2][i1].ActuralArrivalTime = 2500;
 	//			DATA[i2][i1].ActuralDepartureTime = 2500;
@@ -127,7 +125,7 @@ int main()
 	//		}
 	//	}
 	//}
-  //char Location[50];
+	//char Location[50];
 	//strcpy(Location, ".\\Default_Ticket_Database.dat");
 	//SaveTicketDatabase(DATA, FlightID_Count, Location);
 	//return 0;
