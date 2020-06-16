@@ -9,36 +9,37 @@
 #include"struct.h"
 
 using namespace std;
-//ä½¿ç”¨è”¡å‹’å…¬å¼è½¬æ¢æ—¥æœŸä¸æ˜ŸæœŸ
+//Ê¹ÓÃ²ÌÀÕ¹«Ê½×ª»»ÈÕÆÚÓëĞÇÆÚ
 int WeekDayTransfer(int, int, int);
-//è¿”å›æ—¥æœŸå¯¹åº”å¤©æ•°
+//·µ»ØÈÕÆÚ¶ÔÓ¦ÌìÊı
 int DateTransfer(int, int, int);
-//åˆ¤æ–­é£æœºæ˜¯å°é£æœºè¿˜æ˜¯å¤§é£æœºï¼Œå°é£æœºè¿”å›1ï¼Œå¤§é£æœºè¿”å›2
+//ÅĞ¶Ï·É»úÊÇĞ¡·É»ú»¹ÊÇ´ó·É»ú£¬Ğ¡·É»ú·µ»Ø1£¬´ó·É»ú·µ»Ø2
 int JudgeAircraftSize(FlightID*, int);
-//å¯¼å…¥å¯¼å‡ºæ•°æ®åº“
+//µ¼Èëµ¼³öÊı¾İ¿â
 int ImportFlightDatabase(FlightID* ID, char* Location);
 int SaveFlightDatabase(FlightID* ID, int IDcount, char* Location);
 int ImportTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
 int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
-//æŸ¥æ‰¾èˆªç­å·ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+//²éÕÒº½°àºÅ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
 int SearchFlightID(FlightID*, char*, int, int*, int&);
-//æŸ¥æ‰¾èˆªèµ·é£åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+//²éÕÒº½Æğ·ÉµØ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
 int SearchFlightDepartureAirport(FlightID*, char*, int, int*, int&);
-//æŸ¥æ‰¾èˆªé™è½åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+//²éÕÒº½½µÂäµØ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
 int SearchFlightArrivalAirport(FlightID*, char*, int, int*, int&);
-//æŸ¥æ‰¾èˆªèµ·é£é™è½åœ°ï¼Œè¿”å›æŸ¥æ‰¾åˆ°èˆªç­ä¸ªæ•°
+//²éÕÒº½Æğ·É½µÂäµØ£¬·µ»Ø²éÕÒµ½º½°à¸öÊı
 int SearchFlightDepartureAndArrivalAirport(FlightID* ID, char* Departure, char* Arrival, int IDcount, int* SearchReasult, int& SearchCount);
-//æŒ‰ç…§èµ·é£æ—¶é—´æ’åº
-//é‡è½½ï¼Œå…¨æ•°æ®åº“æ’åº/æœç´¢ç»“æœæ•°æ®åº“æ’åº
+//°´ÕÕÆğ·ÉÊ±¼äÅÅĞò
+//ÖØÔØ£¬È«Êı¾İ¿âÅÅĞò/ËÑË÷½á¹ûÊı¾İ¿âÅÅĞò
 int SortByDepartureTime(FlightID*, int, int*);
 int SortByDepartureTime(FlightID* ID, int* SearchReasult, int SearchCount, int* SortReasult);
-//åˆ é™¤
-//é‡è½½ï¼Œå½“æ·»åŠ èˆªç­å–æ¶ˆæ—¶ä½¿ç”¨ç¬¬äºŒä¸ª
+//É¾³ı
+//ÖØÔØ£¬µ±Ìí¼Óº½°àÈ¡ÏûÊ±Ê¹ÓÃµÚ¶ş¸ö
 int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delete);
 int DeleteFlight(FlightID* ID, int& IDcount, int Delete);
-//è¾“å…¥æ¡†ï¼ˆè¾“å…¥å†…å®¹ï¼Œé•¿åº¦é™åˆ¶ï¼Œè¾“å…¥æ¡†æ¨ªè½´ä½ç½®ï¼Œè¾“å…¥æ¡†çºµè½´ä½ç½®ï¼Œé»˜è®¤æ˜¾ç¤ºçš„å†…å®¹ï¼‰
+//ÊäÈë¿ò£¨ÊäÈëÄÚÈİ£¬³¤¶ÈÏŞÖÆ£¬ÊäÈë¿òºáÖáÎ»ÖÃ£¬ÊäÈë¿ò×İÖáÎ»ÖÃ£¬Ä¬ÈÏÏÔÊ¾µÄÄÚÈİ£©
 int C_InputBox(char* Input, int Limit, int x, int y, const char* Default);
-//è¾“å…¥æ¡†ï¼ˆè¾“å…¥å†…å®¹ï¼Œé•¿åº¦é™åˆ¶ï¼Œè¾“å…¥æ¡†æ¨ªè½´ä½ç½®ï¼Œè¾“å…¥æ¡†çºµè½´ä½ç½®ï¼Œè¾“å…¥æ¡†æ€»é•¿åº¦ï¼Œå­—ä½“é«˜åº¦ï¼Œé»˜è®¤æ˜¾ç¤ºçš„å†…å®¹ï¼‰
+//ÊäÈë¿ò£¨ÊäÈëÄÚÈİ£¬³¤¶ÈÏŞÖÆ£¬ÊäÈë¿òºáÖáÎ»ÖÃ£¬ÊäÈë¿ò×İÖáÎ»ÖÃ£¬ÊäÈë¿ò×Ü³¤¶È£¬×ÖÌå¸ß¶È£¬Ä¬ÈÏÏÔÊ¾µÄÄÚÈİ£©
 int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const char* Default);
-//è®¡ç®—é£è¡Œæ•°æ®
+//¼ÆËã·ÉĞĞÊı¾İ
 int CountFlyingDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int wday, int yday, int* FlyingID, int& FlyCount, int& OnTimeCount, int& DelayCount, int& CancelCount);
+
