@@ -728,10 +728,122 @@ int PrintTicket(FlightID* ID, FlightTicket DATA[][999],int n)
 			else
 			{
 				CurrentPage++;
-				PrintTicketPage(ID, DATA, Fly,n, Page, CurrentPage, FlyDayCountAll);
+				PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
 			}
 			MENUchoice = AdminMENU_Ticket_MENUChoose();
 			break;
+		case 101:
+		case 102:
+		case 103:
+		case 104:
+		case 105:
+		case 106:
+		case 107:
+		case 108:
+		case 109:
+		case 110:
+		case 111:
+		case 112:
+		case 113:
+		case 114:
+		case 115:
+		case 116:
+		case 117:
+		case 118:									//更改起飞时间
+		{
+			char Input[8];
+			int i = MENUchoice % 100 - 1;
+			int Count = (CurrentPage - 1) * 36 + i;
+			C_InputBox(Input, 4, 180, 230 + 25 * i, 40, 20, "0000");
+			sscanf(Input, "%d", &DATA[Fly[Count]][n].ActuralDepartureTime);
+			PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			MENUchoice = AdminMENU_Ticket_MENUChoose();
+			break;
+		}
+		case 201:
+		case 202:
+		case 203:
+		case 204:
+		case 205:
+		case 206:
+		case 207:
+		case 208:
+		case 209:
+		case 210:
+		case 211:
+		case 212:
+		case 213:
+		case 214:
+		case 215:
+		case 216:
+		case 217:
+		case 218:									//更改降落时间
+		{
+			char Input[8];
+			int i = MENUchoice % 100 - 1;
+			int Count = (CurrentPage - 1) * 36 + i;
+			C_InputBox(Input, 4, 240, 230 + 25 * i, 40, 20, "0000");
+			sscanf(Input, "%d", &DATA[Fly[Count]][n].ActuralArrivalTime);
+			PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			MENUchoice = AdminMENU_Ticket_MENUChoose();
+			break;
+		}
+		case 301:
+		case 302:
+		case 303:
+		case 304:
+		case 305:
+		case 306:
+		case 307:
+		case 308:
+		case 309:
+		case 310:
+		case 311:
+		case 312:
+		case 313:
+		case 314:
+		case 315:
+		case 316:
+		case 317:
+		case 318:									//更改起飞时间
+		{
+			char Input[8];
+			int i = MENUchoice % 100 - 1;
+			int Count = (CurrentPage - 1) * 36 +18+ i;
+			C_InputBox(Input, 4, 180 + 610, 230 + 25 * i, 40, 20, "0000");
+			sscanf(Input, "%d", &DATA[Fly[Count]][n].ActuralDepartureTime);
+			PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			MENUchoice = AdminMENU_Ticket_MENUChoose();
+			break;
+		}
+		case 401:
+		case 402:
+		case 403:
+		case 404:
+		case 405:
+		case 406:
+		case 407:
+		case 408:
+		case 409:
+		case 410:
+		case 411:
+		case 412:
+		case 413:
+		case 414:
+		case 415:
+		case 416:
+		case 417:
+		case 418:									//更改降落时间
+		{
+			char Input[8];
+			int i = MENUchoice % 100 - 1;
+			int Count = (CurrentPage - 1) * 36 +18+ i;
+			C_InputBox(Input, 4, 240 + 610, 230 + 25 * i, 40, 20, "0000");
+			sscanf(Input, "%d", &DATA[Fly[Count]][n].ActuralArrivalTime);
+			PrintTicketPage(ID, DATA, Fly, n, Page, CurrentPage, FlyDayCountAll);
+			MENUchoice = AdminMENU_Ticket_MENUChoose();
+			break;
+		}
 		}
 	}
 }

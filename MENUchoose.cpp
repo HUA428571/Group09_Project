@@ -366,51 +366,26 @@ int AdminMENU_Ticket_MENUChoose()
 				return 16;
 			if (m.x > 1020 && m.y > 165 && m.x < 1050 && m.y < 195)//鼠标按在返回区域
 				return 18;
-			/*
-			for (int i = 0; i < 18; i++)//i用来计算行数
+			for (int i = 0; i < 18; i++)//i用来计算行数，鼠标按在第一列的起飞时间
 			{
-				if (m.x > 60 && m.y > 230 + 25 * i && m.x < 610 && m.y < 260 + 25 * i)//鼠标按在具体日期
+				if (m.x > 180 && m.y > 230 + 25 * i && m.x < 220 && m.y < 260 + 25 * i)//鼠标按在具体日期
 					return i + 101;
 			}
-			for (int i = 0; i < 18; i++)//i用来计算行数
+			for (int i = 0; i < 18; i++)//i用来计算行数，鼠标按在第一列的降落时间
 			{
-				if (m.x > 670 && m.y > 230 + 25 * i && m.x < 1220 && m.y < 260 + 25 * i)//鼠标按在具体日期
+				if (m.x > 240 && m.y > 230 + 25 * i && m.x < 280 && m.y < 260 + 25 * i)//鼠标按在具体日期
 					return i + 201;
 			}
-			*/
-		}
-	}
-}
-int AdminMENU_Ticket_Detail_MENUChoose()
-{
-	FlushMouseMsgBuffer();
-	while (true)
-	{
-		MOUSEMSG m;
-		// 获取一条鼠标消息
-		m = GetMouseMsg();
-		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
-		{
-			if (m.y > 90 && m.y < 135 && m.x>190 && m.x < 290)//鼠标按在主页区域
-				return 0;
-			if (m.y > 90 && m.y < 135 && m.x>390 && m.x < 490)//鼠标按在查找区域
-				return 1;
-			if (m.y > 90 && m.y < 135 && m.x>590 && m.x < 690)//鼠标按在添加区域
-				return 2;
-			if (m.y > 90 && m.y < 135 && m.x>790 && m.x < 890)//鼠标按在删除区域
-				return 3;
-			if (m.y > 90 && m.y < 135 && m.x>990 && m.x < 1090)//鼠标按在更改区域
-				return 4;
-			if (m.x > 100 && m.y > 300 && m.x < 300 && m.y < 340)//鼠标按在按航班号搜索区域
-				return 11;
-			if (m.x > 100 && m.y > 350 && m.x < 300 && m.y < 390)//鼠标按在按起飞地搜索区域
-				return 12;
-			if (m.x > 100 && m.y > 400 && m.x < 300 && m.y < 440)//鼠标按在按降落地搜索区域
-				return 13;
-			if (m.x > 100 && m.y > 450 && m.x < 300 && m.y < 490)//鼠标按在按起降地搜索区域
-				return 14;
-			if (m.x > 1190 && m.y > 165 && m.x < 1220 && m.y < 195)//鼠标按在返回区域
-				return 18;
+			for (int i = 0; i < 18; i++)//i用来计算行数，鼠标按在第二列的起飞时间
+			{
+				if (m.x > 180 + 610 && m.y > 230 + 25 * i && m.x < 220 + 610 && m.y < 260 + 25 * i)//鼠标按在具体日期
+					return i + 301;
+			}
+			for (int i = 0; i < 18; i++)//i用来计算行数，鼠标按在第二列的降落时间
+			{
+				if (m.x > 240 + 610 && m.y > 230 + 25 * i && m.x < 280 + 610 && m.y < 260 + 25 * i)//鼠标按在具体日期
+					return i + 401;
+			}
 		}
 	}
 }

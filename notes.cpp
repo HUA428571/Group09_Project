@@ -414,7 +414,7 @@ int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const
 	for (int i = x; i < x + Lsize; i++)
 	{
 		line(i, y + Hsize + 2, i + 1, y + Hsize + 2);
-		Sleep(1);
+		//Sleep(1);
 	}
 	settextcolor(RGB(220, 220, 220));
 	outtextxy(x, y, Default);
@@ -431,7 +431,7 @@ int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const
 				outtextxy(x, y, Default);
 				settextcolor(BLACK);
 			}
-			if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
+			if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'||c=='.' || c == '\\' || c == '/' || c == '_' || c == ':' || c == '-')
 			{
 				if (Length == Limit)
 				{

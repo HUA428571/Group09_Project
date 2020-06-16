@@ -107,7 +107,7 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	outtextxy(460, 330, count);
 	_stprintf(count, _T("%4d"), TodayFlyCount);
 	outtextxy(460, 380, count);
-	setfillcolor(RGB(220,220,220));
+	setfillcolor(RGB(220, 220, 220));//设置背景色为浅灰色
 	solidrectangle(550, 240, 1220, 260);
 	solidrectangle(550, 270, 1220, 290);
 	solidrectangle(550, 300, 1220, 320);
@@ -115,36 +115,58 @@ int AdminMENU_MainMENU(FlightID* ID, FlightTicket DATA[][999], int& IDcount)
 	solidrectangle(550, 380, 1220, 400);
 	//昨日航班
 	setfillcolor(RGB(30, 144, 255));//设置颜色为道奇蓝
-	for (int i = 550; i < 550 + ((double)YestFlyCount / IDcount) * 670; i+=2)
+	for (int i = 550; i < 550 + ((double)YestFlyCount / IDcount) * 670; i += 2)
 	{
 		solidrectangle(i, 240, i + 2, 260);
-		Sleep(1);
+		//Sleep(1);
 	}
 	setfillcolor(RGB(0, 128, 0));//设置颜色为绿色
 	for (int i = 550; i < 550 + ((double)YestOnTimeCount / IDcount) * 670; i += 2)
 	{
 		solidrectangle(i, 270, i + 2, 290);
-		Sleep(1);
+		//Sleep(1);
 	}
 	setfillcolor(RGB(255, 165, 0));//橙色
 	for (int i = 550; i < 550 + ((double)YestDelayCount / IDcount) * 670; i += 2)
 	{
 		solidrectangle(i, 300, i + 2, 320);
-		Sleep(1);
+		//Sleep(1);
 	}
 	setfillcolor(RGB(220, 20, 60));//猩红
 	for (int i = 550; i < 550 + ((double)YestCancelCount / IDcount) * 670; i += 2)
 	{
 		solidrectangle(i, 330, i + 2, 350);
-		Sleep(1);
+		//Sleep(1);
 	}
 	//今日航班
 	setfillcolor(RGB(30, 144, 255));//设置颜色为道奇蓝
 	for (int i = 550; i < 550 + ((double)TodayFlyCount / IDcount) * 670; i += 2)
 	{
 		solidrectangle(i, 380, i + 2, 400);
-		Sleep(1);
+		//Sleep(1);
 	}
+	setfillcolor(RGB(220, 220, 220));//设置背景色为浅灰色
+	solidcircle(460, 500 + 40, 80);
+	solidcircle(730, 500 + 40, 80);
+	solidcircle(1000, 500 + 40, 80);
+	setfillcolor(RGB(0, 128, 0));//设置颜色为绿色
+	solidpie(380, 420 + 40, 540, 580 + 40, PI / 2, (0.25 + (double)YestOnTimeCount / YestFlyCount) * 2 * PI);
+	outtextxy(550, 475 + 40, "准点率：");
+	_stprintf(count, _T("%2.0f"), ((double)YestOnTimeCount / YestFlyCount) * 100);
+	outtextxy(550, 505 + 40, count);
+	outtextxy(570, 505 + 40, "%");
+	setfillcolor(RGB(255, 165, 0));//橙色
+	solidpie(650, 420 + 40, 810, 580 + 40, PI / 2, (0.25 + (double)YestDelayCount / YestFlyCount) * 2 * PI);
+	outtextxy(820, 475 + 40, "延误率：");
+	_stprintf(count, _T("%2.0f"), ((double)YestDelayCount / YestFlyCount) * 100);
+	outtextxy(820, 505 + 40, count);
+	outtextxy(840, 505 + 40, "%");
+	setfillcolor(RGB(220, 20, 60));//猩红
+	solidpie(920, 420 + 40, 1080, 580 + 40, PI / 2, (0.25 + (double)YestCancelCount / YestFlyCount) * 2 * PI);
+	outtextxy(1090, 475 + 40, "取消率：");
+	_stprintf(count, _T("%2.0f"), ((double)YestCancelCount / YestFlyCount) * 100);
+	outtextxy(1090, 505 + 40, count);
+	outtextxy(1110, 505 + 40, "%");
 	int MENUchoice = AdminMENU_MainMENU_MENUChoose();
 	while (true)
 	{
@@ -242,9 +264,10 @@ int AdminMENU_MainMENU_ImportFlightDatabase(FlightID* ID, FlightTicket DATA[][99
 		Sleep(500);
 		return 0;
 	case 59:
-		clearrectangle(400, 200, 1220, 400);
+		clearrectangle(400, 280, 1220, 300);
 		char LocationTEMP[100] = "\0";
-		InputBox(LocationTEMP, 100, "请输入新的文件路径：");
+		C_InputBox(LocationTEMP, 99, 400, 280, 600, 20, Location[0]);
+		//InputBox(LocationTEMP, 100, "请输入新的文件路径：");
 		if (LocationTEMP[1] == 0)//如果输入为空，则返回原有目录
 		{
 			outtextxy(400, 280, "无效的目录！");

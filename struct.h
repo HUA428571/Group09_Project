@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#define PI 3.1415926536
 //全局字体格式
 #define FONT "黑体"
 #define FONT2_ZH "宋体"
