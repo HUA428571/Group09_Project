@@ -154,7 +154,7 @@ int main()
 	//	}
 	//}
 	//char Location[50];
-	//strcpy(Location, ".\\Default_Ticket_Database.dat");
+	//strcpy(Location, ".\\Default_Ticket_Database_20.dat");
 	//SaveTicketDatabase(DATA, FlightID_Count, Location);
-	//return 0;
+	return 0;
 }
