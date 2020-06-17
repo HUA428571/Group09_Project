@@ -1,4 +1,4 @@
-#include"notes.h"
+﻿#include"notes.h"
 using namespace std;
 //使用蔡勒公式转换日期与星期
 int WeekDayTransfer(int year, int month, int day)//使用蔡勒公式转换日期与星期
