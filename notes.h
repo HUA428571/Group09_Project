@@ -57,6 +57,6 @@ int REFindTheHistoryAndOrder(FlightTicket DATA[366][999], FlightID* ID, Passenge
 int year_get();
 char Class_get(int seat[100], int size, int i);
 int price_get(FlightID* ID, int i, char Class);
-int Searching(FlightID* ID, FlightTicket DATA[366][999], bookiinginformation custom, int IDcount);
+int Searching(FlightID* ID, FlightTicket DATA[366][999], bookiinginformation* custom, int IDcount);
 int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users* users, int i, int flyday, int flynumber);
 int Refunding(FlightTicket DATA[366][999], FlyhistoryAndOrder* FO, int n);

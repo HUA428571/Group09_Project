@@ -20,13 +20,13 @@ int  OrderMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger
 	int x = C_PrintMultiFlight(ID, FO, IDcount, SearchReasult, SearchCount, flyday);
 	return x;
 }
-int  BookingMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger* P, The_users* users, bookiinginformation custom, int id)
+int  BookingMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger* P, The_users* users, bookiinginformation* custom, int id)
 {
 	int SearchCount = 0;
 	SearchCount = Searching(ID, DATA, custom, IDcount);
-	int* SearchReasult = custom.flynumber;
-	int* flyday = &custom.flyday;
-	int x = b_printmultiflight(ID, DATA, P, users, IDcount, SearchReasult, SearchCount, flyday, id);
+	//int* SearchReasult = custom.flynumber;
+	int flyday =DateTransfer(custom->year, custom->month, custom->day);
+	int x = b_printmultiflight(ID, DATA, P, users, IDcount, custom->flynumber, SearchCount,flyday , id);
 	return x;
 }
 int  Refunding_ChngeMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger* P, The_users* users, FlyhistoryAndOrder* FO, int id)
@@ -35,14 +35,14 @@ int  Refunding_ChngeMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount,
 	SearchCount = REFindTheHistoryAndOrder(DATA, ID, P, users, id, FO);
 	int* flyday = FO->flyday;
 	int* SearchReasult = FO->flight;
-	int x = c_printmultiflight(ID, DATA, FO, P, users, IDcount, SearchReasult, SearchCount, flyday, id);
+	int x = re_printmultiflight(ID, DATA, FO, P, users, IDcount, SearchReasult, SearchCount, flyday, id);
 	return x;
 }
 void SignOutMENU()
 {
 
 }
-void CustomMenu(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger* P, The_users* users, FlyhistoryAndOrder* FO, bookiinginformation custom, int id)
+void CustomMenu(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger* P, The_users* users, FlyhistoryAndOrder* FO, bookiinginformation* custom, int id)
 {
 	initgraph(1280, 720);	// 创建绘图窗口，大小为 1280x720 像素
 	// 设置背景色为淡白色
@@ -50,6 +50,7 @@ void CustomMenu(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenge
 	setbkmode(TRANSPARENT);
 	// 用背景色清空屏幕
 	cleardevice();
+	//PrintLoading();
 	settextcolor(BLACK);
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置

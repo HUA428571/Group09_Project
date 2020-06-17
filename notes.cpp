@@ -1,4 +1,4 @@
-#include"notes.h"
+﻿#include"notes.h"
 using namespace std;
 //使用蔡勒公式转换日期与星期
 int WeekDayTransfer(int year, int month, int day)//使用蔡勒公式转换日期与星期
@@ -13,7 +13,10 @@ int WeekDayTransfer(int year, int month, int day)//使用蔡勒公式转换日�
 	}
 	week = year + year / 4 + century / 4 - 2 * century + (26 * (month + 1)) / 10 + day - 1;
 	week = week % 7;
-	return (week >= 0) ? week : (7 + week);
+	if (week == 0)
+		return 7;
+	else
+	    return (week >= 0) ? week : (7 + week);
 }
 //返回日期对应天数
 int DateTransfer(int year, int month, int day)//返回日期对应天数
@@ -811,9 +814,9 @@ int price_get(FlightID* ID, int i, char Class)//判断价格
 	else
 		return (int)(2.5 * price);
 }
-int Searching(FlightID* ID, FlightTicket DATA[366][999], bookiinginformation custom, int IDcount)//这里需要做一下搜寻界面的背景，文本框参数也得顺着该
+int Searching(FlightID* ID, FlightTicket DATA[366][999], bookiinginformation* custom, int IDcount)//这里需要做一下搜寻界面的背景，文本框参数也得顺着该
 {
-	PrintSearchBG(IDcount);
+	
 	settextstyle(28, 0, FONT2_EN);
 	outtextxy(300, 255, "FROM:");
 	outtextxy(300, 300, "TO:");
@@ -823,29 +826,29 @@ int Searching(FlightID* ID, FlightTicket DATA[366][999], bookiinginformation cus
 	line(140, 535, 290, 535);
 	setlinecolor(BLACK);
 	char month[3], day[3];
-	C_InputBox(custom.departure, 11, 360, 255, "PEK");
-	C_InputBox(custom.destination, 11, 360, 300, "PVG");
+	C_InputBox(custom->departure, 11, 360, 255, "PEK");
+	C_InputBox(custom->destination, 11, 360, 300, "PVG");
 	C_InputBox(month, 4, 360, 355, "12");
 	C_InputBox(day, 4, 360, 400, "31");
 	if (month[1] == '\0')
-		custom.month = ((int)month[0] - 48);
+		custom->month = ((int)month[0] - 48);
 	else
-		custom.month = ((int)month[0] - 48) * 10 + ((int)month[1] - 48);
+		custom->month = ((int)month[0] - 48) * 10 + ((int)month[1] - 48);
 	if (day[1] == '\0')
-		custom.day = ((int)day[0] - 48);
+		custom->day = ((int)day[0] - 48);
 	else
-		custom.day = ((int)day[0] - 48) * 10 + ((int)day[1] - 48);
+		custom->day = ((int)day[0] - 48) * 10 + ((int)day[1] - 48);
 	SYSTEMTIME sys;
 	GetLocalTime(&sys);
-	custom.year = sys.wYear;
-	int daycount = WeekDayTransfer(custom.year, custom.month, custom.day);
-	custom.flyday = daycount;
+	custom->year = sys.wYear;
+	int daycount = WeekDayTransfer(custom->year, custom->month, custom->day);
+	custom->flyday = daycount;
 	int i = 0, j = 0, a = 0, f = 0, e = 0, b = 0, r = 0, count = 0;
 	int& x = j;
 	for (i = 0; i < 999; i++)
 	{
-		if ((strcmp(ID[i].ArrivalAirport, custom.destination) == 0)\
-			&& (strcmp(ID[i].DepartureAirport, custom.departure) == 0) && (ID[i].FlyDay[custom.flyday] == '1'))//根据时间起始地判断ID
+		if ((_strnicmp(ID[i].ArrivalAirport, custom->destination,3) == 0)\
+			&& (_strnicmp(ID[i].DepartureAirport, custom->departure,3) == 0) && (ID[i].FlyDay[custom->flyday] != '0'))//根据时间起始地判断ID
 		{
 			a = JudgeAircraftSizeSeat(JudgeAircraftSize(ID, i));//正在筛选的航线的飞机总座位数
 			if (JudgeAircraftSize(ID, i) == 1)
@@ -863,15 +866,12 @@ int Searching(FlightID* ID, FlightTicket DATA[366][999], bookiinginformation cus
 			}
 			if (r > 0)
 			{
-				count++;//符合条件的飞机数
-				for (x = 0; x < count; x++)
-				{
-					custom.flynumber[x] = i;//筛选后符合要求的ID号集合
-					DATA[daycount - 1][i].FirstClassTicketRemain = f;
-					DATA[daycount - 1][i].EconomyClassTicketRemain = e;
-					if (JudgeAircraftSize(ID, i) == 2)
-						DATA[daycount - 1][i].BusinessClassTicketRemain = b;
-				}
+				custom->flynumber[x] = i;//筛选后符合要求的ID号集合
+				DATA[daycount - 1][i].FirstClassTicketRemain = f;
+				DATA[daycount - 1][i].EconomyClassTicketRemain = e;
+				if (JudgeAircraftSize(ID, i) == 2)
+					DATA[daycount - 1][i].BusinessClassTicketRemain = b;
+				x++;//符合条件的飞机数
 			}
 		}
 	}

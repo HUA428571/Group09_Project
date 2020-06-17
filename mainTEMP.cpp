@@ -4,6 +4,7 @@
 #include"AdminMENU.h"
 #include"StartMENU.h"
 #include <stdlib.h>
+#include"mian.h"
 using namespace std;
 //主函数
 int main()
@@ -69,6 +70,8 @@ int main()
 	}
 	cout << "正在进入系统..." << endl;
 	Sleep(500);
+	int id = 1;
+	CustomMenu(ID, DATA, FlightID_Count, p, u, FOL, &custom, id);
 	//cout << sizeof(DATA) << endl;
 	//int Choice = StartMENU(u, p);
 	//if (Choice == 0)

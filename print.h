@@ -14,6 +14,7 @@ using namespace std;
 //加载动画1280*720
 void PrintLoading();
 //退出动画且不自动保存1280*720（）
+void C_PrintLoading();
 void PrintExit();
 //退出动画并自动保存1280*720（）
 void PrintExit_AutoSAVE(FlightID* ID, FlightTicket DATA[][999], int IDcount);
@@ -50,16 +51,17 @@ void PrintDeleteBG(int IDcount);
 //乘客部分
 void c_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int i, int n);
 void re_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int i, int n);
-void b_PrintFlightDetail(FlightID* ID, FlightTicket DATA[366][999], int IDcount, int i, int n, int m);
+void b_PrintFlightDetail(FlightID* ID, FlightTicket DATA[366][999], int IDcount, int i, int m);
 void PrintRES();
 void PrintORS();
 void PrintORF();
 int C_PrintMultiFlight(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int* SearchReasult, int SearchCount, int* flyday);
-int c_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], FlyhistoryAndOrder* FO, Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int* flyday, int p_id);
-int b_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int* flyday, int p_id);
+int re_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], FlyhistoryAndOrder* FO, Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int* flyday, int p_id);
+int b_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int flyday, int p_id);
 void c_PrintFlightTitle();
 void re_PrintFlightTitle();
-void c_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int* flyday);
+void c_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int flyday);
 void re_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int* flyday);
-void c_PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll, int* flyday);
+void C_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int* flyday);
+void c_PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll, int flyday);
 void re_PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll, int* flyday);
