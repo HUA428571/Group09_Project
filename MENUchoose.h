@@ -22,4 +22,4 @@ int AdminMENU_ChangeMENU_MENUChoose();
 
 int AdminMENU_Ticket_MENUChoose();
 
-int Log_MENUChoose();
+int StartMENU_MENUChoose();

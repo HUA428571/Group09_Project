@@ -169,27 +169,34 @@ int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location)
 	fclose(fp);
 	return IDcount;
 }
-void ImportUserDatabase(users p[], Passenger m[])
+int ImportUserDatabase(users p[], Passenger m[])
 {
 	FILE* UserF;
 	FILE* PassenF;
 	users a;
 	Passenger b;
 	int i;
-	UserF = fopen(".\\Users.dat", "rb");
+	if ((UserF = fopen(".\\Users.dat", "rb")) == NULL)
+	{
+		return -1;
+	}
 	for (i = 1; !feof(UserF); i++)
 	{
 		fread(&a, sizeof(users), 1, UserF); //读入一个结构体字符块 到b
 		p[i] = a;
 	}
 	fclose(UserF);
-	PassenF = fopen(".\\Passenger.dat", "rb");
+	if ((PassenF = fopen(".\\Passenger.dat", "rb")) == NULL)
+	{
+		return -1;
+	}
 	for (i = 1; !feof(PassenF); i++)
 	{
 		fread(&b, sizeof(Passenger), 1, PassenF); //读入一个结构体字符块 到b
 		m[i] = b;
 	}
 	fclose(PassenF);
+	return 0;
 }
 //查找航班号，返回查找到航班个数
 int SearchFlightID(FlightID* ID, char* search, int IDcount, int* SearchReasult, int& SearchCount)//查找航班号，返回查找到航班个数
@@ -346,7 +353,6 @@ int DeleteFlight(FlightID* ID, FlightTicket DATA[][999], int& IDcount, int Delet
 			DATA[i2][i] = DATA[i2][i + 1];
 		}
 	}
-
 	IDcount--;
 	return IDcount;
 }
