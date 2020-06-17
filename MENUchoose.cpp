@@ -411,3 +411,56 @@ int StartMENU_MENUChoose()
 		}
 	}
 }
+
+int StartMENU_Register_MENUChoose()
+{
+	FlushMouseMsgBuffer();
+	while (true)
+	{
+		MOUSEMSG m;
+		// 获取一条鼠标消息
+		m = GetMouseMsg();
+		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
+		{
+			if (m.y > 230 && m.y < 290 && m.x>470 && m.x < 810)//鼠标按在输入账号区域
+				return 1;
+			if (m.y > 300 && m.y < 360 && m.x>470 && m.x < 810)//鼠标按在输入密码区域
+				return 2;
+			if (m.y > 370 && m.y < 430 && m.x>470 && m.x < 810)//鼠标按在确认密码区域
+				return 3;
+			if (m.y > 440 && m.y < 500 && m.x>470 && m.x < 810)//鼠标按在输入手机区域
+				return 4;
+			if (m.y > 510 && m.y < 550 && m.x>470 && m.x < 810)//鼠标按在注册区域
+				return 5;
+			if (m.y > 510 && m.y < 550 && m.x>660 && m.x < 810)//鼠标按在取消区域
+				return 6;
+		}
+	}
+}
+
+int StartMENU_AdminRegister_MENUChoose()
+{
+	FlushMouseMsgBuffer();
+	while (true)
+	{
+		MOUSEMSG m;
+		// 获取一条鼠标消息
+		m = GetMouseMsg();
+		if (m.uMsg == WM_LBUTTONDOWN)//如果左键被按下
+		{
+			if (m.y > 230 && m.y < 290 && m.x>470 && m.x < 810)//鼠标按在输入账号区域
+				return 1;
+			if (m.y > 300 && m.y < 360 && m.x>470 && m.x < 810)//鼠标按在输入密码区域
+				return 2;
+			if (m.y > 370 && m.y < 430 && m.x>470 && m.x < 810)//鼠标按在确认密码区域
+				return 3;
+			if (m.y > 440 && m.y < 500 && m.x>470 && m.x < 810)//鼠标按在输入邀请码区域
+				return 4;
+			if (m.y > 510 && m.y < 550 && m.x>470 && m.x < 810)//鼠标按在注册区域
+				return 5;
+			if (m.y > 510 && m.y < 550 && m.x>660 && m.x < 810)//鼠标按在取消区域
+				return 6;
+		}
+	}
+}
+

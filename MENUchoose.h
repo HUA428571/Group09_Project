@@ -23,3 +23,7 @@ int AdminMENU_ChangeMENU_MENUChoose();
 int AdminMENU_Ticket_MENUChoose();
 
 int StartMENU_MENUChoose();
+
+int StartMENU_Register_MENUChoose();
+
+int StartMENU_AdminRegister_MENUChoose();
