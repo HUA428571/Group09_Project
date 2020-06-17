@@ -1,5 +1,5 @@
 #include"LogIN.h"
-int Log(users u[999], Passenger p[999])
+int StartMENU(users u[999], Passenger p[999])
 {
 	initgraph(1280, 720);	// 创建绘图窗口，大小为 1280x720 像素
 	// 设置背景色为淡白色

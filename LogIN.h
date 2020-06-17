@@ -9,4 +9,4 @@
 #include<stdlib.h>
 #include<time.h>
 
-int Log(users u[999], Passenger p[999]);
+int StartMENU(users u[999], Passenger p[999]);

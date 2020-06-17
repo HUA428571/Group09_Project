@@ -57,3 +57,24 @@ typedef struct The_users
 	char phone[12];				//电话号码
 	int Credit = 0;				//用户信用
 }users;
+
+typedef struct FlyhistoryAndOrder
+{
+	int flyday[100];
+	int flight[100];
+	int seat_x[100];
+	int seat_y[100];
+	int price[100];
+	char Class[100];
+	int count = 0;
+}FlyhistoryAndOrder;
+
+typedef struct bookiinginformation
+{
+	int year, month, day;
+	int primary;
+	char departure[12];
+	char destination[12];
+	int flyday;
+	int flynumber[999];
+}bookiinginformation;

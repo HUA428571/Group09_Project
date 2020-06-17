@@ -56,13 +56,13 @@
     <Text Include="HuaCL_Log.txt">
       <Filter>资源文件</Filter>
     </Text>
-    <Text Include="README.txt">
-      <Filter>资源文件</Filter>
-    </Text>
     <Text Include="Default_FlightID_Database_2.txt">
       <Filter>资源文件</Filter>
     </Text>
     <Text Include="Default_FlightID_Database_NEW.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="README.md">
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>

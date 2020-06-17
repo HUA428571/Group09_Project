@@ -20,6 +20,7 @@ int ImportFlightDatabase(FlightID* ID, char* Location);
 int SaveFlightDatabase(FlightID* ID, int IDcount, char* Location);
 int ImportTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
 int SaveTicketDatabase(FlightTicket DATA[][999], int IDcount, char* Location);
+void ImportUserDatabase(users p[], Passenger m[]);
 //查找航班号，返回查找到航班个数
 int SearchFlightID(FlightID*, char*, int, int*, int&);
 //查找航起飞地，返回查找到航班个数
