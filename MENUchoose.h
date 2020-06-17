@@ -23,3 +23,13 @@ int AdminMENU_ChangeMENU_MENUChoose();
 int AdminMENU_Ticket_MENUChoose();
 
 int StartMENU_MENUChoose();
+
+//³Ë¿Í²¿·Ö
+int CustomMENU_MENUChoose();
+int CAdminMENU_SearchMENU_MultiFlight_MENUChoose();
+int CAdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
+int CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+int CAdminMENU_ReMENU_MultiFlight_FlightDetail_MENUChoose();
+int CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose();
+int CAdminMENU_BookingMENU_MultiFlight_FlightDetail_MENUChoose();
+int CAdminMENU_BOOKINGMENU_MultiFlight_Passenger_MENUChoose();

@@ -6,8 +6,10 @@
 #include<easyx.h>
 #include<stdlib.h>
 #include<conio.h>
+#include <time.h>
 #include"struct.h"
-
+#include"print.h"
+#include"MENUchoose.h"
 using namespace std;
 //使用蔡勒公式转换日期与星期
 int WeekDayTransfer(int, int, int);
@@ -45,3 +47,16 @@ int C_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const
 int CH_InputBox(char* Input, int Limit, int x, int y, int Lsize, int Hsize, const char* Default);
 //计算飞行数据
 int CountFlyingDetail(FlightID* ID, FlightTicket DATA[][999], int IDcount, int wday, int yday, int* FlyingID, int& FlyCount, int& OnTimeCount, int& DelayCount, int& CancelCount);
+int JudgeAircraftSizeSeat(int n);
+int Passengercount(The_users* users, int i);
+int FirstClassTicketRemain(FlightTicket DATA[366][999], int daycount, int i, int judge);//头等舱订票人数
+int BusinessClassTicketRemain(FlightTicket DATA[366][999], int daycount, int i);//商务舱人数
+int EconomyClassTicketRemain(FlightTicket DATA[366][999], int daycount, int i, int judge);
+int FindTheHistoryAndOrder(FlightTicket DATA[366][999], FlightID* ID, Passenger* P, The_users* User, int i, FlyhistoryAndOrder* FO);
+int REFindTheHistoryAndOrder(FlightTicket DATA[366][999], FlightID* ID, Passenger* P, The_users* User, int i, FlyhistoryAndOrder* FO);
+int year_get();
+char Class_get(int seat[100], int size, int i);
+int price_get(FlightID* ID, int i, char Class);
+int Searching(FlightID* ID, FlightTicket DATA[366][999], bookiinginformation custom, int IDcount);
+int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users* users, int i, int flyday, int flynumber);
+int Refunding(FlightTicket DATA[366][999], FlyhistoryAndOrder* FO, int n);

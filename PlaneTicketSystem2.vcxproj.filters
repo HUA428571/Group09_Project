@@ -45,6 +45,9 @@
     <ClCompile Include="StartMENU.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="mian.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="缩写.txt">
@@ -88,6 +91,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="StartMENU.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mian.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

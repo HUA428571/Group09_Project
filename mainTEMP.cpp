@@ -70,10 +70,11 @@ int main()
 	cout << "正在进入系统..." << endl;
 	Sleep(500);
 	//cout << sizeof(DATA) << endl;
-	int Choice = StartMENU(u, p);
-	if (Choice == 0)
-		AdminMENU(ID, DATA, FlightID_Count);
-	else
+	//int Choice = StartMENU(u, p);
+	//if (Choice == 0)
+	//	AdminMENU(ID, DATA, FlightID_Count);
+	//else
+
 		;
 
 	//srand(time(NULL));

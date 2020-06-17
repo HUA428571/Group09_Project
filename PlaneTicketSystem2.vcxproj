@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdminMENU.cpp" />
+    <ClCompile Include="mian.cpp" />
     <ClCompile Include="StartMENU.cpp" />
     <ClCompile Include="mainTEMP.cpp" />
     <ClCompile Include="match.cpp" />
@@ -162,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdminMENU.h" />
+    <ClInclude Include="mian.h" />
     <ClInclude Include="StartMENU.h" />
     <ClInclude Include="match.h" />
     <ClInclude Include="MENUchoose.h" />

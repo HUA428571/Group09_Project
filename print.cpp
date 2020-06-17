@@ -1095,3 +1095,721 @@ void PrintDeleteBG(int IDcount)
 	outtextxy(1173, 55, count);
 	outtextxy(1193, 55, "日");
 }
+
+//乘客部分
+void c_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int i, int n)//细节航班信息
+{
+	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	IMAGE plane;
+	IMAGE FlightDetail;
+	LOGFONT format;
+	loadimage(&FlightDetail, _T(".\\IMAGES\\FlightDetail.png"), 840, 55);
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 20;						// 设置字体高度为 20
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char carrier[20];
+	char AircraftType[50];
+	char DepartureAirport[50];
+	char ArrivalAirport[50];
+	MatchCarrier(ID[i].Carrier, carrier);
+	MatchPlaneImage(plane, ID[i].AircraftType);
+	MatchPlaneType(ID[i].AircraftType, AircraftType);
+	MatchAirport(ID[i].DepartureAirport, DepartureAirport);
+	MatchAirport(ID[i].ArrivalAirport, ArrivalAirport);
+	putimage(1280 - 60 - 240, 200, &plane);						//飞机图片
+	putimage(380, 400, &FlightDetail);							//航线示意图
+	outtextxy(1280 - 60 - 240, 200 + 160 + 5, AircraftType);	//飞机型号
+	char IntChange[8];
+	//信息输出以30px为行距
+	outtextxy(380, 200, "航班号：");
+	outtextxy(550, 200, ID[i].Carrier);
+	outtextxy(570, 200, ID[i].ID);
+	outtextxy(380, 230, "执飞航空公司：");
+	outtextxy(550, 230, carrier);
+	outtextxy(380, 260, "开航日期：");
+	outtextxy(550, 260, FO->flyday[n]);
+	outtextxy(380, 290, "订单票价：");
+	outtextxy(550, 290, _itoa(FO->price[n], IntChange, 10));
+	outtextxy(380, 320, "舱位：");
+	outtextxy(550, 320, FO->Class[n]);
+	outtextxy(380, 460, DepartureAirport);
+	outtextxy(380, 490, ID[i].DepartureAirport);
+	_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
+	outtextxy(380, 520, IntChange);
+	//航线飞机飞行小动画
+	setlinecolor(RGB(255, 255, 253));
+	setfillcolor(RGB(255, 255, 253));
+	for (int i = 480; i < 1000; i += 2)
+	{
+		putimage(380, 400, &FlightDetail);							//航线示意图
+		fillrectangle(i, 400, 1280, 440);
+		Sleep(1);
+	}
+	putimage(380, 400, &FlightDetail);								//航线示意图
+	//小动画到此结束
+	outtextxy(980, 460, ArrivalAirport);
+	outtextxy(980, 490, ID[i].ArrivalAirport);
+	_stprintf(IntChange, _T("%04d"), ID[i].ArrivalTime);
+	outtextxy(980, 520, IntChange);
+	Sleep(50);
+	outtextxy(680, 480, "飞行时长");
+	outtextxy(660, 500, _itoa(ID[i].TravelTimeHour, IntChange, 10));
+	outtextxy(680, 500, "小时");
+	outtextxy(730, 500, _itoa(ID[i].TravelTimeMinute, IntChange, 10));
+	outtextxy(750, 500, "分钟");
+	return;
+}
+void re_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int i, int n)//退改签列表航班细节
+{
+	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	IMAGE plane, choice;
+	IMAGE FlightDetail;
+	LOGFONT format;
+	loadimage(&FlightDetail, _T(".\\IMAGES\\FlightDetail.png"), 840, 55);
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 20;						// 设置字体高度为 20
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char carrier[20];
+	char AircraftType[50];
+	char DepartureAirport[50];
+	char ArrivalAirport[50];
+	MatchCarrier(ID[i].Carrier, carrier);
+	MatchPlaneImage(plane, ID[i].AircraftType);
+	MatchPlaneType(ID[i].AircraftType, AircraftType);
+	MatchAirport(ID[i].DepartureAirport, DepartureAirport);
+	MatchAirport(ID[i].ArrivalAirport, ArrivalAirport);
+	putimage(1280 - 60 - 240, 200, &plane);						//飞机图片
+	putimage(380, 400, &FlightDetail);							//航线示意图
+	outtextxy(1280 - 60 - 240, 200 + 160 + 5, AircraftType);	//飞机型号
+	char IntChange[8];
+	//信息输出以30px为行距
+	outtextxy(380, 200, "航班号：");
+	outtextxy(550, 200, ID[i].Carrier);
+	outtextxy(570, 200, ID[i].ID);
+	outtextxy(380, 230, "执飞航空公司：");
+	outtextxy(550, 230, carrier);
+	outtextxy(380, 260, "开航日期：");
+	outtextxy(550, 260, FO->flyday[n]);
+	outtextxy(380, 290, "订单票价：");
+	outtextxy(550, 290, _itoa(FO->price[n], IntChange, 10));
+	outtextxy(380, 320, "舱位：");
+	outtextxy(550, 320, FO->Class[n]);
+	outtextxy(380, 460, DepartureAirport);
+	outtextxy(380, 490, ID[i].DepartureAirport);
+	_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
+	outtextxy(380, 520, IntChange);
+	//航线飞机飞行小动画
+	setlinecolor(RGB(255, 255, 253));
+	setfillcolor(RGB(255, 255, 253));
+	for (int i = 480; i < 1000; i += 2)
+	{
+		putimage(380, 400, &FlightDetail);							//航线示意图
+		fillrectangle(i, 400, 1280, 440);
+		Sleep(1);
+	}
+	putimage(380, 400, &FlightDetail);								//航线示意图
+	//小动画到此结束
+	outtextxy(980, 460, ArrivalAirport);
+	outtextxy(980, 490, ID[i].ArrivalAirport);
+	_stprintf(IntChange, _T("%04d"), ID[i].ArrivalTime);
+	outtextxy(980, 520, IntChange);
+	Sleep(50);
+	outtextxy(680, 480, "飞行时长");
+	outtextxy(660, 500, _itoa(ID[i].TravelTimeHour, IntChange, 10));
+	outtextxy(680, 500, "小时");
+	outtextxy(730, 500, _itoa(ID[i].TravelTimeMinute, IntChange, 10));
+	outtextxy(750, 500, "分钟");
+
+
+}
+void b_PrintFlightDetail(FlightID* ID, FlightTicket DATA[366][999], int IDcount, int i, int n, int m)//订票界面细节航班信息
+{
+	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	IMAGE plane;
+	IMAGE FlightDetail;
+	LOGFONT format;
+	loadimage(&FlightDetail, _T(".\\IMAGES\\FlightDetail.png"), 840, 55);
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 20;						// 设置字体高度为 20
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	char carrier[20];
+	char AircraftType[50];
+	char DepartureAirport[50];
+	char ArrivalAirport[50];
+	MatchCarrier(ID[i].Carrier, carrier);
+	MatchPlaneImage(plane, ID[i].AircraftType);
+	MatchPlaneType(ID[i].AircraftType, AircraftType);
+	MatchAirport(ID[i].DepartureAirport, DepartureAirport);
+	MatchAirport(ID[i].ArrivalAirport, ArrivalAirport);
+	putimage(1280 - 60 - 240, 200, &plane);						//飞机图片
+	putimage(380, 400, &FlightDetail);							//航线示意图
+	outtextxy(1280 - 60 - 240, 200 + 160 + 5, AircraftType);	//飞机型号
+	char IntChange[8];
+	//信息输出以30px为行距
+	outtextxy(380, 200, "航班号：");
+	outtextxy(550, 200, ID[i].Carrier);
+	outtextxy(570, 200, ID[i].ID);
+	outtextxy(380, 230, "执飞航空公司：");
+	outtextxy(550, 230, carrier);
+	outtextxy(380, 260, "开航日期：");
+	outtextxy(550, 260, m);
+	outtextxy(380, 290, "经济舱订单票价：");
+	outtextxy(550, 290, _itoa(ID[i].Price, IntChange, 10));
+	outtextxy(380, 320, "剩余座位数：");
+	int x = DATA[m - 1][i].BusinessClassTicketRemain + DATA[m - 1][i].EconomyClassTicketRemain + DATA[m - 1][i].FirstClassTicketRemain;//剩余座位数
+	outtextxy(550, 320, x);
+	outtextxy(380, 460, DepartureAirport);
+	outtextxy(380, 490, ID[i].DepartureAirport);
+	_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
+	outtextxy(380, 520, IntChange);
+	//航线飞机飞行小动画
+	setlinecolor(RGB(255, 255, 253));
+	setfillcolor(RGB(255, 255, 253));
+	for (int i = 480; i < 1000; i += 2)
+	{
+		putimage(380, 400, &FlightDetail);							//航线示意图
+		fillrectangle(i, 400, 1280, 440);
+		Sleep(1);
+	}
+	putimage(380, 400, &FlightDetail);								//航线示意图
+	//小动画到此结束
+	outtextxy(980, 460, ArrivalAirport);
+	outtextxy(980, 490, ID[i].ArrivalAirport);
+	_stprintf(IntChange, _T("%04d"), ID[i].ArrivalTime);
+	outtextxy(980, 520, IntChange);
+	Sleep(50);
+	outtextxy(680, 480, "飞行时长");
+	outtextxy(660, 500, _itoa(ID[i].TravelTimeHour, IntChange, 10));
+	outtextxy(680, 500, "小时");
+	outtextxy(730, 500, _itoa(ID[i].TravelTimeMinute, IntChange, 10));
+	outtextxy(750, 500, "分钟");
+	return;
+}
+void PrintRES()
+{
+	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 60;						// 设置字体高度为 20
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	outtextxy(400, 220, "您好，您已成功退票，欢迎再次使用订票系统！！！");
+}
+void PrintORS()
+{
+	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 60;						// 设置字体高度为 20
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	outtextxy(400, 220, "您好，您已成功订票！！！");
+	outtextxy(500, 220, "您的订票记录请至订单查询，，欢迎再次使用订票系统！！！");
+}
+void PrintORF()
+{
+	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 60;						// 设置字体高度为 20
+	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	settextstyle(&format);						// 设置字体样式
+	outtextxy(400, 220, "您好，因您所选的航班舱位余量不足，非常抱歉地告知您订票失了。");
+	outtextxy(500, 220, "您可重新选择航班或舱位再次订票，祝您旅途愉快。");
+}
+int C_PrintMultiFlight(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int* SearchReasult, int SearchCount, int* flyday)//返回菜单选择（看订单用）
+{
+	clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
+	IMAGE PageChoiceImage;
+	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
+	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
+	char IntChange[8];
+	int Page = (SearchCount - 1) / 15 + 1;
+	int CurrentPage = 1;
+	outtextxy(380, 170, "共找到");
+	_stprintf(IntChange, _T("%d"), SearchCount);
+	outtextxy(450, 170, IntChange);
+	outtextxy(485, 170, "个订单");
+	PrintFlightTitle();
+	c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+	int MENUchoice = CAdminMENU_SearchMENU_MultiFlight_MENUChoose();
+	while (true)
+	{
+		switch (MENUchoice)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			return MENUchoice;
+		case 15:					//上一页
+			if (CurrentPage == 1)
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			else
+			{
+				CurrentPage--;
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			}
+			MENUchoice = CAdminMENU_SearchMENU_MultiFlight_MENUChoose();
+			break;
+		case 16:					//下一页
+			if (CurrentPage == Page)
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			else
+			{
+				CurrentPage++;
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			}
+			MENUchoice = CAdminMENU_SearchMENU_MultiFlight_MENUChoose();
+			break;
+		case 18:					//按下了返回键，也就是还显示上一次的界面
+			clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
+			clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+			PrintFlightTitle();
+			c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			MENUchoice = CAdminMENU_SearchMENU_MultiFlight_MENUChoose();
+			break;
+		case 101:
+		case 102:
+		case 103:
+		case 104:
+		case 105:
+		case 106:
+		case 107:
+		case 108:
+		case 109:
+		case 110:
+		case 111:
+		case 112:
+		case 113:
+		case 114:
+		case 115:									//跳转到详情页面
+			//首先判断该页的航班数量
+			int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
+			if ((MENUchoice % 100 + Count) <= SearchCount)
+			{
+				clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
+				IMAGE PageChoiceImage;
+				loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
+				putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
+				c_PrintFlightDetail(ID, FO, IDcount, SearchReasult[MENUchoice % 100 + Count - 1], (MENUchoice % 100 + Count - 1));
+				MENUchoice = AdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose();
+			}
+			else
+				MENUchoice = CAdminMENU_SearchMENU_MultiFlight_MENUChoose();
+			break;
+		}
+	}
+}
+int c_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], FlyhistoryAndOrder* FO, Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int* flyday, int p_id)//返回菜单选择(退改签用）
+{
+	clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
+	IMAGE PageChoiceImage;
+	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
+	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
+	char IntChange[8];
+	int Page = (SearchCount - 1) / 15 + 1;
+	int CurrentPage = 1;
+	outtextxy(380, 170, "共找到");
+	_stprintf(IntChange, _T("%d"), SearchCount);
+	outtextxy(450, 170, IntChange);
+	outtextxy(485, 170, "个订单");
+	re_PrintFlightTitle();
+	re_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+	int MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+	while (true)
+	{
+		switch (MENUchoice)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			return MENUchoice;
+		case 15:					//上一页
+			if (CurrentPage == 1)
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			else
+			{
+				CurrentPage--;
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			}
+			MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+			break;
+		case 16:					//下一页
+			if (CurrentPage == Page)
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			else
+			{
+				CurrentPage++;
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			}
+			MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+			break;
+		case 18:					//按下了返回键，也就是还显示上一次的界面
+			clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
+			clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+			re_PrintFlightTitle();
+			//运行一遍获取信息函数
+			c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+			break;
+		case 101:
+		case 102:
+		case 103:
+		case 104:
+		case 105:
+		case 106:
+		case 107:
+		case 108:
+		case 109:
+		case 110:
+		case 111:
+		case 112:
+		case 113:
+		case 114:
+		case 115:
+		{
+			//跳转到详情页面
+			int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
+			if ((MENUchoice % 100 + Count) <= SearchCount)
+			{
+				clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
+				IMAGE PageChoiceImage;
+				IMAGE Chioce1, Chioce2;
+				loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
+				putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
+				re_PrintFlightDetail(ID, FO, IDcount, SearchReasult[MENUchoice % 100 + Count - 1], (MENUchoice % 100 + Count - 1));
+				loadimage(&Chioce1, _T(".\\IMAGES\\退票1.png"), 0, 0);
+				putimage(380, 600, &Chioce1);
+				loadimage(&Chioce2, _T(".\\IMAGES\\改签1.png"), 0, 0);
+				putimage(580, 600, &Chioce2);
+				MENUchoice = CAdminMENU_ReMENU_MultiFlight_FlightDetail_MENUChoose();
+				if (MENUchoice == 28)//退票
+				{
+					int m = Refunding(DATA, FO, SearchReasult[MENUchoice % 100 + Count - 1]);
+					if (m == 1)
+					{
+						PrintRES();
+						loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
+						putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
+						MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+					}
+				}
+				if (MENUchoice == 29)//改签
+				{
+
+
+					int m = Refunding(DATA, FO, SearchReasult[MENUchoice % 100 + Count - 1]);
+					if (m == 1)
+					{
+						PrintRES();
+						loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
+						putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
+						MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+					}
+				}
+			}
+			else
+				MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+			break;
+		}
+		case 121:
+		case 122:
+		case 123:
+		case 124:
+		case 125:
+		case 126:
+		case 127:
+		case 128:
+		case 129:
+		case 130:
+		case 131:
+		case 132:
+		case 133:
+		case 134:
+		case 135://选择改签
+		{
+			int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
+			if ((MENUchoice % 100 - 20 + Count) <= SearchCount)
+			{
+				MENUchoice = p_Booking(ID, DATA, P, User, p_id, flyday[MENUchoice % 100 + Count - 30], SearchReasult[MENUchoice % 100 + Count - 30]);
+
+
+
+				MENUchoice = CAdminMENU_ReMENU_MultiFlight_FlightDetail_MENUChoose();
+			}
+			else
+				MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+			break;
+		}
+		case 141:
+		case 142:
+		case 143:
+		case 144:
+		case 145:
+		case 146:
+		case 147:
+		case 148:
+		case 149:
+		case 150:
+		case 151:
+		case 152:
+		case 153:
+		case 154:
+		case 155://选择退票
+		{
+			int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
+			if ((MENUchoice % 100 + Count - 40) <= SearchCount)
+			{
+				int m = Refunding(DATA, FO, SearchReasult[MENUchoice % 100 + Count - 40]);
+				if (m == 1)
+				{
+					PrintRES();
+					putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
+					MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+				}
+			}
+			else
+				MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+			break;
+		}
+		}
+	}
+}
+int b_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int* flyday, int p_id)//返回菜单选择(订票用），p_id为用户数组下标
+{
+	clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
+	IMAGE pagechoiceimage;
+	loadimage(&pagechoiceimage, _T(".\\images\\pagechoice.png"), 150, 30);
+	putimage(1280 - 60 - 150, 165, &pagechoiceimage);						//上下页图片
+	char intchange[8];
+	int Page = (SearchCount - 1) / 15 + 1;
+	int CurrentPage = 1;
+	outtextxy(380, 170, "共找到");
+	_stprintf(intchange, _T("%d"), SearchCount);
+	outtextxy(450, 170, intchange);
+	outtextxy(485, 170, "个符合航班");
+	PrintFlightTitle();
+	c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+	int MENUchoice = CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose();
+	IMAGE PageChoiceImage;
+	while (true)
+	{
+		switch (MENUchoice)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			return MENUchoice;
+		case 15:					//上一页
+			if (CurrentPage == 1)
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			else
+			{
+				CurrentPage--;
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			}
+			MENUchoice = CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose();
+			break;
+		case 16:					//下一页
+			if (CurrentPage == Page)
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			else
+			{
+				CurrentPage++;
+				c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			}
+			MENUchoice = CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose();
+			break;
+		case 18:					//按下了返回键，也就是还显示上一次的界面
+			clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
+			clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+			PrintFlightTitle();
+			c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
+			MENUchoice = CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose();
+			break;
+		case 19:					//按起飞时间排序(待补)
+
+			break;
+		case 30://订票成功
+			PrintORS();
+			loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
+			putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
+			MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+			break;
+		case 31://订票失败
+			PrintORF();
+			loadimage(&PageChoiceImage, _T(".\\IMAGES\\Back.png"), 30, 30);
+			putimage(1280 - 60 - 30, 165, &PageChoiceImage);						//返回键图片
+			MENUchoice = CAdminMENU_ReMENU_MultiFlight_MENUChoose();
+			break;
+		case 101:
+		case 102:
+		case 103:
+		case 104:
+		case 105:
+		case 106:
+		case 107:
+		case 108:
+		case 109:
+		case 110:
+		case 111:
+		case 112:
+		case 113:
+		case 114:
+		case 115:									//跳转到详情页面
+			//首先判断该页的航班数量
+			int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
+			if ((MENUchoice % 100 + Count) <= SearchCount)
+			{
+				clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
+				IMAGE pagechoiceimage;
+				IMAGE Chioce;
+				loadimage(&pagechoiceimage, _T(".\\images\\back.png"), 30, 30);
+				putimage(1280 - 60 - 30, 165, &pagechoiceimage);						//返回键图片
+				b_PrintFlightDetail(ID, DATA, IDcount, SearchReasult[MENUchoice % 100 + Count - 1], (MENUchoice % 100 + Count - 1), flyday[MENUchoice % 100 + Count - 1]);
+				loadimage(&Chioce, _T(".\\IMAGES\\订票.png"), 0, 0);
+				putimage(500, 600, &Chioce);
+				MENUchoice = CAdminMENU_BookingMENU_MultiFlight_FlightDetail_MENUChoose();
+				if (MENUchoice == 28)//选中订票
+				{
+					MENUchoice = p_Booking(ID, DATA, P, User, p_id, flyday[MENUchoice % 100 + Count - 1], SearchReasult[MENUchoice % 100 + Count - 1]);
+				}
+			}
+			else
+				MENUchoice = CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose();
+			break;
+		}
+	}
+}
+void c_PrintFlightTitle()
+{
+	outtextxy(380, 200, "航班号");
+	outtextxy(460, 200, "起飞时间");
+	outtextxy(620, 200, "起飞机场");
+	outtextxy(820, 200, "降落机场");
+	outtextxy(980, 200, "订单时间");
+	outtextxy(1080, 200, "机型");
+	outtextxy(1140, 200, "飞行时间");
+}
+void re_PrintFlightTitle()
+{
+	outtextxy(380, 200, "航班号");
+	outtextxy(460, 200, "起飞时间");
+	outtextxy(620, 200, "起飞机场");
+	outtextxy(820, 200, "降落机场");
+	outtextxy(980, 200, "订单时间");
+	outtextxy(1080, 200, "退票");
+	outtextxy(1140, 200, "改签");
+}
+void c_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int* flyday)//page表示当前显示第几页
+{
+	char IntChange[8];
+	clearrectangle(380, 230, 1220, 680);//开始前把显示区域清空
+	IMAGE PageChoiceImage;
+	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
+	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
+	_stprintf(IntChange, _T("%d"), CurrentPage);
+	outtextxy(1280 - 60 - 120, 170, IntChange);
+	outtextxy(1280 - 60 - 95, 170, "/");
+	_stprintf(IntChange, _T("%d"), Page);
+	outtextxy(1280 - 60 - 80, 170, IntChange);
+	outtextxy(1280 - 60 - 55, 170, "页");
+	int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
+	for (int i = 0; i < 15; i++)//i用来计算行数
+	{
+		if ((i + Count) >= SearchCount)
+			break;
+		c_PrintSingleLineFlight(ID, IDcount, SearchReasult[Count + i], 230 + 30 * i, flyday);
+	}
+	return;
+}
+void re_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int* flyday)//page表示当前显示第几页
+{
+	char IntChange[8];
+	clearrectangle(380, 230, 1220, 680);//开始前把显示区域清空
+	IMAGE PageChoiceImage;
+	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
+	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
+	_stprintf(IntChange, _T("%d"), CurrentPage);
+	outtextxy(1280 - 60 - 120, 170, IntChange);
+	outtextxy(1280 - 60 - 95, 170, "/");
+	_stprintf(IntChange, _T("%d"), Page);
+	outtextxy(1280 - 60 - 80, 170, IntChange);
+	outtextxy(1280 - 60 - 55, 170, "页");
+	int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
+	for (int i = 0; i < 15; i++)//i用来计算行数
+	{
+		if ((i + Count) >= SearchCount)
+			break;
+		re_PrintSingleLineFlight(ID, IDcount, SearchReasult[Count + i], 230 + 30 * i, flyday);
+	}
+	return;
+}
+void c_PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll, int* flyday)
+{
+	char DepartureAirport[50];
+	char ArrivalAirport[50];
+	char IntChange[5];
+	int year = year_get();
+	char date[100];
+	MatchDate(year, flyday[i], date);
+	MatchAirport(ID[i].DepartureAirport, DepartureAirport);
+	MatchAirport(ID[i].ArrivalAirport, ArrivalAirport);
+	outtextxy(390, roll, ID[i].Carrier);
+	outtextxy(410, roll, ID[i].ID);
+	_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
+	outtextxy(480, roll, IntChange);
+	outtextxy(570, roll, DepartureAirport);
+	outtextxy(780, roll, ArrivalAirport);
+	_stprintf(IntChange, _T("%10s"), date);
+	outtextxy(1000, roll, IntChange);
+	outtextxy(1090, roll, ID[i].AircraftType);
+	_stprintf(IntChange, _T("%2d"), ID[i].TravelTimeHour);
+	outtextxy(1150, roll, IntChange);
+	outtextxy(1170, roll, "h");
+	_stprintf(IntChange, _T("%02d"), ID[i].TravelTimeMinute);
+	outtextxy(1180, roll, IntChange);
+	outtextxy(1200, roll, "m");
+	return;
+}
+void re_PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll, int* flyday)
+{
+	char DepartureAirport[50];
+	char ArrivalAirport[50];
+	char IntChange[5];
+	int year = year_get();
+	char date[100];
+	MatchDate(year, flyday[i], date);
+	MatchAirport(ID[i].DepartureAirport, DepartureAirport);
+	MatchAirport(ID[i].ArrivalAirport, ArrivalAirport);
+	outtextxy(390, roll, ID[i].Carrier);
+	outtextxy(410, roll, ID[i].ID);
+	_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
+	outtextxy(480, roll, IntChange);
+	outtextxy(570, roll, DepartureAirport);
+	outtextxy(780, roll, ArrivalAirport);
+	_stprintf(IntChange, _T("%10s"), date);
+	outtextxy(1000, roll, IntChange);
+	IMAGE ChoiceImage1;
+	IMAGE ChoiceImage2;
+	loadimage(&ChoiceImage1, _T(".\\IMAGES\\改签1.png"), 60, roll);
+	loadimage(&ChoiceImage2, _T(".\\IMAGES\\退票1.png"), 60, roll);
+	putimage(1280 - 60, roll, &ChoiceImage1);
+	putimage(1280 - 60 - 60, roll, &ChoiceImage2);
+	return;
+}
