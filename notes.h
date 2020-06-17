@@ -6,7 +6,7 @@
 #include<easyx.h>
 #include<stdlib.h>
 #include<conio.h>
-#include <time.h>
+#include<time.h>
 #include"struct.h"
 #include"print.h"
 #include"MENUchoose.h"
