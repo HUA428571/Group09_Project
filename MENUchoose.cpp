@@ -417,6 +417,7 @@ int CustomMENU_MENUChoose()
 {
 	while (true)
 	{
+		FlushMouseMsgBuffer();
 		MOUSEMSG m;
 		// 获取一条鼠标消息
 		m = GetMouseMsg();
@@ -439,6 +440,7 @@ int CAdminMENU_SearchMENU_MultiFlight_MENUChoose()
 {
 	while (true)
 	{
+		FlushMouseMsgBuffer();
 		MOUSEMSG m;
 		// 获取一条鼠标消息
 		m = GetMouseMsg();
@@ -473,6 +475,7 @@ int CAdminMENU_SearchMENU_MultiFlight_FlightDetail_MENUChoose()
 {
 	while (true)
 	{
+		FlushMouseMsgBuffer();
 		MOUSEMSG m;
 		// 获取一条鼠标消息
 		m = GetMouseMsg();
@@ -497,6 +500,7 @@ int CAdminMENU_ReMENU_MultiFlight_MENUChoose()
 {
 	while (true)
 	{
+		FlushMouseMsgBuffer();
 		MOUSEMSG m;
 		// 获取一条鼠标消息
 		m = GetMouseMsg();
@@ -536,6 +540,7 @@ int CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose()
 {
 	while (true)
 	{
+		FlushMouseMsgBuffer();
 		MOUSEMSG m;
 		// 获取一条鼠标消息
 		m = GetMouseMsg();
@@ -569,6 +574,7 @@ int CAdminMENU_ReMENU_MultiFlight_FlightDetail_MENUChoose()
 {
 	while (true)
 	{
+		FlushMouseMsgBuffer();
 		MOUSEMSG m;
 		// 获取一条鼠标消息
 		m = GetMouseMsg();
@@ -598,6 +604,7 @@ int CAdminMENU_BookingMENU_MultiFlight_FlightDetail_MENUChoose()
 
 	while (true)
 	{
+		FlushMouseMsgBuffer();
 		MOUSEMSG m;
 		// 获取一条鼠标消息
 		m = GetMouseMsg();
@@ -625,6 +632,7 @@ int CAdminMENU_BOOKINGMENU_MultiFlight_Passenger_MENUChoose()
 
 	while (true)
 	{
+		FlushMouseMsgBuffer();
 		MOUSEMSG m;
 		// 获取一条鼠标消息
 		m = GetMouseMsg();

@@ -1025,7 +1025,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 							flag5 = 1;
 							clearrectangle(430, 530, 460, 560);
 							loadimage(&Chioce8, _T(".\\IMAGES\\SelectBoxActive.png"), 30, 30);
-							putimage(430, 470, &Chioce8);
+							putimage(430, 530, &Chioce8);
 						}
 					}
 					else if (flag5 == 1)
@@ -1033,7 +1033,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 						flag5 = 0;
 						clearrectangle(430, 530, 460, 560);
 						loadimage(&Chioce8, _T(".\\IMAGES\\SelectBox.png"), 30, 30);
-						putimage(430, 470, &Chioce8);
+						putimage(430, 530, &Chioce8);
 					}
 			}
 			if (m.x > 500 && m.y > 600 && m.x < 600 && m.y < 655)//鼠标按在订票确认区域
@@ -2817,11 +2817,12 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 			}
 		}
 		int cseat[2] = { 0 };
-		for (int l = 0; l < 10; l++)
+		count = 0;
+		for (int y = 0; y < 10; y++)
 		{
-			if (Sflag[l] == 1)
+			if (Sflag[y] == 1)
 			{
-				cseat[count++] = l;
+				cseat[count++] = y;
 			}
 		}
 		if (size == 1)

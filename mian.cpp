@@ -14,6 +14,13 @@ int HOMEpage(Passenger* P, The_users* users, int id)
 int  OrderMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger* P, The_users* users, FlyhistoryAndOrder* FO, int id)
 {
 	int SearchCount = 0;
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	format.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
+	settextstyle(&format);						// 设置字体样式
 	SearchCount = FindTheHistoryAndOrder(DATA, ID, P, users, id, FO);
 	int* flyday = FO->flyday;
 	int* SearchReasult = FO->flight;
@@ -39,6 +46,13 @@ int  BookingMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passeng
 int  Refunding_ChngeMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger* P, The_users* users, FlyhistoryAndOrder* FO, int id)
 {
 	int SearchCount = 0;
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	format.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
+	settextstyle(&format);						// 设置字体样式
 	SearchCount = REFindTheHistoryAndOrder(DATA, ID, P, users, id, FO);
 	int* flyday = FO->flyday;
 	int* SearchReasult = FO->flight;

@@ -1363,35 +1363,35 @@ void PrintRES()
 	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
-	format.lfHeight = 60;						// 设置字体高度为 20
+	format.lfHeight = 20;						// 设置字体高度为 20
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
-	outtextxy(400, 220, "您好，您已成功退票，欢迎再次使用订票系统！！！");
+	outtextxy(400, 320, "您好，您已成功退票，欢迎再次使用订票系统！！！");
 }
 void PrintORS()
 {
 	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
-	format.lfHeight = 60;						// 设置字体高度为 20
+	format.lfHeight = 20;						// 设置字体高度为 20
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
-	outtextxy(400, 220, "您好，您已成功订票！！！");
-	outtextxy(500, 220, "您的订票记录请至订单查询，，欢迎再次使用订票系统！！！");
+	outtextxy(400, 320, "您好，您已成功订票！！！");
+	outtextxy(400, 350, "您的订票记录请至订单查询，，欢迎再次使用订票系统！！！");
 }
 void PrintORF()
 {
 	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
-	format.lfHeight = 60;						// 设置字体高度为 20
+	format.lfHeight = 20;						// 设置字体高度为 20
 	_tcscpy_s(format.lfFaceName, _T("黑体"));	// 设置字体为“黑体”
 	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
 	settextstyle(&format);						// 设置字体样式
-	outtextxy(400, 220, "您好，因您所选的航班舱位余量不足，非常抱歉地告知您订票失败了。");
-	outtextxy(500, 220, "您可重新选择航班或舱位再次订票，祝您旅途愉快。");
+	outtextxy(400, 320, "您好，因您所选的航班舱位余量不足，非常抱歉地告知您订票失败了。");
+	outtextxy(400, 350, "您可重新选择航班或舱位再次订票，祝您旅途愉快。");
 }
 //返回菜单选择（看订单用）
 int C_PrintMultiFlight(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int* SearchReasult, int SearchCount, int* flyday)
@@ -1805,8 +1805,8 @@ void c_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int S
 	int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
 	for (int i = 0; i < 15; i++)//i用来计算行数
 	{
-		//if ((i + Count) >=SearchCount)
-			//break;
+		if ((i + Count) >=SearchCount)
+			break;
 		c_PrintSingleLineFlight(ID, IDcount, SearchReasult[Count + i], 230 + 30 * i, flyday);
 	}
 	return;
