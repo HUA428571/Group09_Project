@@ -925,9 +925,9 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 		putimage(430, 290 + 60 * l, &Chioce3);
 		outtextxy(500, 290 + 60 * l, P[users[i].p[l]].name);
 	}
-	loadimage(&Chioce1, _T(".\\IMAGES\\choose.png"), 0, 0);
+	loadimage(&Chioce1, _T(".\\IMAGES\\choose.png"), 100, 50);
 	putimage(500, 600, &Chioce1);
-	loadimage(&Chioce2, _T(".\\IMAGES\\cancel.png"), 0, 0);
+	loadimage(&Chioce2, _T(".\\IMAGES\\cancel.png"), 100, 50);
 	putimage(700, 600, &Chioce2);
 	while (true)
 	{
@@ -948,7 +948,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 						putimage(430, 290, &Chioce4);
 					}
 				}
-				if (flag1 == 1)
+				else if (flag1 == 1)
 				{
 					flag1 = 0;
 					clearrectangle(430, 290, 460, 310);
@@ -968,7 +968,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 							putimage(430, 350, &Chioce5);
 						}
 					}
-					if (flag2 == 1)
+					else if (flag2 == 1)
 					{
 						flag2 = 0;
 						clearrectangle(430, 350, 460, 380);
@@ -988,7 +988,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 							putimage(430, 410, &Chioce6);
 						}
 					}
-					if (flag3 == 1)
+					else if (flag3 == 1)
 					{
 						flag3 = 0;
 						clearrectangle(430, 410, 460, 440);
@@ -1008,7 +1008,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 							putimage(430, 470, &Chioce7);
 						}
 					}
-					if (flag4 == 1)
+					else if (flag4 == 1)
 					{
 						flag4 = 0;
 						clearrectangle(430, 470, 460, 500);
@@ -1028,7 +1028,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 							putimage(430, 470, &Chioce8);
 						}
 					}
-					if (flag5 == 1)
+					else if (flag5 == 1)
 					{
 						flag5 = 0;
 						clearrectangle(430, 530, 460, 560);
@@ -1065,7 +1065,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 	int  SA = 0, SB = 0, SC = 0, SD = 0, SE = 0, SG = 0, SH = 0, SJ = 0, SK = 0, SL = 0;
 	int F = 0, B = 0, E = 0;
 	IMAGE seat0;
-	if (size == 1)//小飞机
+	if (size == 1)//小飞机`
 	{
 		for (l = 0; l < 2; l++)
 		{
@@ -1093,7 +1093,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 							putimage(430, 290, &Chioce4);
 						}
 					}
-					if (F == 1)
+					else if (F == 1)
 					{
 						F = 0;
 						clearrectangle(430, 290, 460, 310);
@@ -1113,7 +1113,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 							putimage(430, 350, &Chioce5);
 						}
 					}
-					if (E == 1)
+					else if (E == 1)
 					{
 						E = 0;
 						clearrectangle(430, 350, 460, 380);
@@ -1121,7 +1121,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 						putimage(430, 350, &Chioce5);
 					}
 				}
-				if (m.x > 500 && m.y > 600 && m.x < 600 && m.y < 655)//鼠标按在选舱确认区域
+				if (m.x > 400 && m.y > 650 && m.x < 500 && m.y <750 )//鼠标按在选舱确认区域
 				{
 					if (F + E == 0)
 					{
@@ -1130,7 +1130,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 					else
 						break;
 				}
-				if (m.x > 700 && m.y > 600 && m.x < 800 && m.y < 655)//鼠标按在取消区域
+				if (m.x > 800 && m.y > 650 && m.x < 500 && m.y <750 )//鼠标按在取消区域
 					return 18;
 			}
 		}
@@ -1169,7 +1169,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(435, 348, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(435, 348, 490, 410);
@@ -1189,7 +1189,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(490, 348, &seat1);
 								}
 							}
-							if (SB == 1)
+							else if (SB == 1)
 							{
 								SB = 0;
 								clearrectangle(490, 348, 545, 410);
@@ -1209,7 +1209,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(635, 348, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(635, 348, 690, 410);
@@ -1229,7 +1229,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(690, 348, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(690, 348, 745, 410);
@@ -1272,7 +1272,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(435, 348, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(435, 348, 490, 410);
@@ -1292,7 +1292,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(490, 348, &seat1);
 								}
 							}
-							if (SB == 1)
+							else if (SB == 1)
 							{
 								SB = 0;
 								clearrectangle(490, 348, 545, 410);
@@ -1312,7 +1312,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(635, 348, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(635, 348, 690, 410);
@@ -1332,7 +1332,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(690, 348, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(690, 348, 745, 410);
@@ -1392,7 +1392,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(406, 348, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(406, 348, 461, 410);
@@ -1412,7 +1412,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(461, 348, &seat1);
 								}
 							}
-							if (SB == 1)
+							else if (SB == 1)
 							{
 								SB = 0;
 								clearrectangle(461, 348, 516, 410);
@@ -1432,7 +1432,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(516, 348, &seat1);
 								}
 							}
-							if (SC == 1)
+							else if (SC == 1)
 							{
 								SC = 0;
 								clearrectangle(516, 348, 571, 410);
@@ -1452,7 +1452,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(705, 348, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(705, 348, 760, 410);
@@ -1472,7 +1472,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(760, 348, &seat1);
 								}
 							}
-							if (SK == 1)
+							else if (SK == 1)
 							{
 								SK = 0;
 								clearrectangle(760, 348, 815, 410);
@@ -1492,7 +1492,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(815, 348, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(690, 348, 870, 410);
@@ -1535,7 +1535,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(406, 348, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(406, 348, 461, 410);
@@ -1555,7 +1555,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(461, 348, &seat1);
 								}
 							}
-							if (SB == 1)
+							else if (SB == 1)
 							{
 								SB = 0;
 								clearrectangle(461, 348, 516, 410);
@@ -1575,7 +1575,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(516, 348, &seat1);
 								}
 							}
-							if (SC == 1)
+							else if (SC == 1)
 							{
 								SC = 0;
 								clearrectangle(516, 348, 571, 410);
@@ -1595,7 +1595,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(705, 348, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(705, 348, 760, 410);
@@ -1615,7 +1615,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(760, 348, &seat1);
 								}
 							}
-							if (SK == 1)
+							else if (SK == 1)
 							{
 								SK = 0;
 								clearrectangle(760, 348, 815, 410);
@@ -1635,7 +1635,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(815, 348, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(690, 348, 870, 410);
@@ -1688,7 +1688,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 							putimage(430, 290, &Chioce4);
 						}
 					}
-					if (F == 1)
+					else if (F == 1)
 					{
 						F = 0;
 						clearrectangle(430, 290, 460, 310);
@@ -1708,7 +1708,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 							putimage(430, 350, &Chioce5);
 						}
 					}
-					if (E == 1)
+					else if (E == 1)
 					{
 						E = 0;
 						clearrectangle(430, 350, 460, 380);
@@ -1764,7 +1764,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(435, 348, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(435, 348, 490, 410);
@@ -1784,7 +1784,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(490, 348, &seat1);
 								}
 							}
-							if (SB == 1)
+							else if (SB == 1)
 							{
 								SB = 0;
 								clearrectangle(490, 348, 545, 410);
@@ -1804,7 +1804,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(635, 348, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(635, 348, 690, 410);
@@ -1824,7 +1824,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(690, 348, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(690, 348, 745, 410);
@@ -1867,7 +1867,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(435, 348, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(435, 348, 490, 410);
@@ -1887,7 +1887,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(490, 348, &seat1);
 								}
 							}
-							if (SB == 1)
+							else if (SB == 1)
 							{
 								SB = 0;
 								clearrectangle(490, 348, 545, 410);
@@ -1907,7 +1907,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(635, 348, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(635, 348, 690, 410);
@@ -1927,7 +1927,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(690, 348, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(690, 348, 745, 410);
@@ -1987,7 +1987,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(406, 348, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(406, 348, 461, 410);
@@ -2007,7 +2007,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(461, 348, &seat1);
 								}
 							}
-							if (SC == 1)
+							else if (SC == 1)
 							{
 								SC = 0;
 								clearrectangle(461, 348, 516, 410);
@@ -2027,7 +2027,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(516, 348, &seat1);
 								}
 							}
-							if (SD == 1)
+							else if (SD == 1)
 							{
 								SD = 0;
 								clearrectangle(516, 348, 571, 410);
@@ -2047,7 +2047,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(705, 348, &seat1);
 								}
 							}
-							if (SH == 1)
+							else if (SH == 1)
 							{
 								SH = 0;
 								clearrectangle(705, 348, 760, 410);
@@ -2067,7 +2067,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(760, 348, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(760, 348, 815, 410);
@@ -2087,7 +2087,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(815, 348, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(690, 348, 870, 410);
@@ -2130,7 +2130,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(406, 348, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(406, 348, 461, 410);
@@ -2150,7 +2150,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(461, 348, &seat1);
 								}
 							}
-							if (SC == 1)
+							else if (SC == 1)
 							{
 								SC = 0;
 								clearrectangle(461, 348, 516, 410);
@@ -2170,7 +2170,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(516, 348, &seat1);
 								}
 							}
-							if (SD == 1)
+							else if (SD == 1)
 							{
 								SD = 0;
 								clearrectangle(516, 348, 571, 410);
@@ -2190,7 +2190,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(705, 348, &seat1);
 								}
 							}
-							if (SH == 1)
+							else if (SH == 1)
 							{
 								SH = 0;
 								clearrectangle(705, 348, 760, 410);
@@ -2210,7 +2210,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(760, 348, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(760, 348, 815, 410);
@@ -2230,7 +2230,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(815, 348, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(690, 348, 870, 410);
@@ -2294,7 +2294,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(383, 360, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(383, 360, 438, 422);
@@ -2314,7 +2314,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(438, 360, &seat1);
 								}
 							}
-							if (SB == 1)
+							else if (SB == 1)
 							{
 								SB = 0;
 								clearrectangle(438, 360, 493, 422);
@@ -2334,7 +2334,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(493, 360, &seat1);
 								}
 							}
-							if (SC == 1)
+							else if (SC == 1)
 							{
 								SC = 0;
 								clearrectangle(493, 360, 548, 422);
@@ -2354,7 +2354,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(585, 360, &seat1);
 								}
 							}
-							if (SD == 1)
+							else if (SD == 1)
 							{
 								SD = 0;
 								clearrectangle(585, 360, 640, 422);
@@ -2374,7 +2374,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(640, 360, &seat1);
 								}
 							}
-							if (SE == 1)
+							else if (SE == 1)
 							{
 								SE = 0;
 								clearrectangle(640, 360, 695, 422);
@@ -2394,7 +2394,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(695, 360, &seat1);
 								}
 							}
-							if (SG == 1)
+							else if (SG == 1)
 							{
 								SG = 0;
 								clearrectangle(695, 360, 750, 422);
@@ -2414,7 +2414,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(750, 360, &seat1);
 								}
 							}
-							if (SH == 1)
+							else if (SH == 1)
 							{
 								SH = 0;
 								clearrectangle(750, 360, 805, 422);
@@ -2434,7 +2434,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(850, 360, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(850, 360, 905, 422);
@@ -2454,7 +2454,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(905, 360, &seat1);
 								}
 							}
-							if (SK == 1)
+							else if (SK == 1)
 							{
 								SK = 0;
 								clearrectangle(905, 360, 960, 422);
@@ -2474,7 +2474,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(960, 360, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(960, 360, 1015, 422);
@@ -2517,7 +2517,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(383, 360, &seat1);
 								}
 							}
-							if (SA == 1)
+							else if (SA == 1)
 							{
 								SA = 0;
 								clearrectangle(383, 360, 438, 422);
@@ -2537,7 +2537,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(438, 360, &seat1);
 								}
 							}
-							if (SB == 1)
+							else if (SB == 1)
 							{
 								SB = 0;
 								clearrectangle(438, 360, 493, 422);
@@ -2557,7 +2557,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(493, 360, &seat1);
 								}
 							}
-							if (SC == 1)
+							else if (SC == 1)
 							{
 								SC = 0;
 								clearrectangle(493, 360, 548, 422);
@@ -2577,7 +2577,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(585, 360, &seat1);
 								}
 							}
-							if (SD == 1)
+							else if (SD == 1)
 							{
 								SD = 0;
 								clearrectangle(585, 360, 640, 422);
@@ -2597,7 +2597,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(640, 360, &seat1);
 								}
 							}
-							if (SE == 1)
+							else if (SE == 1)
 							{
 								SE = 0;
 								clearrectangle(640, 360, 695, 422);
@@ -2617,7 +2617,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(695, 360, &seat1);
 								}
 							}
-							if (SG == 1)
+							else if (SG == 1)
 							{
 								SG = 0;
 								clearrectangle(695, 360, 750, 422);
@@ -2637,7 +2637,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(750, 360, &seat1);
 								}
 							}
-							if (SH == 1)
+							else if (SH == 1)
 							{
 								SH = 0;
 								clearrectangle(750, 360, 805, 422);
@@ -2657,7 +2657,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(850, 360, &seat1);
 								}
 							}
-							if (SJ == 1)
+							else if (SJ == 1)
 							{
 								SJ = 0;
 								clearrectangle(850, 360, 905, 422);
@@ -2677,7 +2677,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(905, 360, &seat1);
 								}
 							}
-							if (SK == 1)
+							else if (SK == 1)
 							{
 								SK = 0;
 								clearrectangle(905, 360, 960, 422);
@@ -2697,7 +2697,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 									putimage(960, 360, &seat1);
 								}
 							}
-							if (SL == 1)
+							else if (SL == 1)
 							{
 								SL = 0;
 								clearrectangle(960, 360, 1015, 422);
