@@ -830,6 +830,7 @@ int Searching(FlightID* ID, FlightTicket DATA[366][999], bookiinginformation* cu
 	C_InputBox(custom->destination, 11, 360, 300, "PVG");
 	C_InputBox(month, 4, 360, 355, "12");
 	C_InputBox(day, 4, 360, 400, "31");
+	settextstyle(20, 0, FONT);
 	if (month[1] == '\0')
 		custom->month = ((int)month[0] - 48);
 	else

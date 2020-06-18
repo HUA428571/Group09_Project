@@ -574,7 +574,7 @@ void MatchDate(int year, int  date, char* Date)//ÊäÈëÒ»Äê¿ªÊ¼µÄÌìÊı£¬·µ»Ø×Ö·û´®Ğ
 	_stprintf(IntChange, _T("%2d"), month + 1);
 	strcat(Date, IntChange);
 	strcat(Date, "/");
-	_stprintf(IntChange, _T("%2d"), date + 1);
+	_stprintf(IntChange, _T("%2d"), date );
 	strcat(Date, IntChange);
 	return;
 }
