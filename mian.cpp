@@ -23,6 +23,13 @@ int  OrderMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger
 int  BookingMENU(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenger* P, The_users* users, bookiinginformation* custom, int id)
 {
 	int SearchCount = 0;
+	LOGFONT format;
+	gettextstyle(&format);						// 获取当前字体设置
+	format.lfHeight = 25;						// 设置字体高度为 25
+	format.lfQuality = PROOF_QUALITY;			// 设置输出效果为最高质量  
+	format.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
+	settextstyle(&format);						// 设置字体样式
 	SearchCount = Searching(ID, DATA, custom, IDcount);
 	//int* SearchReasult = custom.flynumber;
 	int flyday =DateTransfer(custom->year, custom->month, custom->day);
@@ -50,7 +57,6 @@ void CustomMenu(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenge
 	setbkmode(TRANSPARENT);
 	// 用背景色清空屏幕
 	cleardevice();
-	//PrintLoading();
 	settextcolor(BLACK);
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
@@ -59,6 +65,7 @@ void CustomMenu(FlightID* ID, FlightTicket DATA[366][999], int IDcount, Passenge
 	format.lfPitchAndFamily = FIXED_PITCH;
 	_tcscpy_s(format.lfFaceName, _T(FONT));		// 设置字体为FONT
 	settextstyle(&format);						// 设置字体样式
+	//C_PrintLoading();
 	IMAGE BG;
 	loadimage(&BG, _T(".\\IMAGES\\Bacgr.png"), 1280, 720);
 	putimage(0, 0, &BG);	// 显示背景

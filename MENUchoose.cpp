@@ -551,8 +551,6 @@ int CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose()
 				return 3;
 			if (m.y > 90 && m.y < 136 && m.x>980 && m.x < 1085)//鼠标按在退出登录区域
 				return 4;
-			if (m.x > 1190 && m.y > 165 && m.x < 1220 && m.y < 195)//鼠标按在返回区域
-				return 18;
 			if (m.x > 1070 && m.y > 165 && m.x < 1100 && m.y < 195)//鼠标按在上一页区域
 				return 15;
 			if (m.x > 1190 && m.y > 165 && m.x < 1220 && m.y < 195)//鼠标按在下一页区域

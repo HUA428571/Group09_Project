@@ -1155,10 +1155,12 @@ void PrintDeleteBG(int IDcount)
 	outtextxy(1193, 55, "日");
 }
 
+
 //乘客部分
-void c_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int i, int n)//细节航班信息
+//细节航班信息
+void c_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int i, int n)
 {
-	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 200, 1280, 680);//开始前把显示区域清空
 	IMAGE plane;
 	IMAGE FlightDetail;
 	LOGFONT format;
@@ -1220,9 +1222,10 @@ void c_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int 
 	outtextxy(750, 500, "分钟");
 	return;
 }
-void re_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int i, int n)//退改签列表航班细节
+//退改签列表航班细节
+void re_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int i, int n)
 {
-	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 200, 1280, 680);//开始前把显示区域清空
 	IMAGE plane, choice;
 	IMAGE FlightDetail;
 	LOGFONT format;
@@ -1285,9 +1288,10 @@ void re_PrintFlightDetail(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int
 
 
 }
-void b_PrintFlightDetail(FlightID* ID, FlightTicket DATA[366][999], int IDcount, int i, int m)//订票界面细节航班信息
+//订票界面细节航班信息
+void b_PrintFlightDetail(FlightID* ID, FlightTicket DATA[366][999], int IDcount, int i, int m)
 {
-	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 200, 1280, 680);//开始前把显示区域清空
 	IMAGE plane;
 	IMAGE FlightDetail;
 	LOGFONT format;
@@ -1317,12 +1321,16 @@ void b_PrintFlightDetail(FlightID* ID, FlightTicket DATA[366][999], int IDcount,
 	outtextxy(380, 230, "执飞航空公司：");
 	outtextxy(550, 230, carrier);
 	outtextxy(380, 260, "开航日期：");
-	outtextxy(550, 260, m);
+	int year = year_get();
+	char date[100];
+	MatchDate(year, m, date);
+	outtextxy(550, 260, date);
 	outtextxy(380, 290, "经济舱订单票价：");
 	outtextxy(550, 290, _itoa(ID[i].Price, IntChange, 10));
 	outtextxy(380, 320, "剩余座位数：");
 	int x = DATA[m-1][i].BusinessClassTicketRemain + DATA[m-1][i].EconomyClassTicketRemain + DATA[m-1][i].FirstClassTicketRemain;//剩余座位数
-	outtextxy(550, 320, x);
+	_stprintf(IntChange, _T("%03d"),x);
+	outtextxy(550, 320, IntChange);
 	outtextxy(380, 460, DepartureAirport);
 	outtextxy(380, 490, ID[i].DepartureAirport);
 	_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
@@ -1352,7 +1360,7 @@ void b_PrintFlightDetail(FlightID* ID, FlightTicket DATA[366][999], int IDcount,
 }
 void PrintRES()
 {
-	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 60;						// 设置字体高度为 20
@@ -1363,7 +1371,7 @@ void PrintRES()
 }
 void PrintORS()
 {
-	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 60;						// 设置字体高度为 20
@@ -1375,7 +1383,7 @@ void PrintORS()
 }
 void PrintORF()
 {
-	clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	LOGFONT format;
 	gettextstyle(&format);						// 获取当前字体设置
 	format.lfHeight = 60;						// 设置字体高度为 20
@@ -1385,9 +1393,10 @@ void PrintORF()
 	outtextxy(400, 220, "您好，因您所选的航班舱位余量不足，非常抱歉地告知您订票失败了。");
 	outtextxy(500, 220, "您可重新选择航班或舱位再次订票，祝您旅途愉快。");
 }
-int C_PrintMultiFlight(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int* SearchReasult, int SearchCount, int* flyday)//返回菜单选择（看订单用）
+//返回菜单选择（看订单用）
+int C_PrintMultiFlight(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int* SearchReasult, int SearchCount, int* flyday)
 {
-	clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	IMAGE PageChoiceImage;
 	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
 	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
@@ -1470,9 +1479,10 @@ int C_PrintMultiFlight(FlightID* ID, FlyhistoryAndOrder* FO, int IDcount, int* S
 		}
 	}
 }
-int re_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], FlyhistoryAndOrder* FO, Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int* flyday, int p_id)//返回菜单选择(退改签用）
+//返回菜单选择(退改签用）
+int re_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], FlyhistoryAndOrder* FO, Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int* flyday, int p_id)
 {
-	clearrectangle(380, 170, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	IMAGE PageChoiceImage;
 	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
 	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
@@ -1647,9 +1657,10 @@ int re_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], FlyhistoryAnd
 		}
 	}
 }
-int b_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int flyday, int p_id)//返回菜单选择(订票用），p_id为用户数组下标
+//返回菜单选择(订票用），p_id为用户数组下标
+int b_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users* User, int IDcount, int* SearchReasult, int SearchCount, int flyday, int p_id)
 {
-	clearrectangle(300, 170, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 170, 1280, 680);//开始前把显示区域清空
 	IMAGE pagechoiceimage;
 	loadimage(&pagechoiceimage, _T(".\\images\\pagechoice.png"), 150, 30);
 	putimage(1280 - 60 - 150, 165, &pagechoiceimage);						//上下页图片
@@ -1658,9 +1669,9 @@ int b_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, 
 	int CurrentPage = 1;
 	outtextxy(380, 170, "共找到");
 	_stprintf(intchange, _T("%d"), SearchCount);
-	outtextxy(450, 170, intchange);
+	outtextxy(460, 170, intchange);
 	outtextxy(485, 170, "个符合航班");
-	PrintFlightTitle();
+	c_PrintFlightTitle();
 	c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
 	int MENUchoice = CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose();
 	IMAGE PageChoiceImage;
@@ -1696,13 +1707,15 @@ int b_printmultiflight(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, 
 			break;
 		case 18:					//按下了返回键，也就是还显示上一次的界面
 			clearrectangle(1070, 165, 1220, 200);//开始前把返回区域清空
-			clearrectangle(380, 200, 1220, 680);//开始前把显示区域清空
-			PrintFlightTitle();
+			clearrectangle(300, 200, 1280, 680);//开始前把显示区域清空
+			c_PrintFlightTitle();
 			c_PrintMultiFlightPage(ID, IDcount, SearchReasult, SearchCount, CurrentPage, Page, flyday);
 			MENUchoice = CAdminMENU_BOOKINGMENU_MultiFlight_MENUChoose();
 			break;
-		case 19:					//按起飞时间排序(待补)
-
+		case 19:					//按起飞时间排序，待加按钮
+			int SortReasult[999];//用于存储排序后的顺序，这样就不会更改原有的结构体数组顺序，不影响下标访问。
+			SortByDepartureTime(ID, SearchReasult, SearchCount, SortReasult);//冒泡排序法按照时间排序搜索航班结果；注意此函数有重载
+			return b_printmultiflight(ID, DATA, P,User,IDcount, SortReasult, SearchCount,flyday,p_id);
 			break;
 		case 30://订票成功
 			PrintORS();
@@ -1775,10 +1788,11 @@ void re_PrintFlightTitle()
 	outtextxy(1080, 200, "退票");
 	outtextxy(1140, 200, "改签");
 }
-void c_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int flyday)//page表示当前显示第几页
+//Currentpage表示当前显示第几页
+void c_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int flyday)
 {
 	char IntChange[8];
-	clearrectangle(380, 230, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	IMAGE PageChoiceImage;
 	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
 	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
@@ -1791,16 +1805,17 @@ void c_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int S
 	int Count = (CurrentPage - 1) * 15;//count表示之前页数总计的航班数，即本页航班应该从count+1的下标开始
 	for (int i = 0; i < 15; i++)//i用来计算行数
 	{
-		if ((i + Count) >= SearchCount)
-			break;
+		//if ((i + Count) >=SearchCount)
+			//break;
 		c_PrintSingleLineFlight(ID, IDcount, SearchReasult[Count + i], 230 + 30 * i, flyday);
 	}
 	return;
 }
-void re_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int* flyday)//page表示当前显示第几页
+//Currentpage表示当前显示第几页
+void re_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int* flyday)
 {
 	char IntChange[8];
-	clearrectangle(380, 230, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	IMAGE PageChoiceImage;
 	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
 	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
@@ -1819,10 +1834,11 @@ void re_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int 
 	}
 	return;
 }
-void C_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int* flyday)//page表示当前显示第几页
+//Currentpage表示当前显示第几页
+void C_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int SearchCount, int CurrentPage, int Page, int* flyday)
 {
 	char IntChange[8];
-	clearrectangle(380, 230, 1220, 680);//开始前把显示区域清空
+	clearrectangle(300, 230, 1280, 680);//开始前把显示区域清空
 	IMAGE PageChoiceImage;
 	loadimage(&PageChoiceImage, _T(".\\IMAGES\\PageChoice.png"), 150, 30);
 	putimage(1280 - 60 - 150, 165, &PageChoiceImage);						//上下页图片
@@ -1841,6 +1857,7 @@ void C_PrintMultiFlightPage(FlightID* ID, int IDcount, int* SearchReasult, int S
 	}
 	return;
 }
+//订票，历史订单列表用
 void c_PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll, int flyday)
 {
 	char DepartureAirport[50];
@@ -1852,22 +1869,22 @@ void c_PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll, int fly
 	MatchAirport(ID[i].DepartureAirport, DepartureAirport);
 	MatchAirport(ID[i].ArrivalAirport, ArrivalAirport);
 	outtextxy(390, roll, ID[i].Carrier);
-	outtextxy(410, roll, ID[i].ID);
+	outtextxy(415, roll, ID[i].ID);
 	_stprintf(IntChange, _T("%04d"), ID[i].DepartureTime);
 	outtextxy(480, roll, IntChange);
 	outtextxy(570, roll, DepartureAirport);
-	outtextxy(780, roll, ArrivalAirport);
-	//_stprintf(IntChange, _T("%10s"), date);
-	outtextxy(1000, roll, date);
+	outtextxy(790, roll, ArrivalAirport);
+	outtextxy(950, roll, date);
 	outtextxy(1090, roll, ID[i].AircraftType);
 	_stprintf(IntChange, _T("%2d"), ID[i].TravelTimeHour);
-	outtextxy(1150, roll, IntChange);
+	outtextxy(1145, roll, IntChange);
 	outtextxy(1170, roll, "h");
 	_stprintf(IntChange, _T("%02d"), ID[i].TravelTimeMinute);
-	outtextxy(1180, roll, IntChange);
-	outtextxy(1200, roll, "m");
+	outtextxy(1185, roll, IntChange);
+	outtextxy(1210, roll, "m");
 	return;
 }
+//退改签订单列表用
 void re_PrintSingleLineFlight(FlightID* ID, int IDcount, int i, int roll, int* flyday)
 {
 	char DepartureAirport[50];

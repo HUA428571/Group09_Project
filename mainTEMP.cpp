@@ -18,7 +18,7 @@ int main()
 	static FlightTicket DATA[366][999];//存储一年的航班数
 	int FlightID_Count = 0;//存储当前航班号个数
 	int fail = 0;
-	fail=ImportUserDatabase(u, p);
+	fail = ImportUserDatabase(u, p);
 	if (fail == -1)
 	{
 		cout << "无法打开用户数据文件！程序正在退出" << endl;
@@ -27,7 +27,7 @@ int main()
 	}
 	else
 	{
-	cout << "成功导入用户数据！" << endl;
+		cout << "成功导入用户数据！" << endl;
 	}
 	char choice;
 	do {
@@ -56,7 +56,7 @@ int main()
 	}
 	else
 	{
-	cout << "成功导入" << FlightID_Count << "个航线数据！" << endl;
+		cout << "成功导入" << FlightID_Count << "个航线数据！" << endl;
 	}
 	if (fail == -1)
 	{
@@ -70,13 +70,44 @@ int main()
 	}
 	cout << "正在进入系统..." << endl;
 	Sleep(500);
-	int id = 1;
-	CustomMenu(ID, DATA, FlightID_Count, p, u, FOL, &custom, id);
+
 	//cout << sizeof(DATA) << endl;
 	//int Choice = StartMENU(u, p);
 	//if (Choice == 0)
-	//	AdminMENU(ID, DATA, FlightID_Count);
+	//AdminMENU(ID, DATA, FlightID_Count);
 	//else
+	int id = 1;
+	u[1].p[0] =1;
+	u[1].p[1] =2;
+	u[1].p[2] =3;
+	u[1].p[3] =4;
+	u[1].p[4] = 5;
+	strcpy(u[1].id, "huacl");
+	strcpy(u[1].pwd, "huacl");
+	strcpy(u[1].phone, "17601551978");
+	u[1].identify = 'm';
+	u[1].Credibility = 2000;
+	strcpy(p[1].id, "Huacl");
+	strcpy(p[1].name, "华文嘉");
+	strcpy(p[1].IdCard, "xxxxxxxxxxxxxxx");
+	strcpy(p[1].TelNum, "17601551978");
+	strcpy(p[2].id, "Huacl");
+	strcpy(p[2].name, "雷尚远");
+	strcpy(p[2].IdCard, "xxxxxxxxxxxxxxx");
+	strcpy(p[2].TelNum, "18851986021");
+	strcpy(p[3].id, "Huacl");
+	strcpy(p[3].name, "汤艺林");
+	strcpy(p[3].IdCard, "xxxxxxxxxxxxxxx");
+	strcpy(p[3].TelNum, "xxxxxxxxxxx");
+	strcpy(p[4].id, "Huacl");
+	strcpy(p[4].name, "小明");
+	strcpy(p[4].IdCard, "xxxxxxxxxxxxxxx");
+	strcpy(p[4].TelNum, "xxxxxxxxxxx");
+	strcpy(p[5].id, "Huacl");
+	strcpy(p[5].name, "小红");
+	strcpy(p[5].IdCard, "xxxxxxxxxxxxxxx");
+	strcpy(p[5].TelNum, "xxxxxxxxxxx");
+	CustomMenu(ID, DATA, FlightID_Count, p, u, FOL, &custom, id);
 
 		;
 

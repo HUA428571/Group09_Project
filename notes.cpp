@@ -830,6 +830,7 @@ int Searching(FlightID* ID, FlightTicket DATA[366][999], bookiinginformation* cu
 	C_InputBox(custom->destination, 11, 360, 300, "PVG");
 	C_InputBox(month, 4, 360, 355, "12");
 	C_InputBox(day, 4, 360, 400, "31");
+	settextstyle(20, 0, FONT);
 	if (month[1] == '\0')
 		custom->month = ((int)month[0] - 48);
 	else
@@ -893,13 +894,13 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 	putimage(0, 0, &BG);						// 更新背景
 	settextstyle(25, 0, FONT);
 	outtextxy(660, 200, "请选择乘车人");
-	int MENUchoice = CAdminMENU_BOOKINGMENU_MultiFlight_Passenger_MENUChoose();
 	IMAGE Chioce1, Chioce2, Chioce3, Chioce4, Chioce5, Chioce6, Chioce7, Chioce8;
+	int MENUchoice;
 	int l = 0;
 	p_count = 0;
-	for (l = 0; i < 5; l++)
+	for (l = 0; l < 5; l++)
 	{
-		if (users->p[l] != 0)
+		if (users[i].p[l] != 0)
 			p_count++;
 	}
 	if (p_count == 0)
@@ -907,7 +908,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 		outtextxy(440, 290, "您无乘车人可添加");
 		loadimage(&Chioce1, _T(".\\IMAGES\\choose.png"), 0, 0);
 		putimage(500, 600, &Chioce1);
-		loadimage(&Chioce2, _T(".\\IMAGES\\back.png"), 0, 0);
+		loadimage(&Chioce2, _T(".\\IMAGES\\cancel.png"), 0, 0);
 		putimage(700, 600, &Chioce2);
 		MENUchoice = CAdminMENU_BOOKINGMENU_MultiFlight_Passenger_MENUChoose();
 		if (MENUchoice == 29)
@@ -922,11 +923,11 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 	{
 		loadimage(&Chioce3, _T(".\\IMAGES\\SelectBox.png"), 0, 0);
 		putimage(430, 290 + 60 * l, &Chioce3);
-		outtextxy(500, 290 + 60 * l, P[users->p[l]].name);
+		outtextxy(500, 290 + 60 * l, P[users[i].p[l]].name);
 	}
 	loadimage(&Chioce1, _T(".\\IMAGES\\choose.png"), 0, 0);
 	putimage(500, 600, &Chioce1);
-	loadimage(&Chioce2, _T(".\\IMAGES\\back.png"), 0, 0);
+	loadimage(&Chioce2, _T(".\\IMAGES\\cancel.png"), 0, 0);
 	putimage(700, 600, &Chioce2);
 	while (true)
 	{
@@ -943,7 +944,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 					{
 						flag1 = 1;
 						clearrectangle(430, 290, 460, 310);
-						loadimage(&Chioce4, _T(".\\IMAGES\\SelectBoxActive.png"), 0, 0);
+						loadimage(&Chioce4, _T(".\\IMAGES\\SelectBoxActive.png"), 30, 30);
 						putimage(430, 290, &Chioce4);
 					}
 				}
@@ -951,21 +952,19 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 				{
 					flag1 = 0;
 					clearrectangle(430, 290, 460, 310);
-					loadimage(&Chioce4, _T(".\\IMAGES\\SelectBox.png"), 0, 0);
+					loadimage(&Chioce4, _T(".\\IMAGES\\SelectBox.png"), 30, 30);
 					putimage(430, 290, &Chioce4);
 				}
 			}
 			if (m.x > 430 && m.y > 350 && m.x < 460 && m.y < 380)
 			{
-				if (p_count == 2)
-				{
 					if (flag2 == 0)
 					{
 						if (flag1 + flag2 + flag3 + flag4 + flag5 < 2)
 						{
 							flag2 = 1;
 							clearrectangle(430, 350, 460, 380);
-							loadimage(&Chioce5, _T(".\\IMAGES\\SelectBoxActive.png"), 0, 0);
+							loadimage(&Chioce5, _T(".\\IMAGES\\SelectBoxActive.png"), 30, 30);
 							putimage(430, 350, &Chioce5);
 						}
 					}
@@ -973,22 +972,19 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 					{
 						flag2 = 0;
 						clearrectangle(430, 350, 460, 380);
-						loadimage(&Chioce5, _T(".\\IMAGES\\SelectBox.png"), 0, 0);
+						loadimage(&Chioce5, _T(".\\IMAGES\\SelectBox.png"), 30, 30);
 						putimage(430, 350, &Chioce5);
 					}
-				}
 			}
 			if (m.x > 430 && m.y > 410 && m.x < 460 && m.y < 440)
 			{
-				if (p_count == 3)
-				{
 					if (flag3 == 0)
 					{
 						if (flag1 + flag2 + flag3 + flag4 + flag5 < 2)
 						{
 							flag3 = 1;
 							clearrectangle(430, 410, 460, 440);
-							loadimage(&Chioce6, _T(".\\IMAGES\\SelectBoxActive.png"), 430, 410);
+							loadimage(&Chioce6, _T(".\\IMAGES\\SelectBoxActive.png"), 30, 30);
 							putimage(430, 410, &Chioce6);
 						}
 					}
@@ -996,22 +992,19 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 					{
 						flag3 = 0;
 						clearrectangle(430, 410, 460, 440);
-						loadimage(&Chioce6, _T(".\\IMAGES\\SelectBox.png"), 0, 0);
+						loadimage(&Chioce6, _T(".\\IMAGES\\SelectBox.png"), 30, 30);
 						putimage(430, 410, &Chioce6);
 					}
-				}
 			}
 			if (m.x > 430 && m.y > 470 && m.x < 460 && m.y < 500)
 			{
-				if (p_count == 4)
-				{
 					if (flag4 == 0)
 					{
 						if (flag1 + flag2 + flag3 + flag4 + flag5 < 2)
 						{
 							flag4 = 1;
 							clearrectangle(430, 470, 460, 500);
-							loadimage(&Chioce7, _T(".\\IMAGES\\SelectBoxActive.png"), 0, 0);
+							loadimage(&Chioce7, _T(".\\IMAGES\\SelectBoxActive.png"), 30,30);
 							putimage(430, 470, &Chioce7);
 						}
 					}
@@ -1019,22 +1012,19 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 					{
 						flag4 = 0;
 						clearrectangle(430, 470, 460, 500);
-						loadimage(&Chioce7, _T(".\\IMAGES\\SelectBox.png"), 0, 0);
+						loadimage(&Chioce7, _T(".\\IMAGES\\SelectBox.png"), 30, 30);
 						putimage(430, 470, &Chioce7);
 					}
-				}
 			}
 			if (m.x > 430 && m.y > 530 && m.x < 460 && m.y < 560)
 			{
-				if (p_count == 5)
-				{
 					if (flag5 == 0)
 					{
 						if (flag1 + flag2 + flag3 + flag4 + flag5 < 2)
 						{
 							flag5 = 1;
 							clearrectangle(430, 530, 460, 560);
-							loadimage(&Chioce8, _T(".\\IMAGES\\SelectBoxActive.png"), 0, 0);
+							loadimage(&Chioce8, _T(".\\IMAGES\\SelectBoxActive.png"), 30, 30);
 							putimage(430, 470, &Chioce8);
 						}
 					}
@@ -1042,10 +1032,9 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 					{
 						flag5 = 0;
 						clearrectangle(430, 530, 460, 560);
-						loadimage(&Chioce8, _T(".\\IMAGES\\SelectBox.png"), 0, 0);
+						loadimage(&Chioce8, _T(".\\IMAGES\\SelectBox.png"), 30, 30);
 						putimage(430, 470, &Chioce8);
 					}
-				}
 			}
 			if (m.x > 500 && m.y > 600 && m.x < 600 && m.y < 655)//鼠标按在订票确认区域
 			{
@@ -1071,7 +1060,7 @@ int p_Booking(FlightID* ID, FlightTicket DATA[366][999], Passenger* P, The_users
 	int size = JudgeAircraftSize(ID, flynumber);
 	loadimage(&Chioce1, _T(".\\IMAGES\\choose.png"), 0, 0);
 	putimage(400, 650, &Chioce1);
-	loadimage(&Chioce2, _T(".\\IMAGES\\back.png"), 0, 0);
+	loadimage(&Chioce2, _T(".\\IMAGES\\cancel.png"), 0, 0);
 	putimage(800, 650, &Chioce2);
 	int  SA = 0, SB = 0, SC = 0, SD = 0, SE = 0, SG = 0, SH = 0, SJ = 0, SK = 0, SL = 0;
 	int F = 0, B = 0, E = 0;
