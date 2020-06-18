@@ -10,3 +10,6 @@
 #include<time.h>
 
 int StartMENU(users u[999], Passenger p[999]);
+int Identify_ID(char* n, char* m, users u[999]);
+int SetMenu_Register(users u[999]);
+int SetMenu_Manager_Register(users u[999]);

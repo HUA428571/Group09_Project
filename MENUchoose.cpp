@@ -430,7 +430,7 @@ int StartMENU_Register_MENUChoose()
 				return 3;
 			if (m.y > 440 && m.y < 500 && m.x>470 && m.x < 810)//鼠标按在输入手机区域
 				return 4;
-			if (m.y > 510 && m.y < 550 && m.x>470 && m.x < 810)//鼠标按在注册区域
+			if (m.y > 510 && m.y < 550 && m.x>470 && m.x < 620)//鼠标按在注册区域
 				return 5;
 			if (m.y > 510 && m.y < 550 && m.x>660 && m.x < 810)//鼠标按在取消区域
 				return 6;
@@ -456,7 +456,7 @@ int StartMENU_AdminRegister_MENUChoose()
 				return 3;
 			if (m.y > 440 && m.y < 500 && m.x>470 && m.x < 810)//鼠标按在输入邀请码区域
 				return 4;
-			if (m.y > 510 && m.y < 550 && m.x>470 && m.x < 810)//鼠标按在注册区域
+			if (m.y > 510 && m.y < 550 && m.x>470 && m.x < 620)//鼠标按在注册区域
 				return 5;
 			if (m.y > 510 && m.y < 550 && m.x>660 && m.x < 810)//鼠标按在取消区域
 				return 6;

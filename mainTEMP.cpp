@@ -69,12 +69,11 @@ int main()
 	}
 	cout << "正在进入系统..." << endl;
 	Sleep(500);
-	//cout << sizeof(DATA) << endl;
-	int Choice = StartMENU(u, p);
-	if (Choice == 0)
+	//int Choice = StartMENU(u, p);
+	//if (Choice == 0)
 		AdminMENU(ID, DATA, FlightID_Count);
-	else
-		;
+	//else
+	//	;
 
 	//srand(time(NULL));
 	//for (int i1 = 0; i1 < FlightID_Count; i1++)
@@ -147,9 +146,9 @@ int main()
 	//		}
 	//		else
 	//		{
-	//			DATA[i2][i1].BusinessClassTicketRemain = 8;
+	//			DATA[i2][i1].BusinessClassTicketRemain = 0;
 	//			DATA[i2][i1].EconomyClassTicketRemain = 180;
-	//			DATA[i2][i1].FirstClassTicketRemain = 0;
+	//			DATA[i2][i1].FirstClassTicketRemain = 8;
 	//		}
 	//	}
 	//}

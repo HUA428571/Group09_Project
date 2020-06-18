@@ -373,6 +373,7 @@ int C_InputBox(char* Input, int Limit, int x, int y, const char* Default)
 	char c;
 	int Length = 0;
 	char InputBuf[100] = { '\0' };
+	MOUSEMSG m;
 	settextstyle(28, 0, FONT2_EN);
 	setlinecolor(BLACK);
 	for (int i = x + 5; i < x + 155; i++)
@@ -385,15 +386,25 @@ int C_InputBox(char* Input, int Limit, int x, int y, const char* Default)
 	settextcolor(BLACK);
 	while (true)
 	{
+		FlushMouseMsgBuffer();
+		if (MouseHit())//如果鼠标被按下，则退出输入
+		{
+			m = GetMouseMsg();
+			if (m.mkLButton || m.mkRButton)
+			{
+				strcpy(Input, InputBuf);
+				return Length;
+			}
+		}
 		c = _getch();
-		if (c != 13)//如果输入的不是回车
+		if (c != 13 )//如果输入的不是回车
 		{
 			if (Length == 0)
 			{
 				clearrectangle(x, y, x + 160, y + 34);
 			}
 			if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
-			{
+			{···
 				if (Length == Limit - 1)
 				{
 					;

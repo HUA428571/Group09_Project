@@ -896,25 +896,25 @@ void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n,int 
 		settextcolor(TextColor);
 		outtextxy(300, 230 + 25 * i, Accuracy);
 		settextcolor(BLACK);
+		_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].FirstClassTicketRemain);
+		outtextxy(400, 230 + 25 * i, IntChange);
 		if (JudgeAircraftSize(ID, n) == 2)
 		{
-			_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].FirstClassTicketRemain);
-			outtextxy(400, 230 + 25 * i, IntChange);
 			outtextxy(420, 230 + 25 * i, "/6");
 		}
 		else
 		{
-			outtextxy(400, 230 + 25 * i, " N/A");
+			outtextxy(420, 230 + 25 * i, "/8");
 		}
-		_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].BusinessClassTicketRemain);
-		outtextxy(470, 230 + 25 * i, IntChange);
 		if (JudgeAircraftSize(ID, n) == 2)
 		{
+			_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].BusinessClassTicketRemain);
+			outtextxy(470, 230 + 25 * i, IntChange);
 			outtextxy(490, 230 + 25 * i, "/36");
 		}
 		else
 		{
-			outtextxy(490, 230 + 25 * i, "/8");
+			outtextxy(470, 230 + 25 * i, " N/A");
 		}
 		_stprintf(IntChange, _T("%3d"), DATA[Fly[Count]][n].EconomyClassTicketRemain);
 		outtextxy(540, 230 + 25 * i, IntChange);
@@ -942,25 +942,25 @@ void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n,int 
 		settextcolor(TextColor);
 		outtextxy(300 + 610, 230 + 25 * i, Accuracy);
 		settextcolor(BLACK);
+		_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].FirstClassTicketRemain);
+		outtextxy(400 + 610, 230 + 25 * i, IntChange);
 		if (JudgeAircraftSize(ID, n) == 2)
 		{
-			_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].FirstClassTicketRemain);
-			outtextxy(400 + 610, 230 + 25 * i, IntChange);
 			outtextxy(420 + 610, 230 + 25 * i, "/6");
 		}
 		else
 		{
-			outtextxy(400 + 610, 230 + 25 * i, " N/A");
+			outtextxy(420 + 610, 230 + 25 * i, "/8");
 		}
-		_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].BusinessClassTicketRemain);
-		outtextxy(470 + 610, 230 + 25 * i, IntChange);
 		if (JudgeAircraftSize(ID, n) == 2)
 		{
+			_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].BusinessClassTicketRemain);
+			outtextxy(470 + 610, 230 + 25 * i, IntChange);
 			outtextxy(490 + 610, 230 + 25 * i, "/36");
 		}
 		else
 		{
-			outtextxy(490 + 610, 230 + 25 * i, "/8");
+			outtextxy(470 + 610, 230 + 25 * i, " N/A");
 		}
 		_stprintf(IntChange, _T("%3d"), DATA[Fly[Count]][n].EconomyClassTicketRemain);
 		outtextxy(540 + 610, 230 + 25 * i, IntChange);
@@ -970,8 +970,38 @@ void PrintTicketPage(FlightID* ID, FlightTicket DATA[][999], int* Fly,int n,int 
 		}
 		else
 		{
-			outtextxy(570+610, 230 + 25 * i, "/180");
+			outtextxy(570 + 610, 230 + 25 * i, "/180");
 		}
+		//if (JudgeAircraftSize(ID, n) == 2)
+		//{
+		//	_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].FirstClassTicketRemain);
+		//	outtextxy(400 + 610, 230 + 25 * i, IntChange);
+		//	outtextxy(420 + 610, 230 + 25 * i, "/6");
+		//}
+		//else
+		//{
+		//	outtextxy(400 + 610, 230 + 25 * i, " N/A");
+		//}
+		//_stprintf(IntChange, _T("%2d"), DATA[Fly[Count]][n].BusinessClassTicketRemain);
+		//outtextxy(470 + 610, 230 + 25 * i, IntChange);
+		//if (JudgeAircraftSize(ID, n) == 2)
+		//{
+		//	outtextxy(490 + 610, 230 + 25 * i, "/36");
+		//}
+		//else
+		//{
+		//	outtextxy(490 + 610, 230 + 25 * i, "/8");
+		//}
+		//_stprintf(IntChange, _T("%3d"), DATA[Fly[Count]][n].EconomyClassTicketRemain);
+		//outtextxy(540 + 610, 230 + 25 * i, IntChange);
+		//if (JudgeAircraftSize(ID, n) == 2)
+		//{
+		//	outtextxy(570 + 610, 230 + 25 * i, "/400");
+		//}
+		//else
+		//{
+		//	outtextxy(570+610, 230 + 25 * i, "/180");
+		//}
 		Count++;
 	}
 	return;	
